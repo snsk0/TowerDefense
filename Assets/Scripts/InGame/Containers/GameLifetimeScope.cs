@@ -13,6 +13,8 @@ public class GameLifetimeScope : LifetimeScope
 
         builder.Register<PlayerManager>(Lifetime.Singleton);
 
+        builder.Register<PlayerController>(Lifetime.Transient);
+
         builder.RegisterComponent(playerGenerator);
     }
 }

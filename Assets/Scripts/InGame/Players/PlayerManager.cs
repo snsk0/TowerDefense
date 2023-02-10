@@ -1,13 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 using VContainer;
+using VContainer.Unity;
 
 namespace InGame.Players
 {
-    public class PlayerManager : MonoBehaviour
+    public class PlayerManager
     {
-        private PlayerGenerator playerGenerator;
+        private readonly PlayerGenerator playerGenerator;
+
+        private readonly ISubject<GameObject> generatedPlayerSubject = new Subject<GameObject>();
+        public IObservable<GameObject> GeneratePlayerObservable => generatedPlayerSubject;
         
         public GameObject currentPlayerObject { get; private set; }
 
@@ -20,6 +26,7 @@ namespace InGame.Players
         public void GeneratePlayer(PlayerCharacterType playerCharacterType)
         {
             currentPlayerObject = playerGenerator.GeneratePlayer(playerCharacterType);
+            generatedPlayerSubject.OnNext(currentPlayerObject);
         }
     }
 }
