@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using InGame.Players.Input;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace InGame.Players
 {
-    public class PlayerController : ControllerBase
+    public class PlayerController : ControllerBase, IDisposable
     {
         private PlayerInput playerInput = new PlayerInput();
 
@@ -48,9 +49,14 @@ namespace InGame.Players
                 if (token.IsCancellationRequested)
                     return;
 
-                playerMover.Move(playerInput.MoveVec);
+                playerMover?.Move(playerInput.MoveVec);
                 await UniTask.DelayFrame(1);
             }
+        }
+
+        public void Dispose()
+        {
+            tokenSource.Cancel();
         }
     }
 }
