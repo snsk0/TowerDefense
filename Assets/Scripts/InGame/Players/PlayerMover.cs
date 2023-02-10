@@ -11,7 +11,8 @@ namespace InGame.Players
 
         public void Move(Vector3 moveVec)
         {
-            rigidbody.velocity = moveVec * moveSpeed;
+            var velocity = moveVec * moveSpeed + new Vector3(0, rigidbody.velocity.y, 0);
+            rigidbody.velocity = velocity;
         }
     }
 }
