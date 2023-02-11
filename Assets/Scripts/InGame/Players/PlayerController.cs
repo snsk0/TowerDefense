@@ -15,6 +15,7 @@ namespace InGame.Players
 
         private PlayerMover playerMover;
         private PlayerJumper playerJumper;
+        private PlayerAvoider playerAvoider;
 
         private CancellationTokenSource tokenSource;
 
@@ -22,6 +23,7 @@ namespace InGame.Players
         {
             playerMover = playerObject.GetComponent<PlayerMover>();
             playerJumper = playerObject.GetComponent<PlayerJumper>();
+            playerAvoider = playerObject.GetComponent<PlayerAvoider>();
 
             ControllPlayer();
         }
@@ -38,6 +40,14 @@ namespace InGame.Players
                 .Subscribe(_ =>
                 {
                     playerJumper.Jump();
+                })
+                .AddTo(this);
+
+            this.ObserveEveryValueChanged(x => x.playerInput.HadPushedAvoid)
+                .Where(x => x)
+                .Subscribe(_ =>
+                {
+                    playerAvoider.Avoid();
                 })
                 .AddTo(this);
         }

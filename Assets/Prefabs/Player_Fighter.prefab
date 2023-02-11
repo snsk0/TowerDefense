@@ -13,8 +13,11 @@ GameObject:
   - component: {fileID: 4094564592672338475}
   - component: {fileID: 4094564592672338474}
   - component: {fileID: 6838184118201247873}
-  - component: {fileID: -1547723013485216853}
   - component: {fileID: -176843312180638406}
+  - component: {fileID: -8125778062928823317}
+  - component: {fileID: -1547723013485216853}
+  - component: {fileID: 4394824611952307732}
+  - component: {fileID: -4378014050874588916}
   m_Layer: 0
   m_Name: Player_Fighter
   m_TagString: Untagged
@@ -115,6 +118,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbody: {fileID: -1547723013485216853}
   moveSpeed: 1
+--- !u!114 &-176843312180638406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4094564592672338477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f233830bd0b15d24db5f66af71b7c179, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidbody: {fileID: -1547723013485216853}
+  jumpPower: 10
+--- !u!114 &-8125778062928823317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4094564592672338477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c445e9a5fabe91c45832e75665fca2ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &-1547723013485216853
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -131,7 +160,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &-176843312180638406
+--- !u!114 &4394824611952307732
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,8 +169,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 4094564592672338477}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f233830bd0b15d24db5f66af71b7c179, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c6cbbf0a809026469239e3720c5d23b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerDamagable: {fileID: -8125778062928823317}
+  playerAnimationPlayer: {fileID: -4378014050874588916}
+--- !u!114 &-4378014050874588916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4094564592672338477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2324f8139eda4a54daa7626d358b9d4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: -1547723013485216853}
-  jumpPower: 10
