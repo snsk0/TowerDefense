@@ -16,6 +16,7 @@ namespace InGame.Players
         private PlayerMover playerMover;
         private PlayerJumper playerJumper;
         private PlayerAvoider playerAvoider;
+        private PlayerAttacker playerAttacker;
 
         private CancellationTokenSource tokenSource;
 
@@ -24,6 +25,7 @@ namespace InGame.Players
             playerMover = playerObject.GetComponent<PlayerMover>();
             playerJumper = playerObject.GetComponent<PlayerJumper>();
             playerAvoider = playerObject.GetComponent<PlayerAvoider>();
+            playerAttacker = playerObject.GetComponent<PlayerAttacker>();
 
             ControllPlayer();
         }
@@ -48,6 +50,14 @@ namespace InGame.Players
                 .Subscribe(_ =>
                 {
                     playerAvoider.Avoid();
+                })
+                .AddTo(this);
+
+            this.ObserveEveryValueChanged(x => x.playerInput.HadPushedAttack)
+                .Where(x => x)
+                .Subscribe(_ =>
+                {
+                    playerAttacker.Attack();
                 })
                 .AddTo(this);
         }

@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using InGame.Players.Input;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -29,6 +30,11 @@ namespace InGame.Players
                 if (time > 0.3f)
                     break;
             }
+        }
+
+        public async virtual UniTask PlayAttackAnimation(CancellationToken token, Action<bool> attackCallback = null)
+        {
+            //それぞれのキャラの子クラスで実装
         }
     }
 }
