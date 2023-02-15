@@ -16,6 +16,7 @@ namespace InGame.Players
         public IObservable<GameObject> GeneratePlayerObservable => generatedPlayerSubject;
         
         public GameObject currentPlayerObject { get; private set; }
+        public PlayerParameter playerParameter { get; private set; }
 
         [Inject]
         public PlayerManager(PlayerGenerator playerGenerator)
@@ -27,6 +28,8 @@ namespace InGame.Players
         {
             currentPlayerObject = playerGenerator.GeneratePlayer(playerCharacterType);
             generatedPlayerSubject.OnNext(currentPlayerObject);
+
+            playerParameter = new PlayerParameter(playerCharacterType);
         }
     }
 }
