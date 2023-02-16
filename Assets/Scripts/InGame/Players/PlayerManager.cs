@@ -30,6 +30,10 @@ namespace InGame.Players
             generatedPlayerSubject.OnNext(currentPlayerObject);
 
             playerParameter = new PlayerParameter(playerCharacterType);
+            currentPlayerObject.GetComponent<PlayerAttacker>().Init(playerParameter);
+            currentPlayerObject.GetComponent<PlayerAnimationPlayer>().Init(playerParameter);
+            currentPlayerObject.GetComponent<PlayerAvoider>().Init(playerParameter);
+            currentPlayerObject.GetComponent<PlayerMover>().Init(playerParameter);
         }
     }
 }

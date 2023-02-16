@@ -9,8 +9,8 @@ namespace InGame.Players
         public int maxHP { get; private set; } = 100;
         public float baseAttackValue { get; private set; } = 1f;
         public float baseDefenceValue { get; private set; } = 1f;
-        public float baseInvincibleTime { get; private set; } = 0.5f;
-        public float baseAvoidDistance { get; private set; } = 1f;
+        public float baseInvincibleTime { get; private set; } = 0.3f;
+        public float baseAvoidDistance { get; private set; } = 100f;
         public float baseMoveSpeed { get; private set; } = 1f;
 
         public float maxHPMagnification { get; private set; } = 1f;
