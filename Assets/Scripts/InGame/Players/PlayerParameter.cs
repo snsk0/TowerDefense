@@ -31,6 +31,25 @@ namespace InGame.Players
         {
 
         }
+
+        public void IncreaseAddParameter(PlayerParameterType playerParameterType, int value)
+        {
+            switch (playerParameterType)
+            {
+                case PlayerParameterType.HP:
+                    addMaxHP += value;
+                    break;
+                case PlayerParameterType.AttackPower:
+                    addAttackValue += value;
+                    break;
+                case PlayerParameterType.DefencePower:
+                    addDefenceValue += value;
+                    break;
+                case PlayerParameterType.MoveSpeed:
+                    addMoveSpeed += value;
+                    break;
+            }
+        }
     }
 }
 

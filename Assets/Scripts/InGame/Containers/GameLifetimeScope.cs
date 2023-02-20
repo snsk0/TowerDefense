@@ -1,3 +1,4 @@
+using InGame.Enhancements;
 using InGame.Players;
 using UnityEngine;
 using VContainer;
@@ -6,15 +7,18 @@ using VContainer.Unity;
 public class GameLifetimeScope : LifetimeScope
 {
     [SerializeField] private PlayerGenerator playerGenerator;
+    [SerializeField] private EnhancementView enhancementView;
 
     protected override void Configure(IContainerBuilder builder)
     {
         builder.RegisterEntryPoint<PlayerGeneratePresenter>();
+        builder.RegisterEntryPoint<EnhancementPresenter>();
 
         builder.Register<PlayerManager>(Lifetime.Singleton);
 
         builder.Register<PlayerController>(Lifetime.Transient);
 
         builder.RegisterComponent(playerGenerator);
+        builder.RegisterComponent(enhancementView);
     }
 }
