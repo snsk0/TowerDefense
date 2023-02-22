@@ -8,7 +8,10 @@ namespace InGame.Players
     {
         public int enhancementPoint { get; private set; }
 
-
+        public void AddEnhancementPoint(int point)
+        {
+            enhancementPoint = point;
+        }
     }
 }
 

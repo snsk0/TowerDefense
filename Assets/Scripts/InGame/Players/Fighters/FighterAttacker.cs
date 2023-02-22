@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UniRx.Triggers;
 using UnityEngine;
 using UniRx;
+using InGame.Damages;
+using InGame.Enemies;
 
 namespace InGame.Players.Fighters
 {
@@ -15,9 +17,13 @@ namespace InGame.Players.Fighters
         private void Start()
         {
             fighterAttackCollider.OnTriggerEnterAsObservable()
-                .Subscribe(_ =>
+                .Select(trigger => trigger.GetComponent<IEnemyDamagable>())
+                .Where(enemy => enemy != null)
+                .Subscribe(enemy =>
                 {
                     var attackValue = (playerParameter.baseAttackValue + playerParameter.addAttackValue) * playerParameter.attackMagnification;
+                    var damage = new Damage(attackValue);
+                    enemy.ApplyDamage(damage);
                 })
                 .AddTo(this);
         }

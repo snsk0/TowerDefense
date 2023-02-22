@@ -27,8 +27,13 @@ namespace InGame.Players
         public void GeneratePlayer(PlayerCharacterType playerCharacterType)
         {
             currentPlayerObject = playerGenerator.GeneratePlayer(playerCharacterType);
-            generatedPlayerSubject.OnNext(currentPlayerObject);
+            InitPlayer(playerCharacterType);
 
+            generatedPlayerSubject.OnNext(currentPlayerObject);
+        }
+
+        private void InitPlayer(PlayerCharacterType playerCharacterType)
+        {
             playerParameter = new PlayerParameter(playerCharacterType);
             currentPlayerObject.GetComponent<PlayerAttacker>().Init(playerParameter);
             currentPlayerObject.GetComponent<PlayerAnimationPlayer>().Init(playerParameter);
