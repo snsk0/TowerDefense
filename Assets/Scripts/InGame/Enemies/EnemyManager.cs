@@ -11,7 +11,11 @@ namespace InGame.Enemies
     {
         private readonly EnemyGenerator enemyGenerator;
 
-        private List<GameObject> currentEnemyObjects = new List<GameObject>();
+        private readonly List<GameObject> currentEnemyObjects = new List<GameObject>();
+        public IReadOnlyList<GameObject> CurrentEnemyObjects => currentEnemyObjects;
+
+        private readonly ISubject<int> dropedEnhancementPointSubject = new Subject<int>();
+        public IObservable<int> DropedEnhancementPointObservable => dropedEnhancementPointSubject;
 
         [Inject]
         public EnemyManager(EnemyGenerator enemyGenerator)
@@ -35,6 +39,7 @@ namespace InGame.Enemies
                 .Subscribe(_ =>
                 {
                     GenerateEnemy();
+                    dropedEnhancementPointSubject.OnNext(1);
                 })
                 .AddTo(this);
         }

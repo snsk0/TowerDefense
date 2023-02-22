@@ -10,6 +10,7 @@ namespace InGame.Players.Input
         public bool HadPushedJump => UnityEngine.Input.GetKeyDown(KeyCode.Space);
         public bool HadPushedAttack => UnityEngine.Input.GetMouseButtonDown(0);
         public bool HadPushedAvoid => UnityEngine.Input.GetKeyDown(KeyCode.LeftShift);
+        public bool HadPushedEnhance=> UnityEngine.Input.GetKeyDown(KeyCode.Tab);
     }
 }
 
