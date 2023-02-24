@@ -12,6 +12,11 @@ namespace InGame.Players
         {
             enhancementPoint += point;
         }
+
+        public void DecreaseEnhancementPoint(int point)
+        {
+            enhancementPoint -= point;
+        }
     }
 }
 

@@ -15,7 +15,6 @@ public class GameLifetimeScope : LifetimeScope
     {
         builder.RegisterEntryPoint<PlayerGeneratePresenter>();
         builder.RegisterEntryPoint<EnhancementPresenter>();
-        builder.RegisterEntryPoint<EnhancementPointPresenter>();
         builder.RegisterEntryPoint<EnemyGeneratePresenter>();
 
         builder.Register<PlayerManager>(Lifetime.Singleton);
