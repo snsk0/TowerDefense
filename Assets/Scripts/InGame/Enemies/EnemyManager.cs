@@ -30,6 +30,7 @@ namespace InGame.Enemies
             ObserveEnemyDeath(enemy.GetComponent<EnemyHealth>());
         }
 
+        //プレイヤーの死亡を監視
         public void ObserveEnemyDeath(EnemyHealth enemyHealth)
         {
             enemyHealth.HadDeadReactiveProperty
@@ -38,7 +39,9 @@ namespace InGame.Enemies
                 .Delay(TimeSpan.FromSeconds(2f))
                 .Subscribe(_ =>
                 {
+                    //TODO: 敵の生成タイミングは別で設定する
                     GenerateEnemy();
+                    //TODO: Enemy側に落とすポイントを設定しておく
                     dropedEnhancementPointSubject.OnNext(1);
                 })
                 .AddTo(this);

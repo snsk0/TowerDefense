@@ -26,6 +26,7 @@ namespace InGame.Enhancements
 
         private void Start()
         {
+            //それぞれのボタンが押されたときの上昇するパラメータとその値を送信する
             maxHPOneUpButton.onClick.AddListener(() => parameterUpButtonClickSubject.OnNext(new KeyValuePair<PlayerParameterType, int>(PlayerParameterType.HP, 1)));
             maxHPTenUpButton.onClick.AddListener(() => parameterUpButtonClickSubject.OnNext(new KeyValuePair<PlayerParameterType, int>(PlayerParameterType.HP, 10)));
             attackValueOneUpButton.onClick.AddListener(() => parameterUpButtonClickSubject.OnNext(new KeyValuePair<PlayerParameterType, int>(PlayerParameterType.AttackPower, 1)));
@@ -51,6 +52,7 @@ namespace InGame.Enhancements
             pointText.text = $"point:{point}";
         }
 
+        //+1のボタンの表示のセット
         public void SetIntaractableOneUpButton(bool value)
         {
             maxHPOneUpButton.interactable = value;
@@ -58,6 +60,7 @@ namespace InGame.Enhancements
             defenceValueOneUpButton.interactable = value;
         }
 
+        //+10のボタンの表示のセット
         public void SetIntaractableTenUpButton(bool value)
         {
             maxHPTenUpButton.interactable = value;
