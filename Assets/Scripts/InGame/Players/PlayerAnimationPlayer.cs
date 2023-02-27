@@ -10,7 +10,8 @@ namespace InGame.Players
 {
     public class PlayerAnimationPlayer : MonoBehaviour
     {
-        [SerializeField] private Rigidbody rigidbody;
+        [SerializeField] protected Animator animator;
+        [SerializeField] protected Rigidbody rigidbody;
 
         private PlayerInput playerInput = new PlayerInput();
         private PlayerParameter playerParameter;

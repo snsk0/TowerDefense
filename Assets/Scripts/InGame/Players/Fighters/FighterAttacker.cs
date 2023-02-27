@@ -11,7 +11,7 @@ namespace InGame.Players.Fighters
 {
     public class FighterAttacker : PlayerAttacker
     {
-        [SerializeField] private PlayerAnimationPlayer playerAnimationPlayer;
+        [SerializeField] private FighterAnimationPlayer fighterAnimationPlayer;
         [SerializeField] private FighterAttackCollider fighterAttackCollider;
 
         private void Start()
@@ -30,7 +30,18 @@ namespace InGame.Players.Fighters
 
         public override void Attack()
         {
-            playerAnimationPlayer.PlayAttackAnimation(this.GetCancellationTokenOnDestroy(), fighterAttackCollider.EnableCollider).Forget();
+            if (fighterAnimationPlayer.IsConnectableSecondAttack)
+            {
+                fighterAnimationPlayer.PlaySecondAttackAnimation(this.GetCancellationTokenOnDestroy(), fighterAttackCollider.EnableCollider).Forget();
+            }
+            else if (fighterAnimationPlayer.IsConnectableThirdAttack)
+            {
+                fighterAnimationPlayer.PlayThirdAttackAnimation(this.GetCancellationTokenOnDestroy(), fighterAttackCollider.EnableCollider).Forget();
+            }
+            else
+            {
+                fighterAnimationPlayer.PlayFirstAttackAnimation(this.GetCancellationTokenOnDestroy(), fighterAttackCollider.EnableCollider).Forget();
+            }
         }
     }
 }
