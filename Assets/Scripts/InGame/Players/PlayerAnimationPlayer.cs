@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using InGame.Players.Animators;
 using InGame.Players.Input;
 using System;
 using System.Collections;
@@ -15,6 +16,9 @@ namespace InGame.Players
 
         private PlayerInput playerInput = new PlayerInput();
         private PlayerParameter playerParameter;
+
+        public bool IsAttacking { get; protected set; }
+        public bool IsJumping { get; private set; }
 
         public void Init(PlayerParameter playerParameter)
         {
@@ -44,6 +48,22 @@ namespace InGame.Players
         public async virtual UniTask PlayAttackAnimation(CancellationToken token, Action<bool> attackCallback = null)
         {
             //それぞれのキャラの子クラスで実装
+        }
+
+        public async UniTask PlayJumpAnimation(CancellationToken token, Action jumpCallback = null)
+        {
+            if (IsAttacking)
+                return;
+
+            if (IsJumping)
+                return;
+
+            animator.SetTrigger(AnimatorTriggerHashes.Jump);
+            IsJumping = true;
+            await AnimationTransitionWaiter.WaitStateTime(0.25f, (int)AnimatorLayerType.Base, AnimatorStateHashes.Jump, animator, token);
+            jumpCallback?.Invoke();
+            await AnimationTransitionWaiter.WaitStateTime(1f, (int)AnimatorLayerType.Base, AnimatorStateHashes.Jump, animator, token);
+            IsJumping = false;
         }
     }
 }

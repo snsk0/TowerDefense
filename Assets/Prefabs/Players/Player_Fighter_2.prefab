@@ -1654,6 +1654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 5527404698297266956}
+  playerAnimationPlayer: {fileID: 5628400196887020391}
   jumpPower: 1
 --- !u!114 &1061850077910805993
 MonoBehaviour:
