@@ -10,6 +10,7 @@ namespace InGame.Players.Animators
         public static int SecondAttack => Animator.StringToHash("SecondAttack");
         public static int ThirdAttack => Animator.StringToHash("ThirdAttack");
         public static int Jump => Animator.StringToHash("Jump");
+        public static int Idle => Animator.StringToHash("Idle");
     }
 }
 

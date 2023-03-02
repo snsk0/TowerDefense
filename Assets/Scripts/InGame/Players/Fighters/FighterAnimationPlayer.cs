@@ -38,6 +38,8 @@ namespace InGame.Players.Fighters
 
         public async UniTask PlaySecondAttackAnimation(CancellationToken token, Action<bool> attackCallback = null)
         {
+            IsConnectableSecondAttack = false;
+
             animator.SetTrigger(AnimatorTriggerHashes.SecondAttack);
             IsAttacking = true;
             //攻撃判定のタイミングまで待つ
@@ -55,13 +57,15 @@ namespace InGame.Players.Fighters
 
         public async UniTask PlayThirdAttackAnimation(CancellationToken token, Action<bool> attackCallback = null)
         {
+            IsConnectableThirdAttack = false;
+
             animator.SetTrigger(AnimatorTriggerHashes.ThirdAttack);
             IsAttacking = true;
             //攻撃判定のタイミングまで待つ
-            await AnimationTransitionWaiter.WaitStateTime(0.28f, (int)AnimatorLayerType.Base, AnimatorStateHashes.ThirdAttack, animator, token);
+            await AnimationTransitionWaiter.WaitStateTime(0.33f, (int)AnimatorLayerType.Base, AnimatorStateHashes.ThirdAttack, animator, token);
             //攻撃判定有効化のコールバック
             attackCallback?.Invoke(true);
-            await AnimationTransitionWaiter.WaitStateTime(0.35f, (int)AnimatorLayerType.Base, AnimatorStateHashes.ThirdAttack, animator, token);
+            await AnimationTransitionWaiter.WaitStateTime(0.51f, (int)AnimatorLayerType.Base, AnimatorStateHashes.ThirdAttack, animator, token);
             attackCallback?.Invoke(false);
             IsAttacking = false;
         }

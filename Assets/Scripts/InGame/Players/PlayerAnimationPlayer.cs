@@ -62,7 +62,8 @@ namespace InGame.Players
             IsJumping = true;
             await AnimationTransitionWaiter.WaitStateTime(0.25f, (int)AnimatorLayerType.Base, AnimatorStateHashes.Jump, animator, token);
             jumpCallback?.Invoke();
-            await AnimationTransitionWaiter.WaitStateTime(1f, (int)AnimatorLayerType.Base, AnimatorStateHashes.Jump, animator, token);
+            //await AnimationTransitionWaiter.WaitStateTime(1f, (int)AnimatorLayerType.Base, AnimatorStateHashes.Jump, animator, token);
+            await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.Base, AnimatorStateHashes.Idle, animator, token);
             IsJumping = false;
         }
     }
