@@ -19,10 +19,24 @@ namespace InGame.Players
 
         public bool IsAttacking { get; protected set; }
         public bool IsJumping { get; private set; }
+        public bool IsLanding { get; private set; }
+
+        public bool IsIdle => animator.GetCurrentAnimatorStateInfo((int)AnimatorLayerType.Base).tagHash == AnimatorStateHashes.Idle;
+        public bool IsAttackMotion => animator.GetCurrentAnimatorStateInfo((int)AnimatorLayerType.Base).tagHash == AnimatorStateHashes.Attack;
 
         public void Init(PlayerParameter playerParameter)
         {
             this.playerParameter = playerParameter;
+        }
+
+        public void PlayRunAnimation()
+        {
+            animator.SetBool(AnimatorTriggerHashes.Run, true);
+        }
+
+        public void StopRunAnimation()
+        {
+            animator.SetBool(AnimatorTriggerHashes.Run, false);
         }
 
         public async UniTask PlayAvoidAnimationAsync(CancellationToken token)
@@ -37,7 +51,7 @@ namespace InGame.Players
 
                 var avoidDistance = (playerParameter.baseAvoidDistance + playerParameter.addAvoidDistance) * playerParameter.avoidDistanceMagnification;
                 rigidbody.AddForce(playerInput.MoveVec * avoidDistance);
-                await UniTask.DelayFrame(1);
+                await UniTask.DelayFrame(1, cancellationToken: token);
                 time += Time.deltaTime;
                 var invisicibleTime = (playerParameter.baseInvincibleTime + playerParameter.addinvincibleTime) * playerParameter.invincibleTimeMagnification;
                 if (time > invisicibleTime)
@@ -60,11 +74,16 @@ namespace InGame.Players
 
             animator.SetTrigger(AnimatorTriggerHashes.Jump);
             IsJumping = true;
+            //実際に浮き始めるまで待機
             await AnimationTransitionWaiter.WaitStateTime(0.25f, (int)AnimatorLayerType.Base, AnimatorStateHashes.Jump, animator, token);
             jumpCallback?.Invoke();
-            //await AnimationTransitionWaiter.WaitStateTime(1f, (int)AnimatorLayerType.Base, AnimatorStateHashes.Jump, animator, token);
+            //着地まで待機
+            await AnimationTransitionWaiter.WaitStateTime(0.57f, (int)AnimatorLayerType.Base, AnimatorStateHashes.Jump, animator, token);
+            IsLanding = true;
+            //Idleモーションに遷移するまで待機
             await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.Base, AnimatorStateHashes.Idle, animator, token);
             IsJumping = false;
+            IsLanding = false;
         }
     }
 }

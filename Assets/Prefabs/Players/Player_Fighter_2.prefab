@@ -1669,6 +1669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 5527404698297266956}
+  playerAnimationPlayer: {fileID: 5628400196887020391}
 --- !u!54 &5527404698297266956
 Rigidbody:
   m_ObjectHideFlags: 0

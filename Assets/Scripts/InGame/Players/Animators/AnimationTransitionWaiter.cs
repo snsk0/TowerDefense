@@ -7,6 +7,12 @@ using UnityEngine;
 
 namespace InGame.Players.Animators
 {
+    public enum HashType
+    {
+        Tag,
+        Name,
+    }
+
     public static class AnimationTransitionWaiter
     {
         /// <summary>
@@ -16,7 +22,7 @@ namespace InGame.Players.Animators
         /// <param name="state">遷移後のステート</param>
         /// <param name="animator">レイヤーを持つアニメーター</param>
         /// <param name="token"></param>
-        public static async UniTask WaitAnimationTransition(int layerNum, int stateHash, Animator animator, CancellationToken token)
+        public static async UniTask WaitAnimationTransition(int layerNum, int stateHash, Animator animator, CancellationToken token, HashType hashType=HashType.Tag)
         {
             if (!animator) return;
 
@@ -24,7 +30,22 @@ namespace InGame.Players.Animators
             {
                 if (!animator) return true;
                 var stateInfo = animator.GetCurrentAnimatorStateInfo(layerNum);
-                return stateInfo.tagHash == stateHash;
+                int currentStateHash;
+                switch (hashType)
+                {
+                    case HashType.Tag:
+                        currentStateHash = stateInfo.tagHash;
+                        break;
+                    case HashType.Name:
+                        currentStateHash = stateInfo.shortNameHash;
+                        break;
+                    default:
+                        currentStateHash = 0;
+                        Debug.LogError("無効な引数です");
+                        break;
+                }
+                return currentStateHash == stateHash;
+                
             }, cancellationToken: token);
         }
 
@@ -36,11 +57,11 @@ namespace InGame.Players.Animators
         /// <param name="state">待ちたいステート</param>
         /// <param name="animator">レイヤーを持つアニメーター</param>
         /// <param name="token"></param>
-        public static async UniTask WaitStateTime(float waitTime, int layerNum, int stateHash, Animator animator, CancellationToken token)
+        public static async UniTask WaitStateTime(float waitTime, int layerNum, int stateHash, Animator animator, CancellationToken token, HashType hashType = HashType.Tag)
         {
             if (!animator) return;
 
-            await WaitAnimationTransition(layerNum, stateHash, animator, token);
+            await WaitAnimationTransition(layerNum, stateHash, animator, token, hashType);
 
             await UniTask.WaitUntil(() =>
             {
