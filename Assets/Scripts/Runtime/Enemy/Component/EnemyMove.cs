@@ -32,6 +32,7 @@ namespace Runtime.Enemy.Component
 
 
             //agentを設定
+            moved = true;
             agent.isStopped = false;
             agent.SetDestination(targetPosition);
             return true;
@@ -44,6 +45,7 @@ namespace Runtime.Enemy.Component
         private void OnEnable()
         {
             moved = false;
+            agent.isStopped = false;
         }
 
         //フラグ更新

@@ -51,8 +51,10 @@ namespace Runtime.Enemy
         //ˆÚ“®
         public bool MoveToTarget()
         {
-            _onMove.OnNext(Unit.Default);
-            return move.MoveToTarget(hate.GetMaxHateObject().transform.position);
+            bool moved = move.MoveToTarget(hate.GetMaxHateObject().transform.position);
+
+            if (moved) _onMove.OnNext(Unit.Default);
+            return moved;
         }
 
 
