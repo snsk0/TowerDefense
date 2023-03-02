@@ -24,6 +24,7 @@ namespace InGame.Players
             if (playerAnimationPlayer.IsLanding)
                 return;
 
+            //çUåÇíÜÇÕìÆÇ©Ç»Ç¢ÇÊÇ§Ç…
             if (playerAnimationPlayer.IsAttackMotion)
             {
                 rigidbody.velocity = Vector3.zero;

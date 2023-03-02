@@ -32,14 +32,17 @@ namespace InGame.Players.Fighters
         {
             if (fighterAnimationPlayer.IsConnectableSecondAttack)
             {
+                //“ñ’i–Ú‚ÌUŒ‚‚É‚Â‚È‚°‚é
                 fighterAnimationPlayer.PlaySecondAttackAnimation(this.GetCancellationTokenOnDestroy(), fighterAttackCollider.EnableCollider).Forget();
             }
             else if (fighterAnimationPlayer.IsConnectableThirdAttack)
             {
+                //O’i–Ú‚ÌUŒ‚‚É‚Â‚È‚°‚é
                 fighterAnimationPlayer.PlayThirdAttackAnimation(this.GetCancellationTokenOnDestroy(), fighterAttackCollider.EnableCollider).Forget();
             }
             else
             {
+                //Å‰‚ÌUŒ‚
                 fighterAnimationPlayer.PlayFirstAttackAnimation(this.GetCancellationTokenOnDestroy(), fighterAttackCollider.EnableCollider).Forget();
             }
         }
