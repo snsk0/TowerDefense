@@ -26,6 +26,7 @@ namespace BehaviorTree
         //BTStatus
         private bool isRootTaskExcuted = false;
         [SerializeField] private bool isLoop;
+        public bool excution = true;
 
 
 
@@ -159,6 +160,7 @@ namespace BehaviorTree
         //実行されるフレームや順番は極力細かく制御する必要がある
         private void Update()
         {
+            if (!excution) return;
             if (activeTaskIndex > -1)
             {
                 BaseTask task = taskList[activeTaskIndex];
