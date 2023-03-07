@@ -1603,6 +1603,7 @@ GameObject:
   - component: {fileID: 6169850049479389057}
   - component: {fileID: 8991671656904748790}
   - component: {fileID: 5645709658366505064}
+  - component: {fileID: 7471510853380999950}
   m_Layer: 0
   m_Name: Player_Fighter_2
   m_TagString: Untagged
@@ -1641,6 +1642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c445e9a5fabe91c45832e75665fca2ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHealth: {fileID: 7471510853380999950}
 --- !u!114 &1286028859705709823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1762,6 +1764,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerDamagable: {fileID: 7798371287235743572}
   playerAnimationPlayer: {fileID: 5628400196887020391}
+--- !u!114 &7471510853380999950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6293517211610074319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a1593a5bfb5c95409a5a83d2d8e4b72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6451788157758682072
 GameObject:
   m_ObjectHideFlags: 0
