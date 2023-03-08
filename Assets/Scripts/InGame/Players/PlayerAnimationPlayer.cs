@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using InGame.Damages;
 using InGame.Players.Animators;
 using InGame.Players.Input;
 using System;
@@ -84,6 +85,31 @@ namespace InGame.Players
             await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.Base, AnimatorStateHashes.Idle, animator, token);
             IsJumping = false;
             IsLanding = false;
+        }
+
+        public async UniTask PlayDamagedAnimation(KnockbackType knockbackType, CancellationToken token)
+        {
+            switch (knockbackType)
+            {
+                case KnockbackType.None:
+                    Debug.Log("ノックバック無し！");
+                    break;
+                case KnockbackType.Huge:
+                    animator.SetTrigger("HugeDamaged");
+                    await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.Base, AnimatorStateHashes.Damaged, animator, token);
+                    while (true)
+                    {
+                        rigidbody.AddForce((-transform.forward+Vector3.up*0.25f) * 10);
+                        if (animator.GetCurrentAnimatorStateInfo((int)AnimatorLayerType.Base).normalizedTime>=0.45f)
+                            break;
+
+                        await UniTask.DelayFrame(1, cancellationToken: token);
+                    }
+                    break;
+                default:
+                    Debug.Log("ノックバック！");
+                    break;
+            }
         }
     }
 }

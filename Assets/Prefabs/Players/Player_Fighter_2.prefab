@@ -1643,6 +1643,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 7471510853380999950}
+  playerAnimationPlayer: {fileID: 5628400196887020391}
 --- !u!114 &1286028859705709823
 MonoBehaviour:
   m_ObjectHideFlags: 0

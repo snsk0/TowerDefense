@@ -11,6 +11,8 @@ namespace InGame.Players.Animators
         public static int Jump => Animator.StringToHash("Jump");
         public static int Idle => Animator.StringToHash("Idle");
         public static int Run => Animator.StringToHash("Run");
+        public static int GetUp => Animator.StringToHash("GetUp");
+        public static int Damaged => Animator.StringToHash("Damaged");
 
         //名前のハッシュ
         public static int FirstAttack => Animator.StringToHash("FirstAttack");

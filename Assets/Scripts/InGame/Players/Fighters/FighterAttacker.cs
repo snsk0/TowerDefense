@@ -22,7 +22,7 @@ namespace InGame.Players.Fighters
                 .Subscribe(enemy =>
                 {
                     var attackValue = (playerParameter.baseAttackValue + playerParameter.addAttackValue) * playerParameter.attackMagnification;
-                    var damage = new Damage(attackValue);
+                    var damage = new Damage(attackValue, KnockbackType.None);
                     enemy.ApplyDamage(damage);
                 })
                 .AddTo(this);
