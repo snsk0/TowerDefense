@@ -23,7 +23,7 @@ namespace InGame.Enemies
                 .Where(player=>player.IsDamagable)
                 .Subscribe(player =>
                 {
-                    player.ApplyDamage(new Damage(10, KnockbackType.None));
+                    player.ApplyDamage(new Damage(10, KnockbackType.Huge));
                     collider.enabled = false;
                 })
                 .AddTo(this);

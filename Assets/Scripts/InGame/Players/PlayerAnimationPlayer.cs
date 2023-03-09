@@ -6,7 +6,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using UniRx.Triggers;
 using UnityEngine;
+using UniRx;
 
 namespace InGame.Players
 {
@@ -44,20 +46,18 @@ namespace InGame.Players
         {
             //TODO:アニメーションの実行に書き換える
             var time = 0f;
+            var avoidDistance = (playerParameter.baseAvoidDistance + playerParameter.addAvoidDistance) * playerParameter.avoidDistanceMagnification;
+            var invisicibleTime = (playerParameter.baseInvincibleTime + playerParameter.addinvincibleTime) * playerParameter.invincibleTimeMagnification;
 
-            while (true)
-            {
-                if (token.IsCancellationRequested)
-                    break;
-
-                var avoidDistance = (playerParameter.baseAvoidDistance + playerParameter.addAvoidDistance) * playerParameter.avoidDistanceMagnification;
-                rigidbody.AddForce(playerInput.MoveVec * avoidDistance);
-                await UniTask.DelayFrame(1, cancellationToken: token);
-                time += Time.deltaTime;
-                var invisicibleTime = (playerParameter.baseInvincibleTime + playerParameter.addinvincibleTime) * playerParameter.invincibleTimeMagnification;
-                if (time > invisicibleTime)
-                    break;
-            }
+            //回避時間が経過するまで回避方向に力を与える
+            this.FixedUpdateAsObservable()
+                .TakeWhile(_ => time < invisicibleTime)
+                .Subscribe(_ =>
+                {
+                    rigidbody.AddForce(playerInput.MoveVec * avoidDistance);
+                    time += Time.deltaTime;
+                })
+                .AddTo(this);
         }
 
         public async virtual UniTask PlayAttackAnimation(CancellationToken token, Action<bool> attackCallback = null)
@@ -97,14 +97,14 @@ namespace InGame.Players
                 case KnockbackType.Huge:
                     animator.SetTrigger("HugeDamaged");
                     await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.Base, AnimatorStateHashes.Damaged, animator, token);
-                    while (true)
-                    {
-                        rigidbody.AddForce((-transform.forward+Vector3.up*0.25f) * 10);
-                        if (animator.GetCurrentAnimatorStateInfo((int)AnimatorLayerType.Base).normalizedTime>=0.45f)
-                            break;
 
-                        await UniTask.DelayFrame(1, cancellationToken: token);
-                    }
+                    this.FixedUpdateAsObservable()
+                        .TakeWhile(_ => animator.GetCurrentAnimatorStateInfo((int)AnimatorLayerType.Base).normalizedTime <= 0.4f)
+                        .Subscribe(_ =>
+                        {
+                            rigidbody.AddForce((-transform.forward + Vector3.up * 0.375f) * 30);
+                        })
+                        .AddTo(this);
                     break;
                 default:
                     Debug.Log("ノックバック！");
