@@ -16,6 +16,6 @@ MonoBehaviour:
   - playerCharacterType: 0
     playerPrefab: {fileID: 0}
   - playerCharacterType: 1
-    playerPrefab: {fileID: 6293517211610074319, guid: f860484444f45884b8093eb614e43724, type: 3}
+    playerPrefab: {fileID: 7341874504080868937, guid: a9c0a66b170ae954b841bab03b16455a, type: 3}
   - playerCharacterType: 2
     playerPrefab: {fileID: 3809154286273523731, guid: 16b60c7f9cef60f4482ebcd9dac43fae, type: 3}
