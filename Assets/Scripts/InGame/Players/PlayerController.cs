@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using InGame.Cameras;
 using InGame.Players.Input;
 using System;
 using System.Collections;
@@ -6,12 +7,14 @@ using System.Collections.Generic;
 using System.Threading;
 using UniRx;
 using UnityEngine;
+using VContainer;
 
 namespace InGame.Players
 {
     public class PlayerController : ControllerBase, IDisposable
     {
-        private PlayerInput playerInput = new PlayerInput();
+        private readonly CameraManager cameraManager;
+        private readonly PlayerInput playerInput = new PlayerInput();
 
         private PlayerMover playerMover;
         private PlayerJumper playerJumper;
@@ -19,6 +22,12 @@ namespace InGame.Players
         private PlayerAttacker playerAttacker;
 
         private CancellationTokenSource tokenSource;
+
+        [Inject]
+        public PlayerController(CameraManager cameraManager)
+        {
+            this.cameraManager = cameraManager;
+        }
 
         public void StartControll(GameObject playerObject)
         {
@@ -69,7 +78,11 @@ namespace InGame.Players
                 if (token.IsCancellationRequested)
                     return;
 
-                playerMover?.Move(playerInput.MoveVec);
+                //ƒJƒƒ‰‚Ì•ûŒü‚É“K‚µ‚½ˆÚ“®•ûŒü‚ğŒvZ
+                var moveVec = cameraManager.mainCameraTransform.TransformDirection(playerInput.MoveVec).normalized;
+                moveVec.y = 0;
+
+                playerMover?.Move(moveVec);
                 await UniTask.DelayFrame(1);
             }
         }
