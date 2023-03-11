@@ -1,5 +1,6 @@
 using Cinemachine;
 using InGame.Cameras;
+using InGame.Cursors;
 using InGame.Enemies;
 using InGame.Enhancements;
 using InGame.Players;
@@ -13,6 +14,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private EnhancementView enhancementView;
     [SerializeField] private EnemyGenerator enemyGenerator;
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
+    [SerializeField] private CursorController cursorController;
 
     protected override void Configure(IContainerBuilder builder)
     {
@@ -20,6 +22,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterEntryPoint<EnhancementPresenter>();
         builder.RegisterEntryPoint<EnemyGeneratePresenter>();
         builder.RegisterEntryPoint<CameraSetUpPresenter>();
+        builder.RegisterEntryPoint<CursorPresenter>();
 
         builder.Register<PlayerManager>(Lifetime.Singleton);
         builder.Register<EnemyManager>(Lifetime.Singleton);
@@ -32,5 +35,6 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(enhancementView);
         builder.RegisterComponent(enemyGenerator);
         builder.RegisterComponent(virtualCamera);
+        builder.RegisterComponent(cursorController);
     }
 }
