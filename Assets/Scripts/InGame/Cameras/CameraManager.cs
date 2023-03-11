@@ -9,22 +9,22 @@ namespace InGame.Cameras
 {
     public class CameraManager : ControllerBase
     {
-        private readonly CinemachineVirtualCamera virtualCamera;
+        private readonly CinemachineFreeLook freeLookCamera;
 
         public readonly Transform mainCameraTransform;
 
         [Inject]
-        public CameraManager(CinemachineVirtualCamera virtualCamera)
+        public CameraManager(CinemachineFreeLook freeLookCamera)
         {
-            this.virtualCamera = virtualCamera;
+            this.freeLookCamera = freeLookCamera;
 
             mainCameraTransform = Camera.main.transform;
         }
 
         public void SetTarget(Transform targetTransform)
         {
-            virtualCamera.Follow = targetTransform;
-            virtualCamera.LookAt = targetTransform;
+            freeLookCamera.Follow = targetTransform;
+            freeLookCamera.LookAt = targetTransform.GetChild("Head");
         }
     }
 }

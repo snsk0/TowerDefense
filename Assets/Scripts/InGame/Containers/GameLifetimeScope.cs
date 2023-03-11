@@ -13,7 +13,8 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private PlayerGenerator playerGenerator;
     [SerializeField] private EnhancementView enhancementView;
     [SerializeField] private EnemyGenerator enemyGenerator;
-    [SerializeField] private CinemachineVirtualCamera virtualCamera;
+    //[SerializeField] private CinemachineVirtualCamera virtualCamera;
+    [SerializeField] private CinemachineFreeLook freeLookCamera;
     [SerializeField] private CursorController cursorController;
 
     protected override void Configure(IContainerBuilder builder)
@@ -34,7 +35,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(playerGenerator);
         builder.RegisterComponent(enhancementView);
         builder.RegisterComponent(enemyGenerator);
-        builder.RegisterComponent(virtualCamera);
+        builder.RegisterComponent(freeLookCamera);
         builder.RegisterComponent(cursorController);
     }
 }
