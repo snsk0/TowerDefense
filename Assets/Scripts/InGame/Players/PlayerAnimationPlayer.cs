@@ -13,6 +13,12 @@ namespace InGame.Players
         [SerializeField] private Rigidbody rigidbody;
 
         private PlayerInput playerInput = new PlayerInput();
+        private PlayerParameter playerParameter;
+
+        public void Init(PlayerParameter playerParameter)
+        {
+            this.playerParameter = playerParameter;
+        }
 
         public async UniTask PlayAvoidAnimationAsync(CancellationToken token)
         {
@@ -24,10 +30,12 @@ namespace InGame.Players
                 if (token.IsCancellationRequested)
                     break;
 
-                rigidbody.AddForce(playerInput.MoveVec * 100);
+                var avoidDistance = (playerParameter.baseAvoidDistance + playerParameter.addAvoidDistance) * playerParameter.avoidDistanceMagnification;
+                rigidbody.AddForce(playerInput.MoveVec * avoidDistance);
                 await UniTask.DelayFrame(1);
                 time += Time.deltaTime;
-                if (time > 0.3f)
+                var invisicibleTime = (playerParameter.baseInvincibleTime + playerParameter.addinvincibleTime) * playerParameter.invincibleTimeMagnification;
+                if (time > invisicibleTime)
                     break;
             }
         }

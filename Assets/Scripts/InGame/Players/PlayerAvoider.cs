@@ -11,6 +11,13 @@ namespace InGame.Players
         [SerializeField] private PlayerDamagable playerDamagable;
         [SerializeField] private PlayerAnimationPlayer playerAnimationPlayer;
 
+        private PlayerParameter playerParameter;
+
+        public void Init(PlayerParameter playerParameter)
+        {
+            this.playerParameter = playerParameter;
+        }
+
         public async void Avoid()
         {
             playerDamagable.SetDamagable(false);
