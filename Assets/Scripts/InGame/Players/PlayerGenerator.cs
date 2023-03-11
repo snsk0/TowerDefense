@@ -12,7 +12,7 @@ namespace InGame.Players
         public GameObject GeneratePlayer(PlayerCharacterType playerCharacterType)
         {
             var prefab = playerPrefabTable.GetPlayerPrefab(playerCharacterType);
-            var player = Instantiate(prefab);
+            var player = Instantiate(prefab, Vector3.zero, Quaternion.identity);
             return player;
         }
     }

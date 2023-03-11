@@ -41,7 +41,7 @@ namespace InGame.Players
                 .Where(x => x)
                 .Subscribe(_ =>
                 {
-                    playerJumper.Jump();
+                    playerJumper.StartJump();
                 })
                 .AddTo(this);
 
