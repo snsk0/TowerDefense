@@ -9,8 +9,7 @@ namespace InGame.Cameras
 {
     public class CameraManager : ControllerBase
     {
-        private readonly CinemachineFreeLook freeLookCamera;
-
+        public readonly CinemachineFreeLook freeLookCamera;
         public readonly Transform mainCameraTransform;
 
         [Inject]
@@ -25,6 +24,18 @@ namespace InGame.Cameras
         {
             freeLookCamera.Follow = targetTransform;
             freeLookCamera.LookAt = targetTransform.GetChild("Head");
+        }
+
+        public void SetSensitivity(float xValue, float yValue)
+        {
+            freeLookCamera.m_XAxis.m_MaxSpeed = xValue;
+            freeLookCamera.m_YAxis.m_MaxSpeed = yValue;
+        }
+
+        public void SetInvert(bool xValue, bool yValue)
+        {
+            freeLookCamera.m_XAxis.m_InvertInput = xValue;
+            freeLookCamera.m_YAxis.m_InvertInput = yValue;
         }
     }
 }
