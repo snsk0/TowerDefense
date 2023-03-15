@@ -34,12 +34,12 @@ namespace InGame.Players
 
         public void PlayRunAnimation()
         {
-            animator.SetBool(AnimatorTriggerHashes.Run, true);
+            animator.SetBool(AnimatorParameterHashes.Run, true);
         }
 
         public void StopRunAnimation()
         {
-            animator.SetBool(AnimatorTriggerHashes.Run, false);
+            animator.SetBool(AnimatorParameterHashes.Run, false);
         }
 
         public async UniTask PlayAvoidAnimationAsync(CancellationToken token)
@@ -73,7 +73,7 @@ namespace InGame.Players
             if (IsJumping)
                 return;
 
-            animator.SetTrigger(AnimatorTriggerHashes.Jump);
+            animator.SetTrigger(AnimatorParameterHashes.Jump);
             IsJumping = true;
             //é¿ç€Ç…ïÇÇ´énÇﬂÇÈÇ‹Ç≈ë“ã@
             await AnimationTransitionWaiter.WaitStateTime(0.25f, (int)AnimatorLayerType.Base, AnimatorStateHashes.Jump, animator, token);

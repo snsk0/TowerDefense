@@ -4,6 +4,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 using UniRx;
+using Prepare;
 
 namespace InGame.Players
 {
@@ -11,12 +12,14 @@ namespace InGame.Players
     {
         private readonly PlayerManager playerManager;
         private readonly PlayerController playerController;
+        private readonly PrepareSetting prepareSetting;
 
         [Inject]
-        public PlayerGeneratePresenter(PlayerManager playerManager, PlayerController playerController)
+        public PlayerGeneratePresenter(PlayerManager playerManager, PlayerController playerController, PrepareSetting prepareSetting)
         {
             this.playerManager = playerManager;
             this.playerController = playerController;
+            this.prepareSetting = prepareSetting;
         }
 
         public void Start()
@@ -28,7 +31,7 @@ namespace InGame.Players
                 })
                 .AddTo(this);
 
-            playerManager.GeneratePlayer(PlayerCharacterType.Fighter);
+            playerManager.GeneratePlayer(prepareSetting.selectedPlayerCharacterType);
         }
     }
 }

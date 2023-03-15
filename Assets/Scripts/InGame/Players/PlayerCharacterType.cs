@@ -9,5 +9,6 @@ namespace InGame.Players
         None,
         Fighter,
         Gunner,
+        Archer
     }
 }

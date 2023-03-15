@@ -10,6 +10,7 @@ namespace InGame.Cameras
     public class CameraManager : ControllerBase
     {
         public readonly CinemachineFreeLook freeLookCamera;
+        public readonly Camera mainCamera;
         public readonly Transform mainCameraTransform;
 
         [Inject]
@@ -17,7 +18,8 @@ namespace InGame.Cameras
         {
             this.freeLookCamera = freeLookCamera;
 
-            mainCameraTransform = Camera.main.transform;
+            mainCamera = Camera.main;
+            mainCameraTransform = mainCamera.transform;
         }
 
         public void SetTarget(Transform targetTransform)

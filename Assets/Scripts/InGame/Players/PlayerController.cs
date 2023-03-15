@@ -14,12 +14,13 @@ namespace InGame.Players
     public class PlayerController : ControllerBase, IDisposable
     {
         private readonly CameraManager cameraManager;
-        private readonly PlayerInput playerInput = new PlayerInput();
+        protected readonly PlayerInput playerInput = new PlayerInput();
 
+        protected GameObject currentControlledPlayerObj;
         private PlayerMover playerMover;
         private PlayerJumper playerJumper;
         private PlayerAvoider playerAvoider;
-        private PlayerAttacker playerAttacker;
+        //protected PlayerAttacker playerAttacker;
 
         private CancellationTokenSource tokenSource;
 
@@ -29,17 +30,20 @@ namespace InGame.Players
             this.cameraManager = cameraManager;
         }
 
-        public void StartControll(GameObject playerObject)
+        public virtual void StartControll(GameObject playerObject)
         {
+            currentControlledPlayerObj = playerObject;
+
             playerMover = playerObject.GetComponent<PlayerMover>();
             playerJumper = playerObject.GetComponent<PlayerJumper>();
             playerAvoider = playerObject.GetComponent<PlayerAvoider>();
-            playerAttacker = playerObject.GetComponent<PlayerAttacker>();
+            //playerAttacker = playerObject.GetComponent<PlayerAttacker>();
 
-            ControllPlayer();
+            ControllPlayerMovement();
+            //ControllPlayerAttack();
         }
 
-        private void ControllPlayer()
+        private void ControllPlayerMovement()
         {
             tokenSource?.Cancel();
             tokenSource = new CancellationTokenSource();
@@ -62,13 +66,18 @@ namespace InGame.Players
                 })
                 .AddTo(this);
 
-            this.ObserveEveryValueChanged(x => x.playerInput.HadPushedAttack)
-                .Where(x => x)
-                .Subscribe(_ =>
-                {
-                    playerAttacker.Attack();
-                })
-                .AddTo(this);
+            //this.ObserveEveryValueChanged(x => x.playerInput.HadPushedAttack)
+            //    .Where(x => x)
+            //    .Subscribe(_ =>
+            //    {
+            //        playerAttacker.Attack();
+            //    })
+            //    .AddTo(this);
+        }
+
+        protected virtual async UniTask ControllPlayerAttack(CancellationToken token)
+        {
+
         }
 
         private async UniTask MovePlayerAsync(CancellationToken token)
