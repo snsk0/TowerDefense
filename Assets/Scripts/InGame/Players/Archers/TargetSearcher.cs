@@ -10,8 +10,10 @@ namespace InGame.Players.Archers
 {
     public class TargetSearcher
     {
-        private EnemyManager enemyManager;
-        private CameraManager cameraManager;
+        private readonly EnemyManager enemyManager;
+        private readonly CameraManager cameraManager;
+
+        private readonly Rect searchArea = new Rect(0.2f, 0.4f, 0.6f, 0.4f);
 
         [Inject]
         public TargetSearcher(EnemyManager enemyManager, CameraManager cameraManager)
@@ -23,10 +25,12 @@ namespace InGame.Players.Archers
         public IEnemyDamagable SerchTarget(Vector3 playerPos)
             => enemyManager.CurrentEnemyObjects
                 .Where(x => Vector3.Distance(x.transform.position, playerPos) < 10f)
-                .OrderBy(x => Vector2.Distance(cameraManager.mainCamera.WorldToViewportPoint(x.transform.position), Vector2.zero))
+                .Select(x => (x, cameraManager.mainCamera.WorldToViewportPoint(x.transform.position)))
+                .Where(t => searchArea.xMin <= t.Item2.x && t.Item2.x <= searchArea.xMax && searchArea.yMin <= t.Item2.y && t.Item2.y <= searchArea.yMax)
+                .OrderBy(t => Vector2.Distance(t.Item2, Vector2.zero))
                 .Take(1)
-                .Select(x => x.GetComponent<IEnemyDamagable>())
-                .Single();
+                .Select(t => t.Item1.GetComponent<IEnemyDamagable>())
+                .FirstOrDefault();
     }
 }
 

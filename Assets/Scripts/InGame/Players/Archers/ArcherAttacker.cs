@@ -12,20 +12,26 @@ namespace InGame.Players.Archers
 {
     public class ArcherAttacker : PlayerAttacker
     {
-        [Inject] private TargetSearcher targetSearcher;
-
         [SerializeField] private ArcherAnimationPlayer archerAnimationPlayer;
 
-        private int chargeLevel;
-        private IEnemyDamagable targetEnemy;
+        //private int chargeLevel;
+        //private IEnemyDamagable targetEnemy;
+        //private TargetSearcher targetSearcher;
 
-        private CancellationTokenSource tokenSource;
+        //private CancellationTokenSource tokenSource;
 
-        public override void Attack()
+        //public void SetTargetSearcher(TargetSearcher targetSearcher)
+        //{
+        //    this.targetSearcher = targetSearcher;
+        //}
+
+        public void Attack(IEnemyDamagable target)
         {
-            var target = targetSearcher.SerchTarget(transform.position);
+            //var target = targetSearcher.SerchTarget(transform.position);
             if (target == null)
                 return;
+
+            archerAnimationPlayer.PlayAttackAnimation(this.GetCancellationTokenOnDestroy()).Forget();
 
             var attackValue = (playerParameter.baseAttackValue + playerParameter.addAttackValue) * playerParameter.attackMagnification;
             var damage = new Damage(attackValue, KnockbackType.None);

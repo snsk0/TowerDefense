@@ -32,6 +32,8 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<PlayerBackpack>(Lifetime.Singleton);
         builder.Register<CameraManager>(Lifetime.Singleton);
 
+        builder.Register<TargetSearcher>(Lifetime.Transient);
+
         var prepareSetting = Parent.Container.Resolve<PrepareSetting>();
         switch (prepareSetting.selectedPlayerCharacterType)
         {
@@ -42,8 +44,7 @@ public class GameLifetimeScope : LifetimeScope
                 builder.Register<PlayerController, ArcherController>(Lifetime.Transient);
                 break;
         }
-        builder.Register<TargetSearcher>(Lifetime.Transient);
-
+        
         builder.RegisterComponent(playerGenerator);
         builder.RegisterComponent(enhancementView);
         builder.RegisterComponent(enemyGenerator);

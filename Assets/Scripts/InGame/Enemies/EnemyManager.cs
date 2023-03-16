@@ -4,6 +4,7 @@ using UnityEngine;
 using VContainer;
 using UniRx;
 using System;
+using UniRx.Triggers;
 
 namespace InGame.Enemies
 {
@@ -28,6 +29,13 @@ namespace InGame.Enemies
             var enemy = enemyGenerator.GenerateEnemy();
             currentEnemyObjects.Add(enemy);
             ObserveEnemyDeath(enemy.GetComponent<EnemyHealth>());
+
+            enemy.OnDestroyAsObservable()
+                .Subscribe(_ =>
+                {
+                    currentEnemyObjects.Remove(enemy);
+                })
+                .AddTo(this);
         }
 
         //ƒvƒŒƒCƒ„[‚Ì€–S‚ğŠÄ‹

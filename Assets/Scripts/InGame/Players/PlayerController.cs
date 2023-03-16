@@ -39,15 +39,15 @@ namespace InGame.Players
             playerAvoider = playerObject.GetComponent<PlayerAvoider>();
             //playerAttacker = playerObject.GetComponent<PlayerAttacker>();
 
+            tokenSource?.Cancel();
+            tokenSource = new CancellationTokenSource();
+
             ControllPlayerMovement();
-            //ControllPlayerAttack();
+            ControllPlayerAttackAsync(tokenSource.Token).Forget();
         }
 
         private void ControllPlayerMovement()
         {
-            tokenSource?.Cancel();
-            tokenSource = new CancellationTokenSource();
-
             MovePlayerAsync(tokenSource.Token).Forget();
 
             this.ObserveEveryValueChanged(x => x.playerInput.HadPushedJump)
@@ -75,7 +75,7 @@ namespace InGame.Players
             //    .AddTo(this);
         }
 
-        protected virtual async UniTask ControllPlayerAttack(CancellationToken token)
+        protected virtual async UniTask ControllPlayerAttackAsync(CancellationToken token)
         {
 
         }
@@ -87,12 +87,15 @@ namespace InGame.Players
                 if (token.IsCancellationRequested)
                     return;
 
+                if (cameraManager.mainCameraTransform == null)
+                    return;
+
                 //ƒJƒƒ‰‚Ì•ûŒü‚É“K‚µ‚½ˆÚ“®•ûŒü‚ğŒvZ
                 var moveVec = cameraManager.mainCameraTransform.TransformDirection(playerInput.MoveVec).normalized;
                 moveVec.y = 0;
 
                 playerMover?.Move(moveVec);
-                await UniTask.DelayFrame(1);
+                await UniTask.DelayFrame(1, cancellationToken:token);
             }
         }
 
