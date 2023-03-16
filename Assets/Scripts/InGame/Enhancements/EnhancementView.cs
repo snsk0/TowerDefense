@@ -21,8 +21,11 @@ namespace InGame.Enhancements
         [SerializeField] private Button closeButton;
         [SerializeField] private TMP_Text pointText;
 
-        private ISubject<KeyValuePair<PlayerParameterType, int>> parameterUpButtonClickSubject = new Subject<KeyValuePair<PlayerParameterType, int>>();
+        private readonly ISubject<KeyValuePair<PlayerParameterType, int>> parameterUpButtonClickSubject = new Subject<KeyValuePair<PlayerParameterType, int>>();
         public IObservable<KeyValuePair<PlayerParameterType, int>> parameterUpButtonClickObservable => parameterUpButtonClickSubject;
+
+        private readonly ISubject<bool> viewPanelSubject = new Subject<bool>();
+        public IObservable<bool> ViewPanelObservable => viewPanelSubject; 
 
         private void Start()
         {
@@ -40,11 +43,13 @@ namespace InGame.Enhancements
         public void ViewPanel()
         {
             enhancementPanel.SetActive(true);
+            viewPanelSubject.OnNext(true);
         }
 
         public void HidePanel()
         {
             enhancementPanel.SetActive(false);
+            viewPanelSubject.OnNext(false);
         }
 
         public void SetPointText(int point)

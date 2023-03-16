@@ -1,0 +1,42 @@
+using Cinemachine;
+using InGame.Players;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using VContainer;
+
+namespace InGame.Cameras
+{
+    public class CameraManager : ControllerBase
+    {
+        public readonly CinemachineFreeLook freeLookCamera;
+        public readonly Transform mainCameraTransform;
+
+        [Inject]
+        public CameraManager(CinemachineFreeLook freeLookCamera)
+        {
+            this.freeLookCamera = freeLookCamera;
+
+            mainCameraTransform = Camera.main.transform;
+        }
+
+        public void SetTarget(Transform targetTransform)
+        {
+            freeLookCamera.Follow = targetTransform;
+            freeLookCamera.LookAt = targetTransform.GetChild("Head");
+        }
+
+        public void SetSensitivity(float xValue, float yValue)
+        {
+            freeLookCamera.m_XAxis.m_MaxSpeed = xValue;
+            freeLookCamera.m_YAxis.m_MaxSpeed = yValue;
+        }
+
+        public void SetInvert(bool xValue, bool yValue)
+        {
+            freeLookCamera.m_XAxis.m_InvertInput = xValue;
+            freeLookCamera.m_YAxis.m_InvertInput = yValue;
+        }
+    }
+}
+
