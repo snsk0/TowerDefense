@@ -26,6 +26,8 @@ namespace InGame.Cameras
         {
             freeLookCamera.Follow = targetTransform;
             freeLookCamera.LookAt = targetTransform;
+
+            freeLookCamera.m_YAxis.Value = 0.5f;
         }
 
         public void SetSensitivity(float xValue, float yValue)

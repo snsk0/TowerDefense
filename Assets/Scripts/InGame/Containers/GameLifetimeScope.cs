@@ -26,7 +26,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterEntryPoint<EnemyGeneratePresenter>();
         builder.RegisterEntryPoint<CameraSetUpPresenter>();
         builder.RegisterEntryPoint<CursorPresenter>();
-
+        
         builder.Register<PlayerManager>(Lifetime.Singleton);
         builder.Register<EnemyManager>(Lifetime.Singleton);
         builder.Register<PlayerBackpack>(Lifetime.Singleton);
@@ -42,6 +42,7 @@ public class GameLifetimeScope : LifetimeScope
                 break;
             case PlayerCharacterType.Archer:
                 builder.Register<PlayerController, ArcherController>(Lifetime.Transient);
+                builder.RegisterEntryPoint<ArcherAnimationSetting>();
                 break;
         }
         

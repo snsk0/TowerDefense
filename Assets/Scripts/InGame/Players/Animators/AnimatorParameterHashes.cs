@@ -13,6 +13,7 @@ namespace InGame.Players.Animators
         public static int Jump => Animator.StringToHash("Jump");
         public static int Run => Animator.StringToHash("Run");
         public static int Charging => Animator.StringToHash("Charging");
+        public static int NormalAttackInterval => Animator.StringToHash("NormalAttackInterval");
     }
 }
 
