@@ -11,7 +11,7 @@ namespace InGame.Players.Fighters
 {
     public class FighterAttacker : PlayerAttacker
     {
-        [SerializeField] private PlayerAnimationPlayer playerAnimationPlayer;
+        [SerializeField] private FighterAnimationPlayer fighterAnimationPlayer;
         [SerializeField] private FighterAttackCollider fighterAttackCollider;
 
         private void Start()
@@ -22,7 +22,7 @@ namespace InGame.Players.Fighters
                 .Subscribe(enemy =>
                 {
                     var attackValue = (playerParameter.baseAttackValue + playerParameter.addAttackValue) * playerParameter.attackMagnification;
-                    var damage = new Damage(attackValue);
+                    var damage = new Damage(attackValue, KnockbackType.None);
                     enemy.ApplyDamage(damage);
                 })
                 .AddTo(this);
@@ -30,7 +30,21 @@ namespace InGame.Players.Fighters
 
         public override void Attack()
         {
-            playerAnimationPlayer.PlayAttackAnimation(this.GetCancellationTokenOnDestroy(), fighterAttackCollider.EnableCollider).Forget();
+            if (fighterAnimationPlayer.IsConnectableSecondAttack)
+            {
+                //ìÒíiñ⁄ÇÃçUåÇÇ…Ç¬Ç»Ç∞ÇÈ
+                fighterAnimationPlayer.PlaySecondAttackAnimation(this.GetCancellationTokenOnDestroy(), fighterAttackCollider.EnableCollider).Forget();
+            }
+            else if (fighterAnimationPlayer.IsConnectableThirdAttack)
+            {
+                //éOíiñ⁄ÇÃçUåÇÇ…Ç¬Ç»Ç∞ÇÈ
+                fighterAnimationPlayer.PlayThirdAttackAnimation(this.GetCancellationTokenOnDestroy(), fighterAttackCollider.EnableCollider).Forget();
+            }
+            else
+            {
+                //ç≈èâÇÃçUåÇ
+                fighterAnimationPlayer.PlayFirstAttackAnimation(this.GetCancellationTokenOnDestroy(), fighterAttackCollider.EnableCollider).Forget();
+            }
         }
     }
 }
