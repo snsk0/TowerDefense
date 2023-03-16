@@ -21,7 +21,7 @@ namespace InGame.Players.Fighters
             if (IsJumping)
                 return;
 
-            animator.SetTrigger(AnimatorTriggerHashes.FirstAttack);
+            animator.SetTrigger(AnimatorParameterHashes.FirstAttack);
             IsAttacking = true;
             //攻撃判定のタイミングまで待つ
             await AnimationTransitionWaiter.WaitStateTime(0.65f, (int)AnimatorLayerType.Base, AnimatorStateHashes.FirstAttack, animator, token, HashType.Name);
@@ -40,7 +40,7 @@ namespace InGame.Players.Fighters
         {
             IsConnectableSecondAttack = false;
 
-            animator.SetTrigger(AnimatorTriggerHashes.SecondAttack);
+            animator.SetTrigger(AnimatorParameterHashes.SecondAttack);
             IsAttacking = true;
             //攻撃判定のタイミングまで待つ
             await AnimationTransitionWaiter.WaitStateTime(0.36f, (int)AnimatorLayerType.Base, AnimatorStateHashes.SecondAttack, animator, token, HashType.Name);
@@ -59,7 +59,7 @@ namespace InGame.Players.Fighters
         {
             IsConnectableThirdAttack = false;
 
-            animator.SetTrigger(AnimatorTriggerHashes.ThirdAttack);
+            animator.SetTrigger(AnimatorParameterHashes.ThirdAttack);
             IsAttacking = true;
             //攻撃判定のタイミングまで待つ
             await AnimationTransitionWaiter.WaitStateTime(0.33f, (int)AnimatorLayerType.Base, AnimatorStateHashes.ThirdAttack, animator, token, HashType.Name);

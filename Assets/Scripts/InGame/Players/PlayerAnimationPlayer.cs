@@ -34,12 +34,12 @@ namespace InGame.Players
 
         public void PlayRunAnimation()
         {
-            animator.SetBool(AnimatorTriggerHashes.Run, true);
+            animator.SetBool(AnimatorParameterHashes.Run, true);
         }
 
         public void StopRunAnimation()
         {
-            animator.SetBool(AnimatorTriggerHashes.Run, false);
+            animator.SetBool(AnimatorParameterHashes.Run, false);
         }
 
         public async UniTask PlayAvoidAnimationAsync(CancellationToken token)
@@ -60,11 +60,6 @@ namespace InGame.Players
                 .AddTo(this);
         }
 
-        public async virtual UniTask PlayAttackAnimation(CancellationToken token, Action<bool> attackCallback = null)
-        {
-            //それぞれのキャラの子クラスで実装
-        }
-
         public async UniTask PlayJumpAnimation(CancellationToken token, Action jumpCallback = null)
         {
             if (IsAttacking)
@@ -73,7 +68,7 @@ namespace InGame.Players
             if (IsJumping)
                 return;
 
-            animator.SetTrigger(AnimatorTriggerHashes.Jump);
+            animator.SetTrigger(AnimatorParameterHashes.Jump);
             IsJumping = true;
             //実際に浮き始めるまで待機
             await AnimationTransitionWaiter.WaitStateTime(0.25f, (int)AnimatorLayerType.Base, AnimatorStateHashes.Jump, animator, token);

@@ -4,6 +4,9 @@ using InGame.Cursors;
 using InGame.Enemies;
 using InGame.Enhancements;
 using InGame.Players;
+using InGame.Players.Archers;
+using InGame.Players.Fighters;
+using Prepare;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -13,7 +16,6 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private PlayerGenerator playerGenerator;
     [SerializeField] private EnhancementView enhancementView;
     [SerializeField] private EnemyGenerator enemyGenerator;
-    //[SerializeField] private CinemachineVirtualCamera virtualCamera;
     [SerializeField] private CinemachineFreeLook freeLookCamera;
     [SerializeField] private CursorController cursorController;
 
@@ -24,14 +26,26 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterEntryPoint<EnemyGeneratePresenter>();
         builder.RegisterEntryPoint<CameraSetUpPresenter>();
         builder.RegisterEntryPoint<CursorPresenter>();
-
+        
         builder.Register<PlayerManager>(Lifetime.Singleton);
         builder.Register<EnemyManager>(Lifetime.Singleton);
         builder.Register<PlayerBackpack>(Lifetime.Singleton);
         builder.Register<CameraManager>(Lifetime.Singleton);
 
-        builder.Register<PlayerController>(Lifetime.Transient);
+        builder.Register<TargetSearcher>(Lifetime.Transient);
 
+        var prepareSetting = Parent.Container.Resolve<PrepareSetting>();
+        switch (prepareSetting.selectedPlayerCharacterType)
+        {
+            case PlayerCharacterType.Fighter:
+                builder.Register<PlayerController, FighterController>(Lifetime.Transient);
+                break;
+            case PlayerCharacterType.Archer:
+                builder.Register<PlayerController, ArcherController>(Lifetime.Transient);
+                builder.RegisterEntryPoint<ArcherAnimationSetting>();
+                break;
+        }
+        
         builder.RegisterComponent(playerGenerator);
         builder.RegisterComponent(enhancementView);
         builder.RegisterComponent(enemyGenerator);

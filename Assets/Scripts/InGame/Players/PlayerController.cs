@@ -14,12 +14,13 @@ namespace InGame.Players
     public class PlayerController : ControllerBase, IDisposable
     {
         private readonly CameraManager cameraManager;
-        private readonly PlayerInput playerInput = new PlayerInput();
+        protected readonly PlayerInput playerInput = new PlayerInput();
 
+        protected GameObject currentControlledPlayerObj;
         private PlayerMover playerMover;
         private PlayerJumper playerJumper;
         private PlayerAvoider playerAvoider;
-        private PlayerAttacker playerAttacker;
+        //protected PlayerAttacker playerAttacker;
 
         private CancellationTokenSource tokenSource;
 
@@ -29,21 +30,23 @@ namespace InGame.Players
             this.cameraManager = cameraManager;
         }
 
-        public void StartControll(GameObject playerObject)
+        public virtual void StartControll(GameObject playerObject)
         {
+            currentControlledPlayerObj = playerObject;
+
             playerMover = playerObject.GetComponent<PlayerMover>();
             playerJumper = playerObject.GetComponent<PlayerJumper>();
             playerAvoider = playerObject.GetComponent<PlayerAvoider>();
-            playerAttacker = playerObject.GetComponent<PlayerAttacker>();
 
-            ControllPlayer();
-        }
-
-        private void ControllPlayer()
-        {
             tokenSource?.Cancel();
             tokenSource = new CancellationTokenSource();
 
+            ControllPlayerMovement();
+            ControllPlayerAttackAsync(tokenSource.Token).Forget();
+        }
+
+        private void ControllPlayerMovement()
+        {
             MovePlayerAsync(tokenSource.Token).Forget();
 
             this.ObserveEveryValueChanged(x => x.playerInput.HadPushedJump)
@@ -62,13 +65,11 @@ namespace InGame.Players
                 })
                 .AddTo(this);
 
-            this.ObserveEveryValueChanged(x => x.playerInput.HadPushedAttack)
-                .Where(x => x)
-                .Subscribe(_ =>
-                {
-                    playerAttacker.Attack();
-                })
-                .AddTo(this);
+        }
+
+        protected virtual async UniTask ControllPlayerAttackAsync(CancellationToken token)
+        {
+
         }
 
         private async UniTask MovePlayerAsync(CancellationToken token)
@@ -78,12 +79,15 @@ namespace InGame.Players
                 if (token.IsCancellationRequested)
                     return;
 
+                if (cameraManager.mainCameraTransform == null)
+                    return;
+
                 //ÉJÉÅÉâÇÃï˚å¸Ç…ìKÇµÇΩà⁄ìÆï˚å¸ÇåvéZ
                 var moveVec = cameraManager.mainCameraTransform.TransformDirection(playerInput.MoveVec).normalized;
                 moveVec.y = 0;
 
                 playerMover?.Move(moveVec);
-                await UniTask.DelayFrame(1);
+                await UniTask.DelayFrame(1, cancellationToken:token);
             }
         }
 
