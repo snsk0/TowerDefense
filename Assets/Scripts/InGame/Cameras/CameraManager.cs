@@ -25,7 +25,7 @@ namespace InGame.Cameras
         public void SetTarget(Transform targetTransform)
         {
             freeLookCamera.Follow = targetTransform;
-            freeLookCamera.LookAt = targetTransform.GetChild("Head");
+            freeLookCamera.LookAt = targetTransform;
         }
 
         public void SetSensitivity(float xValue, float yValue)
