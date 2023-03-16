@@ -60,11 +60,6 @@ namespace InGame.Players
                 .AddTo(this);
         }
 
-        //public async virtual UniTask PlayAttackAnimation(CancellationToken token, Action<bool> attackCallback = null)
-        //{
-        //    //それぞれのキャラの子クラスで実装
-        //}
-
         public async UniTask PlayJumpAnimation(CancellationToken token, Action jumpCallback = null)
         {
             if (IsAttacking)

@@ -37,7 +37,6 @@ namespace InGame.Players
             playerMover = playerObject.GetComponent<PlayerMover>();
             playerJumper = playerObject.GetComponent<PlayerJumper>();
             playerAvoider = playerObject.GetComponent<PlayerAvoider>();
-            //playerAttacker = playerObject.GetComponent<PlayerAttacker>();
 
             tokenSource?.Cancel();
             tokenSource = new CancellationTokenSource();
@@ -66,13 +65,6 @@ namespace InGame.Players
                 })
                 .AddTo(this);
 
-            //this.ObserveEveryValueChanged(x => x.playerInput.HadPushedAttack)
-            //    .Where(x => x)
-            //    .Subscribe(_ =>
-            //    {
-            //        playerAttacker.Attack();
-            //    })
-            //    .AddTo(this);
         }
 
         protected virtual async UniTask ControllPlayerAttackAsync(CancellationToken token)
