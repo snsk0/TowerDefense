@@ -40,7 +40,6 @@ namespace InGame.Players.Archers
             var normalAttackLength = drawAnimation.length + recoilAnimation.length;
 
             var spped = normalAttackLength / playerManager.playerParameter.AttackInterval;
-            Debug.Log(spped);
             animator.SetFloat(AnimatorParameterHashes.NormalAttackInterval, spped);
 
             playerManager.playerParameter.ObserveEveryValueChanged(x => x.AttackInterval)

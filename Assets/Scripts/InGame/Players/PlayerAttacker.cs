@@ -12,11 +12,6 @@ namespace InGame.Players
         {
             this.playerParameter = playerParameter;
         }
-
-        public virtual void Attack()
-        {
-            //ŽqƒNƒ‰ƒX‚ÅŽÀ‘•
-        }
     }
 }
 

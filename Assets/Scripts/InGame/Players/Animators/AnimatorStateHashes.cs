@@ -15,9 +15,9 @@ namespace InGame.Players.Animators
         public static int Damaged => Animator.StringToHash("Damaged");
 
         //名前のハッシュ
-        public static int FirstAttack => Animator.StringToHash("FirstAttack");
-        public static int SecondAttack => Animator.StringToHash("SecondAttack");
-        public static int ThirdAttack => Animator.StringToHash("ThirdAttack");
+        public static int FirstNormalAttack => Animator.StringToHash("FirstNormalAttack");
+        public static int SecondNormalAttack => Animator.StringToHash("SecondNormalAttack");
+        //public static int ThirdAttack => Animator.StringToHash("ThirdAttack");
     }
 }
 

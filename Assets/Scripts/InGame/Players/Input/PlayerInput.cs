@@ -8,7 +8,7 @@ namespace InGame.Players.Input
     {
         public Vector3 MoveVec => new Vector3(UnityEngine.Input.GetAxis("Horizontal"), 0, UnityEngine.Input.GetAxis("Vertical")).normalized;
         public bool HadPushedJump => UnityEngine.Input.GetKeyDown(KeyCode.Space);
-        public bool HadPushedAttack => UnityEngine.Input.GetMouseButtonDown(0);
+        //public bool HadPushedAttack => UnityEngine.Input.GetMouseButtonDown(0);
         public bool IsPushingNormalAttack => UnityEngine.Input.GetMouseButton(0);
         public bool HadReleasedAttack => UnityEngine.Input.GetMouseButtonUp(0);
         public bool HadPushedAvoid => UnityEngine.Input.GetKeyDown(KeyCode.LeftShift);

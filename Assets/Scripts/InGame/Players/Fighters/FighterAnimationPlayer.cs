@@ -4,70 +4,48 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace InGame.Players.Fighters
 {
     public class FighterAnimationPlayer : PlayerAnimationPlayer
     {
-        public bool IsConnectableSecondAttack { get; private set; }
-        public bool IsConnectableThirdAttack { get; private set; }
-
-        public async UniTask PlayFirstAttackAnimation(CancellationToken token, Action<bool> attackCallback = null)
+        public void PlayNormalAttackAniamtion(Action<bool> setEnableAttackCollider)
         {
-            if (IsAttacking)
-                return;
-
-            if (IsJumping)
-                return;
-
-            animator.SetTrigger(AnimatorParameterHashes.FirstAttack);
-            IsAttacking = true;
-            //攻撃判定のタイミングまで待つ
-            await AnimationTransitionWaiter.WaitStateTime(0.65f, (int)AnimatorLayerType.Base, AnimatorStateHashes.FirstAttack, animator, token, HashType.Name);
-            //攻撃判定有効化のコールバック
-            attackCallback?.Invoke(true);
-            await AnimationTransitionWaiter.WaitStateTime(0.8f, (int)AnimatorLayerType.Base, AnimatorStateHashes.FirstAttack, animator, token, HashType.Name);
-            attackCallback?.Invoke(false);
-            IsAttacking = false;
-
-            IsConnectableSecondAttack = true;
-            await AnimationTransitionWaiter.WaitStateTime(1.03f, (int)AnimatorLayerType.Base, AnimatorStateHashes.FirstAttack, animator, token, HashType.Name);
-            IsConnectableSecondAttack = false;
+            var stateInfo = animator.GetCurrentAnimatorStateInfo((int)AnimatorLayerType.Attack);
+            if (stateInfo.tagHash == AnimatorParameterHashes.Attack)
+            {
+                if (stateInfo.shortNameHash == AnimatorStateHashes.FirstNormalAttack)
+                {
+                    PlayNormalAttackAnimation(setEnableAttackCollider, 0.5f).Forget();
+                }
+                else if(stateInfo.shortNameHash == AnimatorStateHashes.SecondNormalAttack)
+                {
+                    PlayNormalAttackAnimation(setEnableAttackCollider, 0.78f).Forget();
+                }
+                else
+                {
+                    Debug.LogWarning("アニメーションは攻撃状態ではありません");
+                }
+            }
+            else
+            {
+                PlayNormalAttackAnimation(setEnableAttackCollider, 0.78f).Forget();
+            }
         }
 
-        public async UniTask PlaySecondAttackAnimation(CancellationToken token, Action<bool> attackCallback = null)
+        private async UniTaskVoid PlayNormalAttackAnimation(Action<bool> setEnableAttackCollider, float attackTiming)
         {
-            IsConnectableSecondAttack = false;
-
-            animator.SetTrigger(AnimatorParameterHashes.SecondAttack);
+            animator.SetTrigger(AnimatorParameterHashes.NormalAttack);
+            var token = this.GetCancellationTokenOnDestroy();
+            await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.Attack, AnimatorStateHashes.Attack, animator, token);
             IsAttacking = true;
-            //攻撃判定のタイミングまで待つ
-            await AnimationTransitionWaiter.WaitStateTime(0.36f, (int)AnimatorLayerType.Base, AnimatorStateHashes.SecondAttack, animator, token, HashType.Name);
-            //攻撃判定有効化のコールバック
-            attackCallback?.Invoke(true);
-            await AnimationTransitionWaiter.WaitStateTime(0.72f, (int)AnimatorLayerType.Base, AnimatorStateHashes.SecondAttack, animator, token, HashType.Name);
-            attackCallback?.Invoke(false);
+            await AnimationTransitionWaiter.WaitStateTime(attackTiming, (int)AnimatorLayerType.Attack, AnimatorStateHashes.Attack, animator, token);
+            setEnableAttackCollider(true);
+            await AnimationTransitionWaiter.WaitStateTime(1f, (int)AnimatorLayerType.Attack, AnimatorStateHashes.Attack, animator, token);
             IsAttacking = false;
-
-            IsConnectableThirdAttack = true;
-            await AnimationTransitionWaiter.WaitStateTime(1.1f, (int)AnimatorLayerType.Base, AnimatorStateHashes.SecondAttack, animator, token, HashType.Name);
-            IsConnectableThirdAttack = false;
-        }
-
-        public async UniTask PlayThirdAttackAnimation(CancellationToken token, Action<bool> attackCallback = null)
-        {
-            IsConnectableThirdAttack = false;
-
-            animator.SetTrigger(AnimatorParameterHashes.ThirdAttack);
-            IsAttacking = true;
-            //攻撃判定のタイミングまで待つ
-            await AnimationTransitionWaiter.WaitStateTime(0.33f, (int)AnimatorLayerType.Base, AnimatorStateHashes.ThirdAttack, animator, token, HashType.Name);
-            //攻撃判定有効化のコールバック
-            attackCallback?.Invoke(true);
-            await AnimationTransitionWaiter.WaitStateTime(0.51f, (int)AnimatorLayerType.Base, AnimatorStateHashes.ThirdAttack, animator, token, HashType.Name);
-            attackCallback?.Invoke(false);
-            IsAttacking = false;
+            setEnableAttackCollider(false);
         }
     }
 }

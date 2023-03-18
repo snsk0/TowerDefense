@@ -16,7 +16,7 @@ namespace InGame.Players.Archers
         private TargetSearcher targetSearcher;
 
         [Inject]
-        public ArcherController(CameraManager cameraManager, TargetSearcher targetSearcher) : base(cameraManager)
+        public ArcherController(CameraManager cameraManager, TargetSearcher targetSearcher, PlayerManager playerManager) : base(cameraManager, playerManager)
         {
             Debug.Log("Create Archer Controller");
 
