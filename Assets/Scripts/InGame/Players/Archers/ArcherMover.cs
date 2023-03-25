@@ -27,6 +27,9 @@ namespace InGame.Players.Archers
             //if (archerAnimationPlayer.IsLanding)
             //    return;
 
+            if (archerAnimationPlayer.currentAttackState == PlayerAttackStateType.Special)
+                return;
+
             if (archerAnimationPlayer.IsAiming)
             {
                 var moveSpeed = (playerParameter.baseMoveSpeed + playerParameter.addMoveSpeed) * playerParameter.moveSpeedMagnification * 0.9f;

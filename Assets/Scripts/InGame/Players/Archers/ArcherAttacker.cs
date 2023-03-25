@@ -14,7 +14,7 @@ namespace InGame.Players.Archers
     {
         [SerializeField] private ArcherAnimationPlayer archerAnimationPlayer;
 
-        public async UniTaskVoid Attack(IEnemyDamagable target)
+        public async UniTask NormalAttack(IEnemyDamagable target, CancellationToken token)
         {
             if (archerAnimationPlayer.currentAttackState!=PlayerAttackStateType.None)
                 return;
@@ -22,10 +22,24 @@ namespace InGame.Players.Archers
             if (target == null)
                 return;
 
-            await archerAnimationPlayer.PlayAttackAnimation(this.GetCancellationTokenOnDestroy());
+            await archerAnimationPlayer.PlayNormalAttackAnimation(this.GetCancellationTokenOnDestroy());
 
-            Debug.Log("Attack");
             var attackValue = (playerParameter.baseAttackValue + playerParameter.addAttackValue) * playerParameter.attackMagnification;
+            var damage = new Damage(attackValue, KnockbackType.None);
+            target.ApplyDamage(damage);
+        }
+
+        public async UniTask SpecialAttack(IEnemyDamagable target, CancellationToken token)
+        {
+            if (archerAnimationPlayer.currentAttackState != PlayerAttackStateType.None)
+                return;
+
+            if (target == null)
+                return;
+
+            await archerAnimationPlayer.PlaySpecialAttackAnimation(this.GetCancellationTokenOnDestroy());
+
+            var attackValue = (playerParameter.baseAttackValue + playerParameter.addAttackValue) * playerParameter.attackMagnification * 6;
             var damage = new Damage(attackValue, KnockbackType.None);
             target.ApplyDamage(damage);
         }

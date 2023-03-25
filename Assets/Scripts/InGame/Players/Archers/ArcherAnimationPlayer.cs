@@ -28,7 +28,7 @@ namespace InGame.Players.Archers
             animator.SetFloat(AnimatorParameterHashes.AimMoveY, yValue);
         }
 
-        public async UniTask PlayAttackAnimation(CancellationToken token)
+        public async UniTask PlayNormalAttackAnimation(CancellationToken token)
         {
             animator.SetTrigger(AnimatorParameterHashes.NormalAttack);
             currentAttackState = PlayerAttackStateType.Normal;
@@ -39,6 +39,15 @@ namespace InGame.Players.Archers
             currentAttackState = PlayerAttackStateType.None;
             IsAiming = false;
             StopAimWalkAnimation();
+        }
+
+        public async UniTask PlaySpecialAttackAnimation(CancellationToken token)
+        {
+            animator.SetTrigger(AnimatorParameterHashes.SpecialAttack);
+            currentAttackState = PlayerAttackStateType.Special;
+            await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.SpecialAttack, AnimatorStateHashes.Attack, animator, token);
+            await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.SpecialAttack, AnimatorStateHashes.Attack, animator, token, toState: false);
+            currentAttackState = PlayerAttackStateType.None;
         }
     }
 }
