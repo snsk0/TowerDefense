@@ -17,6 +17,7 @@ namespace InGame.Players.Animators
         //名前のハッシュ
         public static int FirstNormalAttack => Animator.StringToHash("FirstNormalAttack");
         public static int SecondNormalAttack => Animator.StringToHash("SecondNormalAttack");
+        public static int Recoil => Animator.StringToHash("Standing Aim Recoil");
         //public static int ThirdAttack => Animator.StringToHash("ThirdAttack");
     }
 }

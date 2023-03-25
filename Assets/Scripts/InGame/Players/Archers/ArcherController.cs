@@ -13,7 +13,7 @@ namespace InGame.Players.Archers
     public class ArcherController : PlayerController
     {
         private ArcherAttacker archerAttacker;
-        private TargetSearcher targetSearcher;
+        private readonly TargetSearcher targetSearcher;
 
         [Inject]
         public ArcherController(CameraManager cameraManager, TargetSearcher targetSearcher, PlayerManager playerManager) : base(cameraManager, playerManager)
@@ -38,8 +38,8 @@ namespace InGame.Players.Archers
                 if (token.IsCancellationRequested)
                     break;
                 var target = targetSearcher.SerchTarget(currentControlledPlayerObj.transform.position);
-                archerAttacker.Attack(target);
-                await UniTask.Delay(TimeSpan.FromSeconds(1f), cancellationToken:token);
+                archerAttacker.Attack(target).Forget();
+                await UniTask.DelayFrame(1, cancellationToken: token);
             }
         }
     }

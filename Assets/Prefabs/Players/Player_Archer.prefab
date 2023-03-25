@@ -2243,11 +2243,11 @@ GameObject:
   - component: {fileID: 5595587250349675436}
   - component: {fileID: 8981241043419151933}
   - component: {fileID: 169320948769926677}
-  - component: {fileID: 2165910742071885938}
   - component: {fileID: 7104002880429449402}
   - component: {fileID: 4854200443799714780}
   - component: {fileID: 1160088827661224109}
   - component: {fileID: 6880174294015475065}
+  - component: {fileID: -1444205466231387362}
   m_Layer: 0
   m_Name: Player_Archer
   m_TagString: Untagged
@@ -2347,20 +2347,6 @@ MonoBehaviour:
   rigidbody: {fileID: 1160088827661224109}
   playerAnimationPlayer: {fileID: 7104002880429449402}
   jumpPower: 3
---- !u!114 &2165910742071885938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8805702032657133122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a99d2d2d92f9ab540a33704b97a255b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rigidbody: {fileID: 1160088827661224109}
-  playerAnimationPlayer: {fileID: 7104002880429449402}
 --- !u!114 &7104002880429449402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2418,3 +2404,17 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &-1444205466231387362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8805702032657133122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a4643a3facd55e4fb78a6a8e83f5452, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidbody: {fileID: 1160088827661224109}
+  playerAnimationPlayer: {fileID: 7104002880429449402}

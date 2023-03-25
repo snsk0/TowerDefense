@@ -7,7 +7,7 @@ namespace InGame.Enemies
 {
     public class EnemyHealth : MonoBehaviour
     {
-        public int currentHP { get; private set; } = 2;
+        public int currentHP { get; private set; } = 100;
 
         private readonly ReactiveProperty<bool> hadDeadReactiveProperty = new ReactiveProperty<bool>(false);
         public IReadOnlyReactiveProperty<bool> HadDeadReactiveProperty => hadDeadReactiveProperty;
@@ -17,7 +17,7 @@ namespace InGame.Enemies
             currentHP -= damage;
             Debug.Log($"EnemyHealth{currentHP}");
 
-            if (currentHP <= 0)
+            if (currentHP == 0)
             {
                 hadDeadReactiveProperty.Value = true;
                 Invoke("DestroyObject",1f);

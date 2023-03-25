@@ -5,6 +5,7 @@ using VContainer;
 using UniRx;
 using System;
 using UniRx.Triggers;
+using System.Linq;
 
 namespace InGame.Enemies
 {
@@ -13,7 +14,7 @@ namespace InGame.Enemies
         private readonly EnemyGenerator enemyGenerator;
 
         private readonly List<GameObject> currentEnemyObjects = new List<GameObject>();
-        public IReadOnlyList<GameObject> CurrentEnemyObjects => currentEnemyObjects;
+        public IEnumerable<GameObject> CurrentEnemyObjects => currentEnemyObjects.Where(x=>!x.GetComponent<EnemyHealth>().HadDeadReactiveProperty.Value);
 
         private readonly ISubject<int> dropedEnhancementPointSubject = new Subject<int>();
         public IObservable<int> DropedEnhancementPointObservable => dropedEnhancementPointSubject;
