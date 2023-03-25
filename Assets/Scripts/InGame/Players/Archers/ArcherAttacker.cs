@@ -37,6 +37,10 @@ namespace InGame.Players.Archers
             if (target == null)
                 return;
 
+            if (!usableSpecial)
+                return;
+
+            StartCoolTimeCount(this.GetCancellationTokenOnDestroy()).Forget();
             await archerAnimationPlayer.PlaySpecialAttackAnimation(this.GetCancellationTokenOnDestroy());
 
             var attackValue = (playerParameter.baseAttackValue + playerParameter.addAttackValue) * playerParameter.attackMagnification * 6;

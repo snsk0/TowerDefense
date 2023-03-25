@@ -51,6 +51,10 @@ namespace InGame.Players.Fighters
             if (fighterAnimationPlayer.currentAttackState!=PlayerAttackStateType.None)
                 return;
 
+            if (!usableSpecial)
+                return;
+
+            StartCoolTimeCount(this.GetCancellationTokenOnDestroy()).Forget();
             await fighterAnimationPlayer.PlaySpecialAttackAnimation(fighterSpecialAttackCollider.EnableCollider, this.GetCancellationTokenOnDestroy());
         }
     }

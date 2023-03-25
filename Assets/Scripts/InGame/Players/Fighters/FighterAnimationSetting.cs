@@ -55,16 +55,16 @@ namespace InGame.Players.Fighters
             var SecondNormalAtackAnimationLength = (states.Single(x => x.name == "SecondNormalAttack").motion as AnimationClip).length;
 
             //アニメーションの長さがインターバルと同じ長さになるように調整
-            var firstNormalAttackSpped = firstNormalAttackAnimationLength / playerManager.playerParameter.AttackInterval;
-            var secondNormalAttackSpped = SecondNormalAtackAnimationLength / playerManager.playerParameter.AttackInterval;
+            var firstNormalAttackSpped = firstNormalAttackAnimationLength / playerManager.playerParameter.NormalAttackInterval;
+            var secondNormalAttackSpped = SecondNormalAtackAnimationLength / playerManager.playerParameter.NormalAttackInterval;
             animator.SetFloat(AnimatorParameterHashes.FirstNormalAttackSpeed, firstNormalAttackSpped);
             animator.SetFloat(AnimatorParameterHashes.SecondNormalAttackSpeed, secondNormalAttackSpped);
 
-            playerManager.playerParameter.ObserveEveryValueChanged(x => x.AttackInterval)
+            playerManager.playerParameter.ObserveEveryValueChanged(x => x.NormalAttackInterval)
                 .Subscribe(interval =>
                 {
-                    var firstNormalAttackSpped = firstNormalAttackAnimationLength / playerManager.playerParameter.AttackInterval;
-                    var secondNormalAttackSpped = SecondNormalAtackAnimationLength / playerManager.playerParameter.AttackInterval;
+                    var firstNormalAttackSpped = firstNormalAttackAnimationLength / playerManager.playerParameter.NormalAttackInterval;
+                    var secondNormalAttackSpped = SecondNormalAtackAnimationLength / playerManager.playerParameter.NormalAttackInterval;
                     animator.SetFloat(AnimatorParameterHashes.FirstNormalAttackSpeed, firstNormalAttackSpped);
                     animator.SetFloat(AnimatorParameterHashes.SecondNormalAttackSpeed, secondNormalAttackSpped);
                 })

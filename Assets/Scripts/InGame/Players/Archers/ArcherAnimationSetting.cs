@@ -45,13 +45,13 @@ namespace InGame.Players.Archers
             var normalAttackAnimationLength = drawAnimationLength + recoilAtackAnimationLength;
 
             //アニメーションの長さがインターバルと同じ長さになるように調整
-            var normalAttackSpped = normalAttackAnimationLength / playerManager.playerParameter.AttackInterval;
+            var normalAttackSpped = normalAttackAnimationLength / playerManager.playerParameter.NormalAttackInterval;
             animator.SetFloat(AnimatorParameterHashes.NormalAttackSpeed, normalAttackSpped);
 
-            playerManager.playerParameter.ObserveEveryValueChanged(x => x.AttackInterval)
+            playerManager.playerParameter.ObserveEveryValueChanged(x => x.NormalAttackInterval)
                 .Subscribe(interval =>
                 {
-                    var normalAttackSpped = normalAttackAnimationLength / playerManager.playerParameter.AttackInterval;
+                    var normalAttackSpped = normalAttackAnimationLength / playerManager.playerParameter.NormalAttackInterval;
                     animator.SetFloat(AnimatorParameterHashes.NormalAttackSpeed, normalAttackSpped);
                 })
                 .AddTo(this);

@@ -13,6 +13,7 @@ namespace InGame.Players
         public float baseAvoidDistance { get; private set; } = 100f;
         public float baseMoveSpeed { get; private set; } = 1f;
         public float baseNormalAttackInterval { get; private set; } = 1f;
+        public float baseSpecialAttackCoolTime { get; private set; } = 8f;
 
         public float maxHPMagnification { get; private set; } = 1f;
         public float attackMagnification { get; private set; } = 1f;
@@ -21,6 +22,7 @@ namespace InGame.Players
         public float avoidDistanceMagnification { get; private set; } = 1f;
         public float moveSpeedMagnification { get; private set; } = 1f;
         public float normalAttackIntervalMagnification { get; private set; } = 1f;
+        public float SpecialAttackCoolTimeMagnification { get; private set; } = 1f;
 
         public float addMaxHP { get; private set; } = 0f;
         public float addAttackValue { get; private set; } = 0f;
@@ -29,7 +31,8 @@ namespace InGame.Players
         public float addAvoidDistance { get; private set; } = 0f;
         public float addMoveSpeed { get; private set; } = 0f;
 
-        public float AttackInterval => baseNormalAttackInterval * normalAttackIntervalMagnification;
+        public float NormalAttackInterval => baseNormalAttackInterval * normalAttackIntervalMagnification;
+        public float SpecialAttackCoolTime => baseSpecialAttackCoolTime * SpecialAttackCoolTimeMagnification;
 
         public PlayerParameter(PlayerCharacterType playerCharacterType)
         {

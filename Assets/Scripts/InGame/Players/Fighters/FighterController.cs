@@ -44,7 +44,7 @@ namespace InGame.Players.Fighters
                 if (result == 0)
                 {
                     fighterAttacker.NormalAttack();
-                    var interval = playerManager.playerParameter.AttackInterval * 0.95f;
+                    var interval = playerManager.playerParameter.NormalAttackInterval * 0.95f;
                     await UniTask.Delay(TimeSpan.FromSeconds(interval), cancellationToken: token);
                 }
                 else if(result == 1)
