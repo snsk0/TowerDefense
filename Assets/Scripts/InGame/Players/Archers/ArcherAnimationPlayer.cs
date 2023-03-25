@@ -31,12 +31,12 @@ namespace InGame.Players.Archers
         public async UniTask PlayAttackAnimation(CancellationToken token)
         {
             animator.SetTrigger(AnimatorParameterHashes.NormalAttack);
-            IsAttacking = true;
+            currentAttackState = PlayerAttackStateType.Normal;
             IsAiming = true;
             StartAimWalkAnimation();
-            await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.Attack, AnimatorStateHashes.Attack, animator, token);
-            await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.Attack, AnimatorStateHashes.Attack, animator, token, toState: false);
-            IsAttacking = false;
+            await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.NormalAttack, AnimatorStateHashes.Attack, animator, token);
+            await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.NormalAttack, AnimatorStateHashes.Attack, animator, token, toState: false);
+            currentAttackState = PlayerAttackStateType.None;
             IsAiming = false;
             StopAimWalkAnimation();
         }

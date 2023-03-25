@@ -37,7 +37,7 @@ namespace InGame.Players.Archers
         {
             //アニメーターにあるアニメーションを取得
             var animatorController = animator.runtimeAnimatorController as AnimatorController;
-            var layer = animatorController.layers[(int)AnimatorLayerType.Attack];
+            var layer = animatorController.layers[(int)AnimatorLayerType.NormalAttack];
             var states = layer.stateMachine.states.Select(x => x.state);
             //アニメーション自体の長さを取得
             var drawAnimationLength = (states.Single(x => x.name == "Standing Draw Arrow").motion as AnimationClip).length;

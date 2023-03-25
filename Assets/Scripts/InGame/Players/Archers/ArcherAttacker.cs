@@ -16,7 +16,7 @@ namespace InGame.Players.Archers
 
         public async UniTaskVoid Attack(IEnemyDamagable target)
         {
-            if (archerAnimationPlayer.IsAttacking)
+            if (archerAnimationPlayer.currentAttackState!=PlayerAttackStateType.None)
                 return;
 
             if (target == null)

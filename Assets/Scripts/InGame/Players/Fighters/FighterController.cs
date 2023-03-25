@@ -33,12 +33,24 @@ namespace InGame.Players.Fighters
         {
             while (true)
             {
-                await UniTask.WaitUntil(() => playerInput.IsPushingNormalAttack, cancellationToken: token);
+                var result = await UniTask.WhenAny(
+                    UniTask.WaitUntil(() => playerInput.IsPushingNormalAttack, cancellationToken: token),
+                    UniTask.WaitUntil(() => playerInput.HadPushedSpecialAttack, cancellationToken: token)
+                    );
+
                 if (token.IsCancellationRequested)
                     break;
-                fighterAttacker.NormalAttack();
-                var interval = playerManager.playerParameter.AttackInterval * 0.95f;
-                await UniTask.Delay(TimeSpan.FromSeconds(interval), cancellationToken: token);
+
+                if (result == 0)
+                {
+                    fighterAttacker.NormalAttack();
+                    var interval = playerManager.playerParameter.AttackInterval * 0.95f;
+                    await UniTask.Delay(TimeSpan.FromSeconds(interval), cancellationToken: token);
+                }
+                else if(result == 1)
+                {
+                    await fighterAttacker.SpecialAttack();
+                }
             }
         }
     }

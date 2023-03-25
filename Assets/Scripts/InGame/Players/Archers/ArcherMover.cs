@@ -24,8 +24,8 @@ namespace InGame.Players.Archers
             if (rigidbody == null)
                 return;
 
-            if (archerAnimationPlayer.IsLanding)
-                return;
+            //if (archerAnimationPlayer.IsLanding)
+            //    return;
 
             if (archerAnimationPlayer.IsAiming)
             {

@@ -12,11 +12,12 @@ namespace InGame.Players.Fighters
     public class FighterAttacker : PlayerAttacker
     {
         [SerializeField] private FighterAnimationPlayer fighterAnimationPlayer;
-        [SerializeField] private FighterAttackCollider fighterAttackCollider;
+        [SerializeField] private FighterAttackCollider fighterNormalAttackCollider;
+        [SerializeField] private FighterAttackCollider fighterSpecialAttackCollider;
 
         private void Start()
         {
-            fighterAttackCollider.OnTriggerEnterAsObservable()
+            fighterNormalAttackCollider.OnTriggerEnterAsObservable()
                 .Select(trigger => trigger.GetComponent<IEnemyDamagable>())
                 .Where(enemy => enemy != null)
                 .Subscribe(enemy =>
@@ -26,11 +27,31 @@ namespace InGame.Players.Fighters
                     enemy.ApplyDamage(damage);
                 })
                 .AddTo(this);
+
+
+            fighterSpecialAttackCollider.OnTriggerEnterAsObservable()
+                .Select(trigger => trigger.GetComponent<IEnemyDamagable>())
+                .Where(enemy => enemy != null)
+                .Subscribe(enemy =>
+                {
+                    var attackValue = (playerParameter.baseAttackValue + playerParameter.addAttackValue) * playerParameter.attackMagnification * 3f;
+                    var damage = new Damage(attackValue, KnockbackType.None);
+                    enemy.ApplyDamage(damage);
+                })
+                .AddTo(this);
         }
 
         public void NormalAttack()
         {
-            fighterAnimationPlayer.PlayNormalAttackAniamtion(fighterAttackCollider.EnableCollider);
+            fighterAnimationPlayer.PlayNormalAttackAniamtion(fighterNormalAttackCollider.EnableCollider);
+        }
+
+        public async UniTask SpecialAttack()
+        {
+            if (fighterAnimationPlayer.currentAttackState!=PlayerAttackStateType.None)
+                return;
+
+            await fighterAnimationPlayer.PlaySpecialAttackAnimation(fighterSpecialAttackCollider.EnableCollider, this.GetCancellationTokenOnDestroy());
         }
     }
 }

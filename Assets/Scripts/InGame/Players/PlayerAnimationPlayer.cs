@@ -20,9 +20,12 @@ namespace InGame.Players
         private PlayerInput playerInput = new PlayerInput();
         private PlayerParameter playerParameter;
 
-        public bool IsAttacking { get; protected set; }
-        public bool IsJumping { get; private set; }
-        public bool IsLanding { get; private set; }
+        public PlayerBaseStateType currentBaseState { get; protected set; }
+        public PlayerAttackStateType currentAttackState { get; protected set; }
+
+        //public bool IsAttacking { get; protected set; }
+        //public bool IsJumping { get; private set; }
+        //public bool IsLanding { get; private set; }
 
         //public bool IsIdle => animator.GetCurrentAnimatorStateInfo((int)AnimatorLayerType.Base).tagHash == AnimatorStateHashes.Idle;
         //public bool IsAttackMotion => animator.GetCurrentAnimatorStateInfo((int)AnimatorLayerType.Base).tagHash == AnimatorStateHashes.Attack;
@@ -34,11 +37,13 @@ namespace InGame.Players
 
         public void PlayRunAnimation()
         {
+            currentBaseState = PlayerBaseStateType.Move;
             animator.SetBool(AnimatorParameterHashes.Run, true);
         }
 
         public void StopRunAnimation()
         {
+            currentBaseState = PlayerBaseStateType.Idle;
             animator.SetBool(AnimatorParameterHashes.Run, false);
         }
 
@@ -62,24 +67,28 @@ namespace InGame.Players
 
         public async UniTask PlayJumpAnimation(CancellationToken token, Action jumpCallback = null)
         {
-            if (IsAttacking)
-                return;
+            //if (IsAttacking)
+            //    return;
 
-            if (IsJumping)
-                return;
+            //if (IsJumping)
+            //    return;
+
+            currentBaseState = PlayerBaseStateType.Jump;
 
             animator.SetTrigger(AnimatorParameterHashes.Jump);
-            IsJumping = true;
+            //IsJumping = true;
             //実際に浮き始めるまで待機
             await AnimationTransitionWaiter.WaitStateTime(0.25f, (int)AnimatorLayerType.Base, AnimatorStateHashes.Jump, animator, token);
             jumpCallback?.Invoke();
             //着地まで待機
             await AnimationTransitionWaiter.WaitStateTime(0.57f, (int)AnimatorLayerType.Base, AnimatorStateHashes.Jump, animator, token);
-            IsLanding = true;
+            //IsLanding = true;
             //Idleモーションに遷移するまで待機
             await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.Base, AnimatorStateHashes.Idle, animator, token);
-            IsJumping = false;
-            IsLanding = false;
+            //IsJumping = false;
+            //IsLanding = false;
+
+            currentBaseState = PlayerBaseStateType.Idle;
         }
 
         public async UniTask PlayDamagedAnimation(KnockbackType knockbackType, CancellationToken token)

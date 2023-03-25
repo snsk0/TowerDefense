@@ -627,6 +627,65 @@ Transform:
   m_Father: {fileID: 3683556299822558939}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1499785255240911301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8934255324619841407}
+  - component: {fileID: 6496616101805435277}
+  - component: {fileID: 1413244604969180944}
+  m_Layer: 0
+  m_Name: SpecialAttackCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8934255324619841407
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499785255240911301}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7973697198171659507}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6496616101805435277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499785255240911301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb560ddc64ce1c34f8b13455a0ca8538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackCollider: {fileID: 1413244604969180944}
+--- !u!65 &1413244604969180944
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499785255240911301}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 1.9926591}
+  m_Center: {x: 0, y: 0, z: 0.49632955}
 --- !u!1 &1540262837529666972
 GameObject:
   m_ObjectHideFlags: 0
@@ -1973,7 +2032,7 @@ GameObject:
   - component: {fileID: 3594851923922253072}
   - component: {fileID: 2130718132751867141}
   m_Layer: 0
-  m_Name: AttackCollider
+  m_Name: NormalAttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2094,6 +2153,7 @@ Transform:
   - {fileID: 7155741042730982476}
   - {fileID: 2519783328668908647}
   - {fileID: 890554115807263728}
+  - {fileID: 8934255324619841407}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2243,7 +2303,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fighterAnimationPlayer: {fileID: 7575892570970127151}
-  fighterAttackCollider: {fileID: 3594851923922253072}
+  fighterNormalAttackCollider: {fileID: 3594851923922253072}
+  fighterSpecialAttackCollider: {fileID: 6496616101805435277}
 --- !u!1 &7361127797921490194
 GameObject:
   m_ObjectHideFlags: 0

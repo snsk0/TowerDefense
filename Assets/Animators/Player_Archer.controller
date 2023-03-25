@@ -505,7 +505,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Attack Layer
     m_StateMachine: {fileID: -8411359991812085843}
-    m_Mask: {fileID: 31900000, guid: a05cfff91c8f1ee4c995abe84deffbcb, type: 2}
+    m_Mask: {fileID: 31900000, guid: b0398b23734a172488e3565562f40643, type: 2}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0
