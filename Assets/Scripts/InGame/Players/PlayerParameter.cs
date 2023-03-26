@@ -6,7 +6,7 @@ namespace InGame.Players
 {
     public class PlayerParameter
     {
-        public int maxHP { get; private set; } = 100;
+        public int baseMaxHP { get; private set; } = 100;
         public float baseAttackValue { get; private set; } = 1f;
         public float baseDefenceValue { get; private set; } = 1f;
         public float baseInvincibleTime { get; private set; } = 0.3f;
@@ -31,6 +31,7 @@ namespace InGame.Players
         public float addAvoidDistance { get; private set; } = 0f;
         public float addMoveSpeed { get; private set; } = 0f;
 
+        public int MaxHP => (int)((baseMaxHP + addMaxHP) * maxHPMagnification);
         public float NormalAttackInterval => baseNormalAttackInterval * normalAttackIntervalMagnification;
         public float SpecialAttackCoolTime => baseSpecialAttackCoolTime * SpecialAttackCoolTimeMagnification;
 

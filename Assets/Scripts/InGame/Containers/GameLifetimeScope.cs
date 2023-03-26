@@ -7,6 +7,7 @@ using InGame.Players;
 using InGame.Players.Archers;
 using InGame.Players.Fighters;
 using InGame.Targets;
+using InGame.UI.Players;
 using Prepare;
 using UnityEngine;
 using VContainer;
@@ -20,6 +21,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private CinemachineFreeLook freeLookCamera;
     [SerializeField] private CursorController cursorController;
     [SerializeField] private TargetPointerView targetPointerView;
+    [SerializeField] private PlayerHPView playerHPView;
 
     protected override void Configure(IContainerBuilder builder)
     {
@@ -28,6 +30,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterEntryPoint<EnemyGeneratePresenter>();
         builder.RegisterEntryPoint<CameraSetUpPresenter>();
         builder.RegisterEntryPoint<CursorPresenter>();
+        builder.RegisterEntryPoint<PlayerHPPresenter>();
         
         builder.Register<PlayerManager>(Lifetime.Singleton);
         builder.Register<EnemyManager>(Lifetime.Singleton);
@@ -57,5 +60,6 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(freeLookCamera);
         builder.RegisterComponent(cursorController);
         builder.RegisterComponent(targetPointerView);
+        builder.RegisterComponent(playerHPView);
     }
 }

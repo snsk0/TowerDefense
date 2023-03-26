@@ -14,7 +14,7 @@ namespace InGame.Players
         {
             this.playerParameter = playerParameter;
 
-            currentHP = playerParameter.maxHP;
+            currentHP = playerParameter.MaxHP;
         }
 
         public void AddDamage(int damageValue)
@@ -25,7 +25,7 @@ namespace InGame.Players
 
         public void Heal(int value)
         {
-            currentHP = Mathf.Clamp(currentHP + value, 0, playerParameter.maxHP);
+            currentHP = Mathf.Clamp(currentHP + value, 0, playerParameter.MaxHP);
         }
     }
 }
