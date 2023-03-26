@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using InGame.Cameras;
+using InGame.Targets;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,14 +14,14 @@ namespace InGame.Players.Archers
     public class ArcherController : PlayerController
     {
         private ArcherAttacker archerAttacker;
-        private readonly TargetSearcher targetSearcher;
+        private readonly TargetManager targetManager;
 
         [Inject]
-        public ArcherController(CameraManager cameraManager, TargetSearcher targetSearcher, PlayerManager playerManager) : base(cameraManager, playerManager)
+        public ArcherController(CameraManager cameraManager, TargetManager targetManager, PlayerManager playerManager) : base(cameraManager, playerManager)
         {
             Debug.Log("Create Archer Controller");
 
-            this.targetSearcher = targetSearcher;
+            this.targetManager = targetManager;
         }
 
         public override void StartControll(GameObject playerObject)
@@ -44,14 +45,12 @@ namespace InGame.Players.Archers
 
                 if (result == 0)
                 {
-                    var target = targetSearcher.SerchTarget(currentControlledPlayerObj.transform.position);
-                    await archerAttacker.NormalAttack(target, token);
+                    await archerAttacker.NormalAttack(targetManager.currentTargetEnemy, token);
                     await UniTask.DelayFrame(1, cancellationToken: token);
                 }
                 else if (result == 1)
                 {
-                    var target = targetSearcher.SerchTarget(currentControlledPlayerObj.transform.position);
-                    await archerAttacker.SpecialAttack(target, token);
+                    await archerAttacker.SpecialAttack(targetManager.currentTargetEnemy, token);
                     await UniTask.DelayFrame(1, cancellationToken: token);
                 }
                 
