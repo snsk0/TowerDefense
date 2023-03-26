@@ -24,7 +24,10 @@ namespace InGame.Players.Archers
             if (rigidbody == null)
                 return;
 
-            if (archerAnimationPlayer.IsLanding)
+            //if (archerAnimationPlayer.IsLanding)
+            //    return;
+
+            if (archerAnimationPlayer.currentAttackState == PlayerAttackStateType.Special)
                 return;
 
             if (archerAnimationPlayer.IsAiming)

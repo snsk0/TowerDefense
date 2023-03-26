@@ -21,7 +21,10 @@ namespace InGame.Players
             if (rigidbody == null)
                 return;
 
-            if (playerAnimationPlayer.IsLanding)
+            //if (playerAnimationPlayer.currentBaseState==PlayerBaseStateType.Jump)
+            //    return;
+
+            if (playerAnimationPlayer.currentAttackState == PlayerAttackStateType.Special)
                 return;
 
             var moveSpeed = (playerParameter.baseMoveSpeed + playerParameter.addMoveSpeed) * playerParameter.moveSpeedMagnification;

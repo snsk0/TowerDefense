@@ -37,7 +37,7 @@ namespace InGame.Players.Archers
         {
             //アニメーターにあるアニメーションを取得
             var animatorController = animator.runtimeAnimatorController as AnimatorController;
-            var layer = animatorController.layers[(int)AnimatorLayerType.Attack];
+            var layer = animatorController.layers[(int)AnimatorLayerType.NormalAttack];
             var states = layer.stateMachine.states.Select(x => x.state);
             //アニメーション自体の長さを取得
             var drawAnimationLength = (states.Single(x => x.name == "Standing Draw Arrow").motion as AnimationClip).length;
@@ -45,13 +45,13 @@ namespace InGame.Players.Archers
             var normalAttackAnimationLength = drawAnimationLength + recoilAtackAnimationLength;
 
             //アニメーションの長さがインターバルと同じ長さになるように調整
-            var normalAttackSpped = normalAttackAnimationLength / playerManager.playerParameter.AttackInterval;
+            var normalAttackSpped = normalAttackAnimationLength / playerManager.playerParameter.NormalAttackInterval;
             animator.SetFloat(AnimatorParameterHashes.NormalAttackSpeed, normalAttackSpped);
 
-            playerManager.playerParameter.ObserveEveryValueChanged(x => x.AttackInterval)
+            playerManager.playerParameter.ObserveEveryValueChanged(x => x.NormalAttackInterval)
                 .Subscribe(interval =>
                 {
-                    var normalAttackSpped = normalAttackAnimationLength / playerManager.playerParameter.AttackInterval;
+                    var normalAttackSpped = normalAttackAnimationLength / playerManager.playerParameter.NormalAttackInterval;
                     animator.SetFloat(AnimatorParameterHashes.NormalAttackSpeed, normalAttackSpped);
                 })
                 .AddTo(this);

@@ -34,12 +34,27 @@ namespace InGame.Players.Archers
         {
             while (true)
             {
-                await UniTask.WaitUntil(() => playerInput.IsPushingNormalAttack, cancellationToken: token);
+                var result = await UniTask.WhenAny(
+                    UniTask.WaitUntil(() => playerInput.IsPushingNormalAttack, cancellationToken: token),
+                    UniTask.WaitUntil(() => playerInput.HadPushedSpecialAttack, cancellationToken: token)
+                    );
+
                 if (token.IsCancellationRequested)
                     break;
-                var target = targetSearcher.SerchTarget(currentControlledPlayerObj.transform.position);
-                archerAttacker.Attack(target).Forget();
-                await UniTask.DelayFrame(1, cancellationToken: token);
+
+                if (result == 0)
+                {
+                    var target = targetSearcher.SerchTarget(currentControlledPlayerObj.transform.position);
+                    await archerAttacker.NormalAttack(target, token);
+                    await UniTask.DelayFrame(1, cancellationToken: token);
+                }
+                else if (result == 1)
+                {
+                    var target = targetSearcher.SerchTarget(currentControlledPlayerObj.transform.position);
+                    await archerAttacker.SpecialAttack(target, token);
+                    await UniTask.DelayFrame(1, cancellationToken: token);
+                }
+                
             }
         }
     }

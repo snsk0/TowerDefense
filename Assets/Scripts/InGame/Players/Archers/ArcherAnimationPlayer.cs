@@ -28,17 +28,26 @@ namespace InGame.Players.Archers
             animator.SetFloat(AnimatorParameterHashes.AimMoveY, yValue);
         }
 
-        public async UniTask PlayAttackAnimation(CancellationToken token)
+        public async UniTask PlayNormalAttackAnimation(CancellationToken token)
         {
             animator.SetTrigger(AnimatorParameterHashes.NormalAttack);
-            IsAttacking = true;
+            currentAttackState = PlayerAttackStateType.Normal;
             IsAiming = true;
             StartAimWalkAnimation();
-            await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.Attack, AnimatorStateHashes.Attack, animator, token);
-            await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.Attack, AnimatorStateHashes.Attack, animator, token, toState: false);
-            IsAttacking = false;
+            await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.NormalAttack, AnimatorStateHashes.Attack, animator, token);
+            await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.NormalAttack, AnimatorStateHashes.Attack, animator, token, toState: false);
+            currentAttackState = PlayerAttackStateType.None;
             IsAiming = false;
             StopAimWalkAnimation();
+        }
+
+        public async UniTask PlaySpecialAttackAnimation(CancellationToken token)
+        {
+            animator.SetTrigger(AnimatorParameterHashes.SpecialAttack);
+            currentAttackState = PlayerAttackStateType.Special;
+            await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.SpecialAttack, AnimatorStateHashes.Attack, animator, token);
+            await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.SpecialAttack, AnimatorStateHashes.Attack, animator, token, toState: false);
+            currentAttackState = PlayerAttackStateType.None;
         }
     }
 }
