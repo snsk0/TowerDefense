@@ -43,17 +43,16 @@ namespace InGame.Players.Archers
                 if (token.IsCancellationRequested)
                     break;
 
+                currentControlledPlayerObj.transform.LookAt(targetManager.TargetedTransform.Value.position);
                 if (result == 0)
                 {
                     await archerAttacker.NormalAttack(targetManager.currentTargetEnemy, token);
-                    await UniTask.DelayFrame(1, cancellationToken: token);
                 }
                 else if (result == 1)
                 {
                     await archerAttacker.SpecialAttack(targetManager.currentTargetEnemy, token);
-                    await UniTask.DelayFrame(1, cancellationToken: token);
                 }
-                
+                await UniTask.DelayFrame(1, cancellationToken: token);
             }
         }
     }

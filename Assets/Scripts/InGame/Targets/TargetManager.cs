@@ -12,7 +12,7 @@ namespace InGame.Targets
     public class TargetManager : IDisposable
     {
         private readonly ReactiveProperty<Transform> currentTargetTransform = new ReactiveProperty<Transform>();
-        public IObservable<Transform> TargetedTransform => currentTargetTransform;
+        public IReadOnlyReactiveProperty<Transform> TargetedTransform => currentTargetTransform;
 
         public IEnemyDamagable currentTargetEnemy { get; private set; }
 
