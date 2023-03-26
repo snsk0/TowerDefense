@@ -10,13 +10,35 @@ namespace InGame.Players.Archers
 {
     public class ArcherAnimationPlayer : PlayerAnimationPlayer
     {
+        public bool IsAiming { get; private set; }
+
+        public void StartAimWalkAnimation()
+        {
+            animator.SetBool(AnimatorParameterHashes.AimWalking, true);
+        }
+
+        public void StopAimWalkAnimation()
+        {
+            animator.SetBool(AnimatorParameterHashes.AimWalking, false);
+        }
+
+        public void PlayAimWalkAnimation(float xValue, float yValue)
+        {
+            animator.SetFloat(AnimatorParameterHashes.AimMoveX, xValue);
+            animator.SetFloat(AnimatorParameterHashes.AimMoveY, yValue);
+        }
+
         public async UniTask PlayAttackAnimation(CancellationToken token)
         {
-            animator.SetTrigger(AnimatorParameterHashes.Attack);
-            await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.Base, AnimatorStateHashes.Attack, animator, token);
+            animator.SetTrigger(AnimatorParameterHashes.NormalAttack);
             IsAttacking = true;
-            await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.Base, AnimatorStateHashes.Idle, animator, token);
+            IsAiming = true;
+            StartAimWalkAnimation();
+            await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.Attack, AnimatorStateHashes.Attack, animator, token);
+            await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.Attack, AnimatorStateHashes.Attack, animator, token, toState: false);
             IsAttacking = false;
+            IsAiming = false;
+            StopAimWalkAnimation();
         }
     }
 }

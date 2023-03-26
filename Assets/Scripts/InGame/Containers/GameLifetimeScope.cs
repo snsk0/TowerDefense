@@ -39,6 +39,7 @@ public class GameLifetimeScope : LifetimeScope
         {
             case PlayerCharacterType.Fighter:
                 builder.Register<PlayerController, FighterController>(Lifetime.Transient);
+                builder.RegisterEntryPoint<FighterAnimationSetting>();
                 break;
             case PlayerCharacterType.Archer:
                 builder.Register<PlayerController, ArcherController>(Lifetime.Transient);

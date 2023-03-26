@@ -13,7 +13,7 @@ namespace InGame.Players.Archers
         private readonly EnemyManager enemyManager;
         private readonly CameraManager cameraManager;
 
-        private readonly Rect searchArea = new Rect(0.2f, 0.4f, 0.6f, 0.4f);
+        private readonly Rect searchArea = new Rect(0.2f, 0.3f, 0.6f, 0.5f);
 
         [Inject]
         public TargetSearcher(EnemyManager enemyManager, CameraManager cameraManager)

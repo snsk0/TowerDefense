@@ -14,13 +14,17 @@ namespace InGame.Players.Archers
     {
         [SerializeField] private ArcherAnimationPlayer archerAnimationPlayer;
 
-        public void Attack(IEnemyDamagable target)
+        public async UniTaskVoid Attack(IEnemyDamagable target)
         {
+            if (archerAnimationPlayer.IsAttacking)
+                return;
+
             if (target == null)
                 return;
 
-            archerAnimationPlayer.PlayAttackAnimation(this.GetCancellationTokenOnDestroy()).Forget();
+            await archerAnimationPlayer.PlayAttackAnimation(this.GetCancellationTokenOnDestroy());
 
+            Debug.Log("Attack");
             var attackValue = (playerParameter.baseAttackValue + playerParameter.addAttackValue) * playerParameter.attackMagnification;
             var damage = new Damage(attackValue, KnockbackType.None);
             target.ApplyDamage(damage);

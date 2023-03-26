@@ -22,7 +22,7 @@ namespace InGame.Players.Animators
         /// <param name="state">遷移後のステート</param>
         /// <param name="animator">レイヤーを持つアニメーター</param>
         /// <param name="token"></param>
-        public static async UniTask WaitAnimationTransition(int layerNum, int stateHash, Animator animator, CancellationToken token, HashType hashType=HashType.Tag)
+        public static async UniTask WaitAnimationTransition(int layerNum, int stateHash, Animator animator, CancellationToken token, HashType hashType=HashType.Tag, bool toState = true)
         {
             if (!animator) return;
 
@@ -44,7 +44,16 @@ namespace InGame.Players.Animators
                         Debug.LogError("無効な引数です");
                         break;
                 }
-                return currentStateHash == stateHash;
+
+                if (toState)
+                {
+                    return currentStateHash == stateHash;
+                }
+                else
+                {
+                    return currentStateHash != stateHash;
+                }
+                
                 
             }, cancellationToken: token);
         }

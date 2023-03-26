@@ -6,6 +6,7 @@ using UniRx;
 using InGame.Players.Animators;
 using VContainer.Unity;
 using VContainer;
+using UnityEditor.Animations;
 
 namespace InGame.Players.Archers
 {
@@ -34,20 +35,24 @@ namespace InGame.Players.Archers
 
         private void UpdateAttackAnimationSpeed()
         {
-            var animatorController = animator.runtimeAnimatorController;
-            var drawAnimation = animatorController.animationClips.Single(x => x.name == "Standing Draw Arrow");
-            var recoilAnimation = animatorController.animationClips.Single(x => x.name == "Standing Aim Recoil");
-            var normalAttackLength = drawAnimation.length + recoilAnimation.length;
+            //アニメーターにあるアニメーションを取得
+            var animatorController = animator.runtimeAnimatorController as AnimatorController;
+            var layer = animatorController.layers[(int)AnimatorLayerType.Attack];
+            var states = layer.stateMachine.states.Select(x => x.state);
+            //アニメーション自体の長さを取得
+            var drawAnimationLength = (states.Single(x => x.name == "Standing Draw Arrow").motion as AnimationClip).length;
+            var recoilAtackAnimationLength = (states.Single(x => x.name == "Standing Aim Recoil").motion as AnimationClip).length;
+            var normalAttackAnimationLength = drawAnimationLength + recoilAtackAnimationLength;
 
-            var spped = normalAttackLength / playerManager.playerParameter.AttackInterval;
-            Debug.Log(spped);
-            animator.SetFloat(AnimatorParameterHashes.NormalAttackInterval, spped);
+            //アニメーションの長さがインターバルと同じ長さになるように調整
+            var normalAttackSpped = normalAttackAnimationLength / playerManager.playerParameter.AttackInterval;
+            animator.SetFloat(AnimatorParameterHashes.NormalAttackSpeed, normalAttackSpped);
 
             playerManager.playerParameter.ObserveEveryValueChanged(x => x.AttackInterval)
                 .Subscribe(interval =>
                 {
-                    var spped = normalAttackLength / interval;
-                    animator.SetFloat(AnimatorParameterHashes.NormalAttackInterval, spped);
+                    var normalAttackSpped = normalAttackAnimationLength / playerManager.playerParameter.AttackInterval;
+                    animator.SetFloat(AnimatorParameterHashes.NormalAttackSpeed, normalAttackSpped);
                 })
                 .AddTo(this);
 

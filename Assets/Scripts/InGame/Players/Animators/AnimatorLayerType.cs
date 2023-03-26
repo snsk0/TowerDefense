@@ -7,5 +7,6 @@ namespace InGame.Players.Animators
     public enum AnimatorLayerType
     {
         Base,
+        Attack
     }
 }

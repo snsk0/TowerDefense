@@ -13,21 +13,24 @@ namespace InGame.Players
 {
     public class PlayerController : ControllerBase, IDisposable
     {
-        private readonly CameraManager cameraManager;
+        protected readonly CameraManager cameraManager;
+        protected readonly PlayerManager playerManager;
         protected readonly PlayerInput playerInput = new PlayerInput();
 
         protected GameObject currentControlledPlayerObj;
-        private PlayerMover playerMover;
+        
+        protected PlayerMover playerMover;
         private PlayerJumper playerJumper;
         private PlayerAvoider playerAvoider;
         //protected PlayerAttacker playerAttacker;
 
-        private CancellationTokenSource tokenSource;
+        protected CancellationTokenSource tokenSource;
 
         [Inject]
-        public PlayerController(CameraManager cameraManager)
+        public PlayerController(CameraManager cameraManager, PlayerManager playerManager)
         {
             this.cameraManager = cameraManager;
+            this.playerManager = playerManager;
         }
 
         public virtual void StartControll(GameObject playerObject)
@@ -72,7 +75,7 @@ namespace InGame.Players
 
         }
 
-        private async UniTask MovePlayerAsync(CancellationToken token)
+        protected async UniTask MovePlayerAsync(CancellationToken token)
         {
             while (true)
             {
