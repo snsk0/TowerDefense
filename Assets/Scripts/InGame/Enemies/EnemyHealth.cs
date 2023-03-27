@@ -7,7 +7,7 @@ namespace InGame.Enemies
 {
     public class EnemyHealth : MonoBehaviour
     {
-        public int currentHP { get; private set; } = 100;
+        public int currentHP { get; private set; } = 1;
 
         private readonly ReactiveProperty<bool> hadDeadReactiveProperty = new ReactiveProperty<bool>(false);
         public IReadOnlyReactiveProperty<bool> HadDeadReactiveProperty => hadDeadReactiveProperty;

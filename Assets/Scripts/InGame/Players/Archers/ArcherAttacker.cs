@@ -24,7 +24,7 @@ namespace InGame.Players.Archers
 
             await archerAnimationPlayer.PlayNormalAttackAnimation(this.GetCancellationTokenOnDestroy());
 
-            var attackValue = (playerParameter.baseAttackValue + playerParameter.addAttackValue) * playerParameter.attackMagnification;
+            var attackValue = playerParameter.GetCalculatedValue(PlayerParameterType.AttackValue);
             var damage = new Damage(attackValue, KnockbackType.None);
             target.ApplyDamage(damage);
         }
@@ -43,7 +43,7 @@ namespace InGame.Players.Archers
             StartCoolTimeCount(this.GetCancellationTokenOnDestroy()).Forget();
             await archerAnimationPlayer.PlaySpecialAttackAnimation(this.GetCancellationTokenOnDestroy());
 
-            var attackValue = (playerParameter.baseAttackValue + playerParameter.addAttackValue) * playerParameter.attackMagnification * 6;
+            var attackValue = playerParameter.GetCalculatedValue(PlayerParameterType.AttackValue) * 6;
             var damage = new Damage(attackValue, KnockbackType.None);
             target.ApplyDamage(damage);
         }
