@@ -13,30 +13,108 @@
             "Magnification":1
         },
         {
-            "ParameterType":2,
-            "BaseValue":1,
-            "AddValue":0,
-            "Magnification":1
+          "ParameterType": 2,
+          "BaseValue": 1,
+          "AddValue": 0,
+          "Magnification": 1
+        },
+        {
+          "ParameterType": 3,
+          "BaseValue": 0.5,
+          "AddValue": 0,
+          "Magnification": 1
+        },
+        {
+          "ParameterType": 4,
+          "BaseValue": 8,
+          "AddValue": 0,
+          "Magnification": 1
+        },
+        {
+          "ParameterType": 5,
+          "BaseValue": 1,
+          "AddValue": 0,
+          "Magnification": 1
+        },
+        {
+          "ParameterType": 6,
+          "BaseValue": 500,
+          "AddValue": 0,
+          "Magnification": 1
+        },
+        {
+          "ParameterType": 7,
+          "BaseValue": 0.5,
+          "AddValue": 0,
+          "Magnification": 1
+        },
+        {
+          "ParameterType": 8,
+          "BaseValue": 500,
+          "AddValue": 0,
+          "Magnification": 1
         }
     ],
-    "Archer":[
-        {
-            "ParameterType":0,
-            "BaseValue":100,
-            "AddValue":0,
-            "Magnification":1
-        },
-        {
-            "ParameterType":1,
-            "BaseValue":1,
-            "AddValue":0,
-            "Magnification":1
-        },
-        {
-            "ParameterType":2,
-            "BaseValue":1,
-            "AddValue":0,
-            "Magnification":1
-        }
-    ]
+  "Archer": [
+      {
+        "ParameterType": 0,
+        "BaseValue": 100,
+        "AddValue": 0,
+        "Magnification": 1
+      },
+      {
+        "ParameterType": 1,
+        "BaseValue": 1,
+        "AddValue": 0,
+        "Magnification": 1
+      },
+      {
+        "ParameterType": 2,
+        "BaseValue": 1,
+        "AddValue": 0,
+        "Magnification": 1
+      },
+      {
+        "ParameterType": 2,
+        "BaseValue": 1,
+        "AddValue": 0,
+        "Magnification": 1
+      },
+      {
+        "ParameterType": 3,
+        "BaseValue": 0.5,
+        "AddValue": 0,
+        "Magnification": 1
+      },
+      {
+        "ParameterType": 4,
+        "BaseValue": 8,
+        "AddValue": 0,
+        "Magnification": 1
+      },
+      {
+        "ParameterType": 5,
+        "BaseValue": 1,
+        "AddValue": 0,
+        "Magnification": 1
+      },
+      {
+        "ParameterType": 6,
+        "BaseValue": 500,
+        "AddValue": 0,
+        "Magnification": 1
+      },
+      {
+        "ParameterType": 7,
+        "BaseValue": 0.5,
+        "AddValue": 0,
+        "Magnification": 1
+      },
+      {
+        "ParameterType": 8,
+        "BaseValue": 500,
+        "AddValue": 0,
+        "Magnification": 1
+      }
+  ]
 }

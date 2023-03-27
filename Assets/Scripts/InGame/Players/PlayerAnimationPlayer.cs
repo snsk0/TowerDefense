@@ -51,15 +51,15 @@ namespace InGame.Players
         {
             //TODO:アニメーションの実行に書き換える
             var time = 0f;
-            var avoidDistance = (playerParameter.baseAvoidDistance + playerParameter.addAvoidDistance) * playerParameter.avoidDistanceMagnification;
-            var invisicibleTime = (playerParameter.baseInvincibleTime + playerParameter.addinvincibleTime) * playerParameter.invincibleTimeMagnification;
+            var distance = playerParameter.GetCalculatedValue(PlayerParameterType.SprintDistance);
+            var invisicibleTime = playerParameter.GetCalculatedValue(PlayerParameterType.invincibleTime);
 
             //回避時間が経過するまで回避方向に力を与える
             this.FixedUpdateAsObservable()
                 .TakeWhile(_ => time < invisicibleTime)
                 .Subscribe(_ =>
                 {
-                    rigidbody.AddForce(playerInput.MoveVec * avoidDistance);
+                    rigidbody.AddForce(playerInput.MoveVec * distance);
                     time += Time.deltaTime;
                 })
                 .AddTo(this);

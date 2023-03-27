@@ -24,7 +24,7 @@ namespace InGame.Players
         protected async UniTaskVoid StartCoolTimeCount(CancellationToken token)
         {
             usableSpecial = false;
-            var time = playerParameter.SpecialAttackCoolTime;
+            var time = playerParameter.GetCalculatedValue(PlayerParameterType.SpecialAttackCoolTime);
             while (true)
             {
                 await UniTask.DelayFrame(1, cancellationToken: token);
