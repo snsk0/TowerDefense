@@ -19,7 +19,7 @@ namespace InGame.Enhancements
         [SerializeField] private Button defenceValueOneUpButton;
         [SerializeField] private Button defenceValueTenUpButton;
         [SerializeField] private Button closeButton;
-        [SerializeField] private TMP_Text pointText;
+        [SerializeField] private TMP_Text[] pointTextArray;
 
         private readonly ISubject<KeyValuePair<PlayerParameterType, int>> parameterUpButtonClickSubject = new Subject<KeyValuePair<PlayerParameterType, int>>();
         public IObservable<KeyValuePair<PlayerParameterType, int>> parameterUpButtonClickObservable => parameterUpButtonClickSubject;
@@ -54,7 +54,10 @@ namespace InGame.Enhancements
 
         public void SetPointText(int point)
         {
-            pointText.text = $"point:{point}";
+            foreach(var text in pointTextArray)
+            {
+                text.text= $"point:{point}";
+            }
         }
 
         //+1のボタンの表示のセット
