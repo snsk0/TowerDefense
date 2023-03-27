@@ -21,6 +21,10 @@ MonoBehaviour:
     m_Address: UpperBodyMask
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: a90c0d2272c367046af9e111a72811d0
+    m_Address: PlayerParameter
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: d5951ff33cc1899419f29ad293143edd, type: 2}
   m_SchemaSet:

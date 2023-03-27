@@ -6,9 +6,9 @@ namespace InGame.Players
 {
     public enum PlayerParameterType
     {
-        HP,
-        AttackPower,
-        DefencePower,
-        MoveSpeed,
+        HP=0,
+        AttackValue=1,
+        DefenceValue=2,
+        //MoveSpeed,
     }
 }

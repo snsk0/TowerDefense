@@ -22,7 +22,7 @@ namespace InGame.Players.Fighters
                 .Where(enemy => enemy != null)
                 .Subscribe(enemy =>
                 {
-                    var attackValue = (playerParameter.baseAttackValue + playerParameter.addAttackValue) * playerParameter.attackMagnification;
+                    var attackValue = playerParameter.GetCalculatedValue(PlayerParameterType.AttackValue);
                     var damage = new Damage(attackValue, KnockbackType.None);
                     enemy.ApplyDamage(damage);
                 })
@@ -34,7 +34,7 @@ namespace InGame.Players.Fighters
                 .Where(enemy => enemy != null)
                 .Subscribe(enemy =>
                 {
-                    var attackValue = (playerParameter.baseAttackValue + playerParameter.addAttackValue) * playerParameter.attackMagnification * 3f;
+                    var attackValue = playerParameter.GetCalculatedValue(PlayerParameterType.AttackValue) * 3f;
                     var damage = new Damage(attackValue, KnockbackType.None);
                     enemy.ApplyDamage(damage);
                 })

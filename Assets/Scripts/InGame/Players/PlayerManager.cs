@@ -28,18 +28,22 @@ namespace InGame.Players
         {
             currentPlayerObject = playerGenerator.GeneratePlayer(playerCharacterType);
             InitPlayer(playerCharacterType);
-
-            generatedPlayerSubject.OnNext(currentPlayerObject);
         }
 
         private void InitPlayer(PlayerCharacterType playerCharacterType)
         {
-            playerParameter = new PlayerParameter(playerCharacterType);
+            playerParameter = new PlayerParameter(playerCharacterType, InitComponent);
+        }
+
+        private void InitComponent()
+        {
             currentPlayerObject.GetComponent<PlayerAttacker>().Init(playerParameter);
             currentPlayerObject.GetComponent<PlayerAnimationPlayer>().Init(playerParameter);
             currentPlayerObject.GetComponent<PlayerAvoider>().Init(playerParameter);
             currentPlayerObject.GetComponent<PlayerMover>().Init(playerParameter);
             currentPlayerObject.GetComponent<PlayerHealth>().Init(playerParameter);
+
+            generatedPlayerSubject.OnNext(currentPlayerObject);
         }
     }
 }

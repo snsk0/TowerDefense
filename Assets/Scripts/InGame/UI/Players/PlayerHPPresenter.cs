@@ -40,9 +40,9 @@ namespace InGame.UI.Players
             playerHealth.ObserveEveryValueChanged(x => x.currentHP)
                 .Subscribe(hp =>
                 {
-                    var rate = (float)hp / playerParameter.MaxHP;
+                    var rate = hp / playerParameter.GetCalculatedValue(PlayerParameterType.HP);
                     playerHPView.ViewHPBar(rate);
-                    playerHPView.ViewHPValue(hp, playerParameter.MaxHP);
+                    playerHPView.ViewHPValue(hp, Mathf.FloorToInt(playerParameter.GetCalculatedValue(PlayerParameterType.HP)));
                 })
                 .AddTo(this);
         }

@@ -1,10 +1,10 @@
-using InGame.Enhancements;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 using UniRx;
+using InGame.UI.Enhancements;
 
 namespace InGame.Cursors
 {
