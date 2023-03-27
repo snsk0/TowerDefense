@@ -22,6 +22,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private CursorController cursorController;
     [SerializeField] private TargetPointerView targetPointerView;
     [SerializeField] private PlayerHPView playerHPView;
+    [SerializeField] private AttackCoolTimeView attackCoolTimeView;
 
     protected override void Configure(IContainerBuilder builder)
     {
@@ -31,6 +32,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterEntryPoint<CameraSetUpPresenter>();
         builder.RegisterEntryPoint<CursorPresenter>();
         builder.RegisterEntryPoint<PlayerHPPresenter>();
+        builder.RegisterEntryPoint<AttackCoolTimePresenter>();
         
         builder.Register<PlayerManager>(Lifetime.Singleton);
         builder.Register<EnemyManager>(Lifetime.Singleton);
@@ -61,5 +63,6 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(cursorController);
         builder.RegisterComponent(targetPointerView);
         builder.RegisterComponent(playerHPView);
+        builder.RegisterComponent(attackCoolTimeView);
     }
 }
