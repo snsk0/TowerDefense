@@ -79,6 +79,8 @@ namespace InGame.UI.Enhancements
             movePanelButton.onClick.AddListener(() => ChangePanel(moveParameterPanel));
 
             closeButton.onClick.AddListener(()=>HidePanel());
+
+            currentOpenedPanel = baseParameterPanel;
         }
 
         public void ViewPanel()
