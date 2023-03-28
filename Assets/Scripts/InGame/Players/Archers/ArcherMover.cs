@@ -32,7 +32,7 @@ namespace InGame.Players.Archers
 
             if (archerAnimationPlayer.IsAiming)
             {
-                var moveSpeed = (playerParameter.baseMoveSpeed + playerParameter.addMoveSpeed) * playerParameter.moveSpeedMagnification * 0.9f;
+                var moveSpeed =playerParameter.GetCalculatedValue(PlayerParameterType.MoveSpeed) * 0.9f;
                 var velocity = moveVec * moveSpeed + new Vector3(0, rigidbody.velocity.y, 0);
                 rigidbody.velocity = velocity;
 
@@ -40,7 +40,7 @@ namespace InGame.Players.Archers
             }
             else
             {
-                var moveSpeed = (playerParameter.baseMoveSpeed + playerParameter.addMoveSpeed) * playerParameter.moveSpeedMagnification;
+                var moveSpeed = playerParameter.GetCalculatedValue(PlayerParameterType.MoveSpeed);
                 var velocity = moveVec * moveSpeed + new Vector3(0, rigidbody.velocity.y, 0);
                 rigidbody.velocity = velocity;
                 transform.LookAt(transform.position + moveVec);

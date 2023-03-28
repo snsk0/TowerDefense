@@ -46,6 +46,12 @@ namespace InGame.UI.Enhancements
         [SerializeField] private EnhancementUIElements[] enhansementUIElementsList;
 
         [SerializeField] private GameObject enhancementPanel;
+        [SerializeField] private GameObject baseParameterPanel;
+        [SerializeField] private GameObject attackParameterPanel;
+        [SerializeField] private GameObject moveParameterPanel;
+        [SerializeField] private Button basePanelButton;
+        [SerializeField] private Button attackPanelButton;
+        [SerializeField] private Button movePanelButton;
         [SerializeField] private Button closeButton;
         [SerializeField] private TMP_Text[] pointTextArray;
 
@@ -53,7 +59,9 @@ namespace InGame.UI.Enhancements
         public IObservable<EnhancementStruct> parameterUpButtonClickObservable => parameterUpButtonClickSubject;
 
         private readonly ISubject<bool> viewPanelSubject = new Subject<bool>();
-        public IObservable<bool> ViewPanelObservable => viewPanelSubject; 
+        public IObservable<bool> ViewPanelObservable => viewPanelSubject;
+
+        private GameObject currentOpenedPanel;
 
         private void Start()
         {
@@ -66,7 +74,13 @@ namespace InGame.UI.Enhancements
                 }
             }
 
+            basePanelButton.onClick.AddListener(() => ChangePanel(baseParameterPanel));
+            attackPanelButton.onClick.AddListener(() => ChangePanel(attackParameterPanel));
+            movePanelButton.onClick.AddListener(() => ChangePanel(moveParameterPanel));
+
             closeButton.onClick.AddListener(()=>HidePanel());
+
+            currentOpenedPanel = baseParameterPanel;
         }
 
         public void ViewPanel()
@@ -90,6 +104,13 @@ namespace InGame.UI.Enhancements
             }
         }
 
+        private void ChangePanel(GameObject panel)
+        {
+            currentOpenedPanel?.SetActive(false);
+            panel.SetActive(true);
+            currentOpenedPanel = panel;
+        }
+
         //強化のボタンのが使用可能か設定する
         public void SetInteractableButtons(int currentPoint)
         {
@@ -110,7 +131,6 @@ namespace InGame.UI.Enhancements
             {
                 Debug.LogError("パラメータに適したUIが設定されていません");
             }
-            Debug.Log(value + "," + magnification);
             UI.SetValueText($"{value}(x{magnification.ToString(".00")})");
         }
     }

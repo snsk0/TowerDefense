@@ -39,7 +39,7 @@ namespace InGame.UI.Players
                 .Subscribe(time =>
                 {
                     var count = Mathf.CeilToInt(time);
-                    var rate = 1 - (time / playerManager.playerParameter.SpecialAttackCoolTime);
+                    var rate = 1 - (time / playerManager.playerParameter.GetCalculatedValue(PlayerParameterType.SpecialAttackCoolTime));
                     attackCoolTimeView.ViewSpecialAttackCoolTime(count, rate);
                 })
                 .AddTo(this);

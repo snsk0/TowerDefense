@@ -9,6 +9,11 @@ namespace InGame.Players
         HP=0,
         AttackValue=1,
         DefenceValue=2,
-        //MoveSpeed,
+        NormalAttackSpeed=3,
+        SpecialAttackCoolTime=4,
+        MoveSpeed=5,
+        SprintDistance=6,
+        invincibleTime=7,
+        JumpPower=8,
     }
 }
