@@ -2240,7 +2240,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8178523679987528952}
   - component: {fileID: 2855246017471393410}
-  - component: {fileID: 764769760529554159}
   - component: {fileID: 5595587250349675436}
   - component: {fileID: 8981241043419151933}
   - component: {fileID: 169320948769926677}
@@ -2293,20 +2292,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!114 &764769760529554159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8805702032657133122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c6cbbf0a809026469239e3720c5d23b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerDamagable: {fileID: 5595587250349675436}
-  playerAnimationPlayer: {fileID: 7104002880429449402}
 --- !u!114 &5595587250349675436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2419,6 +2404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 1160088827661224109}
   playerAnimationPlayer: {fileID: 7104002880429449402}
+  playerDamagable: {fileID: 5595587250349675436}
 --- !u!1001 &1330432553617881681
 PrefabInstance:
   m_ObjectHideFlags: 0

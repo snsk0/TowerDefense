@@ -23,13 +23,6 @@ namespace InGame.Players
         public PlayerBaseStateType currentBaseState { get; protected set; }
         public PlayerAttackStateType currentAttackState { get; protected set; }
 
-        //public bool IsAttacking { get; protected set; }
-        //public bool IsJumping { get; private set; }
-        //public bool IsLanding { get; private set; }
-
-        //public bool IsIdle => animator.GetCurrentAnimatorStateInfo((int)AnimatorLayerType.Base).tagHash == AnimatorStateHashes.Idle;
-        //public bool IsAttackMotion => animator.GetCurrentAnimatorStateInfo((int)AnimatorLayerType.Base).tagHash == AnimatorStateHashes.Attack;
-
         public void Init(PlayerParameter playerParameter)
         {
             this.playerParameter = playerParameter;
@@ -47,46 +40,30 @@ namespace InGame.Players
             animator.SetBool(AnimatorParameterHashes.Run, false);
         }
 
-        public async UniTask PlayAvoidAnimationAsync(CancellationToken token)
+        public void StartAvoidAnimation()
         {
-            //TODO:アニメーションの実行に書き換える
-            var time = 0f;
-            var distance = playerParameter.GetCalculatedValue(PlayerParameterType.SprintDistance);
-            var invisicibleTime = playerParameter.GetCalculatedValue(PlayerParameterType.invincibleTime);
+            currentBaseState = PlayerBaseStateType.Sprint;
+            animator.SetBool(AnimatorParameterHashes.Sprint, true);
+        }
 
-            //回避時間が経過するまで回避方向に力を与える
-            this.FixedUpdateAsObservable()
-                .TakeWhile(_ => time < invisicibleTime)
-                .Subscribe(_ =>
-                {
-                    rigidbody.AddForce(playerInput.MoveVec * distance);
-                    time += Time.deltaTime;
-                })
-                .AddTo(this);
+        public void EndAvoidAnimation()
+        {
+            currentBaseState = PlayerBaseStateType.Idle;
+            animator.SetBool(AnimatorParameterHashes.Sprint, false);
         }
 
         public async UniTask PlayJumpAnimation(CancellationToken token, Action jumpCallback = null)
         {
-            //if (IsAttacking)
-            //    return;
-
-            //if (IsJumping)
-            //    return;
-
             currentBaseState = PlayerBaseStateType.Jump;
 
             animator.SetTrigger(AnimatorParameterHashes.Jump);
-            //IsJumping = true;
             //実際に浮き始めるまで待機
             await AnimationTransitionWaiter.WaitStateTime(0.25f, (int)AnimatorLayerType.Base, AnimatorStateHashes.Jump, animator, token);
             jumpCallback?.Invoke();
             //着地まで待機
             await AnimationTransitionWaiter.WaitStateTime(0.57f, (int)AnimatorLayerType.Base, AnimatorStateHashes.Jump, animator, token);
-            //IsLanding = true;
             //Idleモーションに遷移するまで待機
             await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.Base, AnimatorStateHashes.Idle, animator, token);
-            //IsJumping = false;
-            //IsLanding = false;
 
             currentBaseState = PlayerBaseStateType.Idle;
         }

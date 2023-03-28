@@ -39,7 +39,6 @@ namespace InGame.Players
         {
             currentPlayerObject.GetComponent<PlayerAttacker>().Init(playerParameter);
             currentPlayerObject.GetComponent<PlayerAnimationPlayer>().Init(playerParameter);
-            currentPlayerObject.GetComponent<PlayerAvoider>().Init(playerParameter);
             currentPlayerObject.GetComponent<PlayerMover>().Init(playerParameter);
             currentPlayerObject.GetComponent<PlayerHealth>().Init(playerParameter);
 

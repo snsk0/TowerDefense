@@ -75,12 +75,6 @@
         "Magnification": 1
       },
       {
-        "ParameterType": 2,
-        "BaseValue": 1,
-        "AddValue": 0,
-        "Magnification": 1
-      },
-      {
         "ParameterType": 3,
         "BaseValue": 0.5,
         "AddValue": 0,

@@ -12,6 +12,7 @@ namespace InGame.Players.Animators
         public static int SpecialAttack => Animator.StringToHash("SpecialAttack");
         public static int Jump => Animator.StringToHash("Jump");
         public static int Run => Animator.StringToHash("Run");
+        public static int Sprint => Animator.StringToHash("Sprint");
         public static int NormalAttackSpeed => Animator.StringToHash("NormalAttackSpeed");
 
         //ファイター用
