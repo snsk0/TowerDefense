@@ -13,7 +13,7 @@ namespace InGame.Players
         SpecialAttackCoolTime=4,
         MoveSpeed=5,
         SprintDistance=6,
-        invincibleTime=7,
+        InvincibleTime=7,
         JumpPower=8,
     }
 }

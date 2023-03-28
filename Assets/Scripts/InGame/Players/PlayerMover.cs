@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
 namespace InGame.Players
@@ -8,6 +10,7 @@ namespace InGame.Players
     {
         [SerializeField] protected Rigidbody rigidbody;
         [SerializeField] protected PlayerAnimationPlayer playerAnimationPlayer;
+        [SerializeField] private PlayerDamagable playerDamagable;
 
         protected PlayerParameter playerParameter;
 
@@ -40,6 +43,25 @@ namespace InGame.Players
             {
                 playerAnimationPlayer.PlayRunAnimation();
             }
+        }
+
+        public void Sprint(Vector3 dir)
+        {
+            playerAnimationPlayer.PlayAvoidAnimation();
+            playerDamagable.SetDamagable(false);
+
+            float elaspedTime = 0f;
+            float invincibleTime = playerParameter.GetCalculatedValue(PlayerParameterType.InvincibleTime);
+            
+            //‰ñ”ðŽžŠÔ‚ªŒo‰ß‚·‚é‚Ü‚Å‰ñ”ð•ûŒü‚É—Í‚ð—^‚¦‚é
+            this.FixedUpdateAsObservable()
+                .TakeWhile(_ => elaspedTime < invincibleTime)
+                .Subscribe(_ =>
+                {
+                    rigidbody.AddForce(dir* playerParameter.GetCalculatedValue(PlayerParameterType.SprintDistance));
+                    elaspedTime += Time.deltaTime;
+                },()=>playerDamagable.SetDamagable(true))
+                .AddTo(this);
         }
     }
 }

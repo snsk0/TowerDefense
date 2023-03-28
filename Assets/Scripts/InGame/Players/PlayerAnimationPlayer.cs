@@ -47,22 +47,9 @@ namespace InGame.Players
             animator.SetBool(AnimatorParameterHashes.Run, false);
         }
 
-        public async UniTask PlayAvoidAnimationAsync(CancellationToken token)
+        public void PlayAvoidAnimation()
         {
-            //TODO:アニメーションの実行に書き換える
-            var time = 0f;
-            var distance = playerParameter.GetCalculatedValue(PlayerParameterType.SprintDistance);
-            var invisicibleTime = playerParameter.GetCalculatedValue(PlayerParameterType.invincibleTime);
-
-            //回避時間が経過するまで回避方向に力を与える
-            this.FixedUpdateAsObservable()
-                .TakeWhile(_ => time < invisicibleTime)
-                .Subscribe(_ =>
-                {
-                    rigidbody.AddForce(playerInput.MoveVec * distance);
-                    time += Time.deltaTime;
-                })
-                .AddTo(this);
+            
         }
 
         public async UniTask PlayJumpAnimation(CancellationToken token, Action jumpCallback = null)

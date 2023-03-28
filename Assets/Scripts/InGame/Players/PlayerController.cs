@@ -21,7 +21,6 @@ namespace InGame.Players
         
         protected PlayerMover playerMover;
         private PlayerJumper playerJumper;
-        private PlayerAvoider playerAvoider;
         //protected PlayerAttacker playerAttacker;
 
         protected CancellationTokenSource tokenSource;
@@ -39,7 +38,6 @@ namespace InGame.Players
 
             playerMover = playerObject.GetComponent<PlayerMover>();
             playerJumper = playerObject.GetComponent<PlayerJumper>();
-            playerAvoider = playerObject.GetComponent<PlayerAvoider>();
 
             tokenSource?.Cancel();
             tokenSource = new CancellationTokenSource();
@@ -64,7 +62,9 @@ namespace InGame.Players
                 .Where(x => x)
                 .Subscribe(_ =>
                 {
-                    playerAvoider.Avoid();
+                    var sprintVec = cameraManager.mainCameraTransform.TransformDirection(playerInput.MoveVec).normalized;
+                    sprintVec.y = 0;
+                    playerMover.Sprint(sprintVec);
                 })
                 .AddTo(this);
 
