@@ -47,20 +47,31 @@ namespace InGame.Players
 
         public void Sprint(Vector3 dir)
         {
-            playerAnimationPlayer.PlayAvoidAnimation();
+            if (playerAnimationPlayer.currentAttackState != PlayerAttackStateType.None)
+                return;
+
+            if (playerAnimationPlayer.currentBaseState == PlayerBaseStateType.Jump)
+                return;
+
+            playerAnimationPlayer.StartAvoidAnimation();
             playerDamagable.SetDamagable(false);
 
             float elaspedTime = 0f;
             float invincibleTime = playerParameter.GetCalculatedValue(PlayerParameterType.InvincibleTime);
-            
+
             //‰ñ”ðŽžŠÔ‚ªŒo‰ß‚·‚é‚Ü‚Å‰ñ”ð•ûŒü‚É—Í‚ð—^‚¦‚é
             this.FixedUpdateAsObservable()
                 .TakeWhile(_ => elaspedTime < invincibleTime)
                 .Subscribe(_ =>
                 {
-                    rigidbody.AddForce(dir* playerParameter.GetCalculatedValue(PlayerParameterType.SprintDistance));
+                    rigidbody.AddForce(dir * playerParameter.GetCalculatedValue(PlayerParameterType.SprintDistance));
                     elaspedTime += Time.deltaTime;
-                },()=>playerDamagable.SetDamagable(true))
+                }, 
+                () => 
+                {
+                    playerDamagable.SetDamagable(true);
+                    playerAnimationPlayer.EndAvoidAnimation();
+                })
                 .AddTo(this);
         }
     }
