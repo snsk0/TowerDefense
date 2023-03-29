@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Tests/TestScene_PlayerControll.unity
     guid: 17e8e1752c51f5d48830f5d86af2f1fc
+  - enabled: 1
+    path: Assets/Scenes/WaveSample.unity
+    guid: 662d61730cc22154396926a87323c56e
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: ba8571bc19806e545b0035184d0d4f57, type: 2}

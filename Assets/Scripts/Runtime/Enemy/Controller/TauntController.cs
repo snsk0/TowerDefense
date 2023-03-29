@@ -144,9 +144,9 @@ namespace Runtime.Enemy.Controller
             base.OnEnable();
 
             //ƒwƒCƒg‰Šú‰»
-            GameObject player = GameObject.Find("Player");
+            //GameObject player = GameObject.Find("Player");
             GameObject tower = GameObject.Find("Tower");
-            hate.AddHate(0, player);
+            //hate.AddHate(0, player);
             hate.AddHate(3, tower);
         }
     }

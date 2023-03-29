@@ -6,6 +6,8 @@ using UniRx;
 using UniRx.Triggers;
 
 using Runtime.Enemy.Parameter;
+using InGame.Players;
+using InGame.Damages;
 
 namespace Runtime.Enemy.Component.Attack
 {
@@ -46,15 +48,16 @@ namespace Runtime.Enemy.Component.Attack
             {
                 hitedList.Add(other.gameObject);
 
-                IDamagable damagable = other.GetComponent<IDamagable>();
+                IPlayerDamagable damagable = other.GetComponent<IPlayerDamagable>();
+                damagable?.ApplyDamage(new Damage(parameter.attack, KnockbackType.None));
 
-                if(damagable != null)
-                {
-                    if(!(damagable is EnemyController))
-                    {
-                        damagable.Damage(parameter.attack, 1, this.gameObject);
-                    }
-                }
+                //if(damagable != null)
+                //{
+                //    if(!(damagable is EnemyController))
+                //    {
+                //        damagable.Damage(parameter.attack, 1, this.gameObject);
+                //    }
+                //}
             }
         }
 

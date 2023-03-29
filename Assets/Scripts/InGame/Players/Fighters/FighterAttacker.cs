@@ -6,6 +6,7 @@ using UnityEngine;
 using UniRx;
 using InGame.Damages;
 using InGame.Enemies;
+using Runtime.Enemy;
 
 namespace InGame.Players.Fighters
 {
@@ -18,25 +19,27 @@ namespace InGame.Players.Fighters
         private void Start()
         {
             fighterNormalAttackCollider.OnTriggerEnterAsObservable()
-                .Select(trigger => trigger.GetComponent<IEnemyDamagable>())
+                .Select(trigger => trigger.GetComponent<IDamagable>())
                 .Where(enemy => enemy != null)
                 .Subscribe(enemy =>
                 {
                     var attackValue = playerParameter.GetCalculatedValue(PlayerParameterType.AttackValue);
-                    var damage = new Damage(attackValue, KnockbackType.None);
-                    enemy.ApplyDamage(damage);
+                    //var damage = new Damage(attackValue, KnockbackType.None);
+                    //enemy.ApplyDamage(damage);
+                    enemy.Damage(attackValue, 1, gameObject);
                 })
                 .AddTo(this);
 
 
             fighterSpecialAttackCollider.OnTriggerEnterAsObservable()
-                .Select(trigger => trigger.GetComponent<IEnemyDamagable>())
+                .Select(trigger => trigger.GetComponent<IDamagable>())
                 .Where(enemy => enemy != null)
                 .Subscribe(enemy =>
                 {
                     var attackValue = playerParameter.GetCalculatedValue(PlayerParameterType.AttackValue) * 3f;
-                    var damage = new Damage(attackValue, KnockbackType.None);
-                    enemy.ApplyDamage(damage);
+                    //var damage = new Damage(attackValue, KnockbackType.None);
+                    //enemy.ApplyDamage(damage);
+                    enemy.Damage(attackValue, 1, gameObject);
                 })
                 .AddTo(this);
         }

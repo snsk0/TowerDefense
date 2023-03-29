@@ -35,12 +35,12 @@ public class GameLifetimeScope : LifetimeScope
     protected override void Configure(IContainerBuilder builder)
     {
         builder.RegisterEntryPoint<PlayerGeneratePresenter>();
-        builder.RegisterEntryPoint<EnhancementPresenter>();
-        builder.RegisterEntryPoint<EnemyGeneratePresenter>();
+        //builder.RegisterEntryPoint<EnhancementPresenter>();
+        //builder.RegisterEntryPoint<EnemyGeneratePresenter>();
         builder.RegisterEntryPoint<CameraSetUpPresenter>();
         builder.RegisterEntryPoint<CursorPresenter>();
-        builder.RegisterEntryPoint<PlayerHPPresenter>();
-        builder.RegisterEntryPoint<AttackCoolTimePresenter>();
+        //builder.RegisterEntryPoint<PlayerHPPresenter>();
+        //builder.RegisterEntryPoint<AttackCoolTimePresenter>();
 
         builder.Register<PlayerBackpack>(Lifetime.Singleton);
         builder.Register<TargetManager>(Lifetime.Singleton);
@@ -72,10 +72,10 @@ public class GameLifetimeScope : LifetimeScope
                 break;
         }
         
-        builder.RegisterComponent(enhancementView);
+        //builder.RegisterComponent(enhancementView);
         builder.RegisterComponent(cursorController);
-        builder.RegisterComponent(targetPointerView);
-        builder.RegisterComponent(playerHPView);
-        builder.RegisterComponent(attackCoolTimeView);
+        //builder.RegisterComponent(targetPointerView);
+        //builder.RegisterComponent(playerHPView);
+        //builder.RegisterComponent(attackCoolTimeView);
     }
 }
