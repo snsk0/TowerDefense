@@ -70,14 +70,6 @@ namespace InGame.UI.Enhancements
                 })
                 .AddTo(this);
 
-            //敵から強化ポイントを取得したときの処理
-            enemyManager.DropedEnhancementPointObservable
-                .Subscribe(value =>
-                {
-                    playerBackpack.AddEnhancementPoint(value);
-                })
-                .AddTo(this);
-
             //現在の強化ポイントを表示
             playerBackpack.ObserveEveryValueChanged(x => x.enhancementPoint)
                 .Subscribe(point =>

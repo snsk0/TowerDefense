@@ -18,9 +18,6 @@ namespace InGame.Enemies
         private readonly List<GameObject> currentEnemyObjects = new List<GameObject>();
         public IEnumerable<GameObject> CurrentEnemyObjects => currentEnemyObjects.Where(x=>!x.GetComponent<EnemyHealth>().HadDeadReactiveProperty.Value);
 
-        private readonly ISubject<int> dropedEnhancementPointSubject = new Subject<int>();
-        public IObservable<int> DropedEnhancementPointObservable => dropedEnhancementPointSubject;
-
         [Inject]
         public EnemyManager(EnemyGenerator enemyGenerator, EnhancementPointObjectManager enhancementPointObjectManager)
         {

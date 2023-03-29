@@ -10,12 +10,12 @@ namespace InGame.DropItems
 {
     public class EnhancementPointObjectManager : ControllerBase
     {
-        private GameObject prefab;
-        private Transform poolParent;
-        private List<GameObject> objectPool = new List<GameObject>();
-        private EnhancementPointObjectGenerator generator;
-        private PlayerManager playerManager;
-        private PlayerBackpack playerBackpack;
+        private readonly GameObject prefab;
+        private readonly Transform poolParent;
+        private readonly List<GameObject> objectPool = new List<GameObject>();
+        private readonly EnhancementPointObjectGenerator  generator;
+        private readonly PlayerManager playerManager;
+        private readonly PlayerBackpack playerBackpack;
 
         public EnhancementPointObjectManager(GameObject prefab, Transform poolParent, EnhancementPointObjectGenerator generator,
             PlayerManager playerManager, PlayerBackpack playerBackpack)
