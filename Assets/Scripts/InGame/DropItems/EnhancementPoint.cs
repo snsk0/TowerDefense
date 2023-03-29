@@ -33,9 +33,17 @@ namespace InGame.DropItems
             this.point = point;
 
             pickedSubject = new Subject<int>();
+            SetFirstImpulse();
         }
 
-        public void Picked()
+        private void SetFirstImpulse()
+        {
+            var horizontalVec = Quaternion.Euler(new Vector3(0, UnityEngine.Random.Range(0f, 360f), 0)) * new Vector3(0.25f, 0, 0);
+            var impalse = (horizontalVec + Vector3.up)*5;
+            rigidbody.AddForce(impalse, ForceMode.Impulse);
+        }
+
+        private void Picked()
         {
             pickedSubject.OnNext(point);
             pickedSubject.OnCompleted();
@@ -44,13 +52,14 @@ namespace InGame.DropItems
         public void MoveToPlayer(Transform target, Action closedPlayerAction)
         {
             rigidbody.useGravity = false;
+            Func<Vector3> targetPosition = () => target.position + Vector3.up;
 
             this.FixedUpdateAsObservable()
-                .TakeWhile(_=>Vector3.Distance(target.position, transform.position) > 0.5f)
+                .TakeWhile(_=>Vector3.Distance(targetPosition(), transform.position) > 0.5f)
                 .Subscribe(_ =>
                 {
-                    var dir = (target.position - (transform.position + Vector3.up)).normalized;
-                    rigidbody.AddForce(dir * 100);
+                    var dir = (targetPosition() - transform.position).normalized;
+                    rigidbody.AddForce(dir * 10);
                 },
                 ()=>
                 {

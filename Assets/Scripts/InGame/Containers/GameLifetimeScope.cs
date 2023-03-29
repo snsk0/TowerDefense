@@ -1,4 +1,5 @@
 using Cinemachine;
+using InGame;
 using InGame.Cameras;
 using InGame.Cursors;
 using InGame.DropItems;
