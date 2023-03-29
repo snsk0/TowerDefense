@@ -1,46 +1,69 @@
 using UnityEngine;
 
-using UniRx;
-
 
 namespace Runtime.Enemy.Animation
 {
     public class EnemyAnimator : MonoBehaviour
     {
-        [SerializeField] private GameObject eventSender;
-        private IEnemyEventSender sender;
+        //アニメータ
+        [SerializeField] protected Animator animator;
 
 
-        [SerializeField] private Animator animator;
- 
-
-        //moveフラグ
-        private bool moved;
-
-        private void Start()
+        //立ちモーション
+        public virtual void PlayIdle()
         {
-            moved = false;
-            sender = eventSender.GetComponent<IEnemyEventSender>();
-
-            sender.onAttack.Subscribe(_ => animator.SetTrigger("Attack")).AddTo(this);
-            sender.onMove.Subscribe(_ =>
-            {
-                animator.SetBool("Move", true);
-                moved = true;
-            }).AddTo(this);
+            animator.SetBool("Walk", false);
+            animator.SetBool("Run", false);
         }
 
-        private void Update()
+
+        //歩き
+        public virtual void PlayWalk(Vector3 vector, float maxVelocity)
         {
-            if (moved)
-            {
-                moved = false;
-            }
-            else
-            {
-                animator.SetBool("Move", false);
-            }
+            vector = vector / maxVelocity;
+
+            animator.SetBool("Walk", true);
+            animator.SetFloat("Walk_X", vector.x);
+            animator.SetFloat("Walk_Z", vector.z);
+        }
+
+        
+        //走り
+        public virtual void PlayRun(Vector3 vector, float maxVelocity)
+        {
+            vector = vector / maxVelocity;
+
+            animator.SetBool("Run", true);
+            animator.SetFloat("Run_X", vector.x);
+            animator.SetFloat("Run_Z", vector.z);
+        }
+
+
+        //攻撃
+        public virtual void PlayAttack(int index)
+        {
+            animator.SetTrigger("Attack_" + index);
+        }
+        
+
+        //ノックバック
+        public virtual void PlayDamaged(int index)
+        {
+            animator.SetTrigger("Damaged_" + index);
+        }
+
+
+        //死亡
+        public virtual void PlayDeath()
+        {
+            animator.SetTrigger("Death");
+        }
+
+
+        //その他アニメーション
+        public virtual void PlayUnique(int index)
+        {
+            animator.SetTrigger("Unique_" + index);
         }
     }
-
 }

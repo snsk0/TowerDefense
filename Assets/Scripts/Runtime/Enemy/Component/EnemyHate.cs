@@ -1,13 +1,32 @@
 using System.Collections.Generic;
+
 using UnityEngine;
+
+using UniRx;
 
 
 namespace Runtime.Enemy.Component
 {
-    public class EnemyHate : MonoBehaviour
+    public class EnemyHate : MonoBehaviour, ITargetProvider
     {
         //ヘイト値管理
         private Dictionary<GameObject, float> hateMap;
+
+
+        //target(変更イベント含む)
+        private ReactiveProperty<GameObject> _target;
+        public IReadOnlyReactiveProperty<GameObject> target => _target;
+
+
+
+
+
+        //初期化
+        public void Initialize()
+        {
+            hateMap = new Dictionary<GameObject, float>();
+            _target = new ReactiveProperty<GameObject>();
+        }
 
 
 
@@ -25,21 +44,34 @@ namespace Runtime.Enemy.Component
                 float currentHate = hateMap[gameObject];
                 hateMap[gameObject] = currentHate + hate;
             }
+
+            //target更新
+            _target.Value = GetMaxHateObject();
+        }
+
+
+        //クリア
+        public void ClearHate(GameObject gameObject)
+        {
+            if (hateMap.ContainsKey(gameObject)) hateMap.Remove(gameObject);
+
+            //target更新
+            _target.Value = GetMaxHateObject();
         }
 
 
 
         //最大ヘイト値のオブジェクト取得
-        public GameObject GetMaxHateObject()
+        private GameObject GetMaxHateObject()
         {
             //比較用
             GameObject gameObject = null;
             float maxHate = 0;
 
             //全検索
-            foreach(KeyValuePair<GameObject, float> hatePair in hateMap)
+            foreach (KeyValuePair<GameObject, float> hatePair in hateMap)
             {
-                if(maxHate < hatePair.Value)
+                if (maxHate < hatePair.Value)
                 {
                     maxHate = hatePair.Value;
                     gameObject = hatePair.Key;
@@ -52,10 +84,11 @@ namespace Runtime.Enemy.Component
 
 
 
-        //初期化する
-        private void OnEnable()
+        //終了時に破棄
+        private void OnDisable()
         {
-            hateMap = new Dictionary<GameObject, float>();
+            hateMap = null;
+            _target.Dispose();
         }
     }
 }

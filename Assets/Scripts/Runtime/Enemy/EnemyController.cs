@@ -1,94 +1,95 @@
-using System;
-
 using UnityEngine;
 
 using UniRx;
 
-using Runtime.Enemy.Component;
+using StateMachines;
+using StateMachines.BlackBoards;
+
 using Runtime.Enemy.Parameter;
+using Runtime.Enemy.Component;
 
 
-namespace Runtime.Enemy 
+
+namespace Runtime.Enemy
 {
-    public class EnemyController : MonoBehaviour, IEnemyDamagable, IEnemyEventSender
+    public abstract class EnemyController : MonoBehaviour, IDamagable
     {
-        //敵のコンポーネント群
-        [SerializeField] private EnemyHealth health;
-        [SerializeField] private EnemyHate hate;
-        [SerializeField] private EnemyKnock knock;
-        [SerializeField] private EnemyMove move;
-        [SerializeField] private EnemyAttack attack;
+        //ステートマシン関連
+        protected StateMachine<EnemyController> stateMachine;
+        protected IBlackBoard blackBoard = new BlackBoard();
 
-        //パラメータ
+
+        //コンポーネント
+        [SerializeField] protected EnemyHealth health;
+        [SerializeField] protected EnemyHate hate;
         [SerializeField] private EnemyParameter _parameter;
         public EnemyParameter parameter => _parameter;
 
 
-        //イベント
-        private Subject<Unit> _onMove;
-        public IObservable<Unit> onMove => _onMove;
-        private Subject<Unit> _onAttack;
-        public IObservable<Unit> onAttack => _onAttack;
-        private Subject<EnemyDamageEvent> _onDamage;
-        public IObservable<EnemyDamageEvent> onDamage => _onDamage;
-
-
-
-        //ダメージ
-        public void Damage(float damage, float knock, float hate, GameObject cause)
-        {
-            //ダメージ
-            float damaged = health.Damage(damage);
-            _onDamage.OnNext(new EnemyDamageEvent(health.maxHealth, health.currentHealth, damage));
-
-            //ノックバック
-            float knocked = this.knock.KnockBack(transform.position - cause.transform.position, knock);
-
-            //ヘイト値
-            this.hate.AddHate(hate, cause);
-        }
-
-        //移動
-        public bool MoveToTarget()
-        {
-            bool moved = move.MoveToTarget(hate.GetMaxHateObject().transform.position);
-
-            if (moved) _onMove.OnNext(Unit.Default);
-            return moved;
-        }
-
-
-        //攻撃 攻撃動作にかかる時間を返す
-        public float Attack(int index)
-        {
-            _onAttack.OnNext(Unit.Default);
-            return attack.AttackToTarget(hate.GetMaxHateObject(), index);
-        }
-
+        //死亡フラグ
+        private ReactiveProperty<bool> _isDeathProperty;
+        public IReadOnlyReactiveProperty<bool> isDeathProperty => _isDeathProperty;
 
 
         //初期化
-        public void Initialize(int level)
+        protected void OnEnable()
         {
-            //パラメータ初期化
-            parameter.Initialize(level);
+            stateMachine.Reset();
+            parameter.Initialize(0);
+            health.Initialize();
+            hate.Initialize();
+            _isDeathProperty = new ReactiveProperty<bool>(false);
+        }
+
+        //Property破棄
+        protected void OnDisable()
+        {
+            //死亡フラグpropertyをDispose
+            _isDeathProperty.Dispose();
+
+            //外からアクセスしたblackBoardのvalueを初期化しておく
+            blackBoard.SetValue<Vector3>("Damaged", Vector3.zero);
+            blackBoard.SetValue<bool>("Death", false);
+        }
+
+
+        //ステートマシン更新
+        protected void Update()
+        {
+            stateMachine.Tick();
+        }
+
+
+        //ダメージ関数
+        public void Damage(float damage, Vector3 knock, float hate, GameObject cause)
+        {
+            health.SetDamage(damage);
+            this.hate.AddHate(hate, cause);
+
+            //死亡判定
+            _isDeathProperty.Value = isDeath();
+            if (isDeathProperty.Value)
+            {
+                blackBoard.SetValue<bool>("Death", true);
+            }
+            else
+            {
+                blackBoard.SetValue<Vector3>("Damaged", knock);
+            }
         }
 
 
 
-        //イベントの初期化は別途自動で行う
-        private void OnEnable()
+        //死亡判定
+        protected virtual bool isDeath()
         {
-            //イベント初期化
-            _onMove = new Subject<Unit>();
-            _onAttack = new Subject<Unit>();
-            _onDamage = new Subject<EnemyDamageEvent>();
+            if(health.currentHealth.Value <= 0)
+            {
+                return true;
+            }
+            return false;
         }
-        private void OnDisable()
-        {
-            _onMove.Dispose();
-            _onAttack.Dispose();
-            _onDamage.Dispose();
-        }
+
+
     }
 }

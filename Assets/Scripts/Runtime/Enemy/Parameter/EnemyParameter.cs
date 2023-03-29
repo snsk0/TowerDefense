@@ -7,6 +7,10 @@ namespace Runtime.Enemy.Parameter
 {
     public class EnemyParameter : MonoBehaviour
     {
+        //共通定数
+        public static float sprintMultiply { get; } = 1.2f;
+
+
         //コンポーネント関連
         [SerializeField] private EnemyData data;
 
@@ -23,7 +27,7 @@ namespace Runtime.Enemy.Parameter
         }
         public float speed                          //攻撃速度
         {
-            get { return data.speed * (1 + (((float)level * data.growth) / 100)); }
+            get { return data.speed; }
         }
         public float poise
         {
