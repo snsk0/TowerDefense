@@ -43,6 +43,12 @@ namespace InGame.Players.Archers
                 if (token.IsCancellationRequested)
                     break;
 
+                if (targetManager.TargetedTransform.Value == null)
+                {
+                    await UniTask.DelayFrame(1, cancellationToken: token);
+                    continue;
+                }
+                
                 currentControlledPlayerObj.transform.LookAt(targetManager.TargetedTransform.Value.position);
                 if (result == 0)
                 {
