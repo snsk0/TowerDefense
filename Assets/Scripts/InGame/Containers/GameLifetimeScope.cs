@@ -16,15 +16,17 @@ using VContainer.Unity;
 
 public class GameLifetimeScope : LifetimeScope
 {
-    [SerializeField] private PlayerGenerator playerGenerator;
+    //‰ðŒˆ‚·‚éMonoBehaviour
     [SerializeField] private EnhancementView enhancementView;
-    [SerializeField] private EnemyGenerator enemyGenerator;
-    [SerializeField] private CinemachineFreeLook freeLookCamera;
     [SerializeField] private CursorController cursorController;
     [SerializeField] private TargetPointerView targetPointerView;
     [SerializeField] private PlayerHPView playerHPView;
     [SerializeField] private AttackCoolTimeView attackCoolTimeView;
 
+    //‰ðŒˆ‚µ‚È‚¢MonoBehaviour
+    [SerializeField] private PlayerGenerator playerGenerator;
+    [SerializeField] private EnemyGenerator enemyGenerator;
+    [SerializeField] private CinemachineFreeLook freeLookCamera;
     [SerializeField] private GameObject enhancementPointObjectPrefab;
     [SerializeField] private Transform enhancementPointObjectParent;
     [SerializeField] private EnhancementPointObjectGenerator enhancementPointObjectGenerator;
@@ -38,12 +40,16 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterEntryPoint<CursorPresenter>();
         builder.RegisterEntryPoint<PlayerHPPresenter>();
         builder.RegisterEntryPoint<AttackCoolTimePresenter>();
-        
-        builder.Register<PlayerManager>(Lifetime.Singleton);
-        builder.Register<EnemyManager>(Lifetime.Singleton);
+
         builder.Register<PlayerBackpack>(Lifetime.Singleton);
-        builder.Register<CameraManager>(Lifetime.Singleton);
         builder.Register<TargetManager>(Lifetime.Singleton);
+
+        builder.Register<PlayerManager>(Lifetime.Singleton)
+            .WithParameter("playerGenerator", playerGenerator);
+        builder.Register<EnemyManager>(Lifetime.Singleton)
+            .WithParameter("enemyGenerator", enemyGenerator);
+        builder.Register<CameraManager>(Lifetime.Singleton)
+            .WithParameter("freeLookCamera", freeLookCamera);
         builder.Register<EnhancementPointObjectManager>(Lifetime.Singleton)
             .WithParameter("prefab", enhancementPointObjectPrefab)
             .WithParameter("poolParent", enhancementPointObjectParent)
@@ -65,10 +71,7 @@ public class GameLifetimeScope : LifetimeScope
                 break;
         }
         
-        builder.RegisterComponent(playerGenerator);
         builder.RegisterComponent(enhancementView);
-        builder.RegisterComponent(enemyGenerator);
-        builder.RegisterComponent(freeLookCamera);
         builder.RegisterComponent(cursorController);
         builder.RegisterComponent(targetPointerView);
         builder.RegisterComponent(playerHPView);
