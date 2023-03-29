@@ -2130,9 +2130,9 @@ GameObject:
   - component: {fileID: 7575892570970127140}
   - component: {fileID: 7575892570970127141}
   - component: {fileID: 6693431853604393328}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player_Fighter_2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

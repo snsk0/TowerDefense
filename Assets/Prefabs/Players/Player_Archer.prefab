@@ -2248,9 +2248,9 @@ GameObject:
   - component: {fileID: 1160088827661224109}
   - component: {fileID: 6880174294015475065}
   - component: {fileID: -1444205466231387362}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player_Archer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -43,6 +43,9 @@ namespace InGame.Players.Archers
                 if (token.IsCancellationRequested)
                     break;
 
+                if (targetManager.TargetedTransform.Value == null)
+                    return;
+
                 currentControlledPlayerObj.transform.LookAt(targetManager.TargetedTransform.Value.position);
                 if (result == 0)
                 {

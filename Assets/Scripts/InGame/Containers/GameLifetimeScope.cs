@@ -1,6 +1,7 @@
 using Cinemachine;
 using InGame.Cameras;
 using InGame.Cursors;
+using InGame.DropItems;
 using InGame.Enemies;
 using InGame.Players;
 using InGame.Players.Archers;
@@ -24,6 +25,10 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private PlayerHPView playerHPView;
     [SerializeField] private AttackCoolTimeView attackCoolTimeView;
 
+    [SerializeField] private GameObject enhancementPointObjectPrefab;
+    [SerializeField] private Transform enhancementPointObjectParent;
+    [SerializeField] private EnhancementPointObjectGenerator enhancementPointObjectGenerator;
+
     protected override void Configure(IContainerBuilder builder)
     {
         builder.RegisterEntryPoint<PlayerGeneratePresenter>();
@@ -39,6 +44,10 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<PlayerBackpack>(Lifetime.Singleton);
         builder.Register<CameraManager>(Lifetime.Singleton);
         builder.Register<TargetManager>(Lifetime.Singleton);
+        builder.Register<EnhancementPointObjectManager>(Lifetime.Singleton)
+            .WithParameter("prefab", enhancementPointObjectPrefab)
+            .WithParameter("poolParent", enhancementPointObjectParent)
+            .WithParameter("generator", enhancementPointObjectGenerator);
 
         builder.Register<TargetSearcher>(Lifetime.Transient);
 
