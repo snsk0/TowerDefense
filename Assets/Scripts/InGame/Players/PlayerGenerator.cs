@@ -8,11 +8,12 @@ namespace InGame.Players
     public class PlayerGenerator : MonoBehaviour
     {
         [SerializeField] private PlayerPrefabTable playerPrefabTable;
+        [SerializeField] private Transform generatePosition;
 
         public GameObject GeneratePlayer(PlayerCharacterType playerCharacterType)
         {
             var prefab = playerPrefabTable.GetPlayerPrefab(playerCharacterType);
-            var player = Instantiate(prefab, Vector3.zero, Quaternion.identity);
+            var player = Instantiate(prefab, generatePosition.position, Quaternion.identity);
             return player;
         }
     }

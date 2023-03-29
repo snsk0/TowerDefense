@@ -23,7 +23,8 @@ namespace Prepare
             fighterButton.onClick.AddListener(() => selectedPlayerCharacterTypeSubject.OnNext(PlayerCharacterType.Fighter));
             archerButton.onClick.AddListener(() => selectedPlayerCharacterTypeSubject.OnNext(PlayerCharacterType.Archer));
 
-            startButton.onClick.AddListener(() => SceneManager.LoadScene("TestScene_PlayerControll"));
+            //startButton.onClick.AddListener(() => SceneManager.LoadScene("TestScene_PlayerControll"));
+            startButton.onClick.AddListener(() => SceneManager.LoadScene("WaveSample"));
         }
     }
 }
