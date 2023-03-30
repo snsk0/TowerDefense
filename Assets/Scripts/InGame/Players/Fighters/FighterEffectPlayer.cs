@@ -8,6 +8,7 @@ namespace InGame.Players.Fighters
     {
         [SerializeField] private ParticleSystem firstSlashEffect;
         [SerializeField] private ParticleSystem secondSlashEffect;
+        [SerializeField] private ParticleSystem specialAttackEffect;
 
         public void PlayNormalAttackEffect(bool isFirst)
         {
@@ -19,6 +20,11 @@ namespace InGame.Players.Fighters
             {
                 secondSlashEffect.Play();
             }
+        }
+
+        public void playSpecialAttackEffect()
+        {
+            specialAttackEffect.Play();
         }
     }
 }
