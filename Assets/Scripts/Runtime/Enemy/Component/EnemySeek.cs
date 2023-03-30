@@ -28,7 +28,7 @@ namespace Runtime.Enemy.Component
 
         
         //外部から変更可能
-        public float stoppingDistance { set { agent.stoppingDistance = value; } }
+        public float stoppingDistance { set { agent.stoppingDistance = value - fixedAgentDistance; } }
 
 
 
@@ -102,6 +102,9 @@ namespace Runtime.Enemy.Component
             //パスの計算が終了しているか
             if (agent.pathPending == true) return;
 
+
+            //距離がぶれるので別で調整
+            /*
             //agentの終了を判定
             if (agent.remainingDistance <= agent.stoppingDistance)
             {
@@ -112,7 +115,6 @@ namespace Runtime.Enemy.Component
                     if (rigidbody.velocity.magnitude <= stoppingVelocity)
                     {
                         EndSeek();
-                        Debug.Log("end");
                         return;
                     }
                 }
@@ -125,15 +127,28 @@ namespace Runtime.Enemy.Component
                     look.Look(agent.nextPosition);
                 }
             }
+            */
 
-            //agentが終了していないなら実行し続ける
+            //agent座標を一定距離,行きたい方向に
+            Vector3 direction = agent.nextPosition - transform.position;
+            direction = direction.normalized * fixedAgentDistance;
+            agent.nextPosition = transform.position + direction;
+
+
+            //Y軸無視で距離を判定
+            if (transform.position.DistanceIgnoreY(target.position) < agent.stoppingDistance + fixedAgentDistance)
+            {
+                //速度が一定以下になったら終了
+                if (rigidbody.velocity.magnitude <= stoppingVelocity)
+                {
+                    EndSeek();
+                    return;
+                }
+            }
+
+            //距離がはなれていたら実行し続ける
             else
             {
-                //agent座標を一定距離に補正する(一定に保つと後ろ向きに移動しない)
-                Vector3 direction = agent.nextPosition - transform.position;
-                direction = direction.normalized * fixedAgentDistance;
-                agent.nextPosition = transform.position + direction;
-
                 //移動と回転入力
                 move.MoveByWorldDir(agent.nextPosition - transform.position);
                 look.Look(agent.nextPosition);

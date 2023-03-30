@@ -14,7 +14,7 @@ namespace Runtime.Enemy.Debugs {
         {
             if (Input.GetKeyDown(KeyCode.D))
             {
-                controller.Damage(3, (controller.transform.position - gameObject.transform.position).normalized, 0, gameObject);
+                controller.Damage(3, Vector3.right, 0, gameObject);
                 Debug.Log("D");
             }
         }

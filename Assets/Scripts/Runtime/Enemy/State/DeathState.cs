@@ -12,6 +12,7 @@ namespace Runtime.Enemy.State
     public class DeathState : StateBase<EnemyController>
     {
         //コンポーネント
+        private EnemyHealth health;
         private EnemyDissolve dissolve;
         private EnemyAnimator animator;
         private EnemyItemDropper dropper;   //仮実装
@@ -26,6 +27,7 @@ namespace Runtime.Enemy.State
             dissolve = owner.GetComponent<EnemyDissolve>();
             animator = owner.GetComponent<EnemyAnimator>();
             dropper = owner.GetComponent<EnemyItemDropper>();
+            health = owner.GetComponent<EnemyHealth>();
         }
 
 
@@ -50,7 +52,7 @@ namespace Runtime.Enemy.State
             }
             if(timer > 3.0f)
             {
-                dropper.Drop();     //仮実装
+                if(health.currentHealth.Value <= 0) dropper.Drop();     //仮実装
                 owner.gameObject.SetActive(false);  //Disable
             }
         }
