@@ -27,6 +27,7 @@ namespace InGame.Players.Archers
         public override void StartControll(GameObject playerObject)
         {
             archerAttacker = playerObject.GetComponent<ArcherAttacker>();
+            playerObject.GetComponent<ArcherEffectPlayer>().Init(targetManager);
 
             base.StartControll(playerObject);
         }

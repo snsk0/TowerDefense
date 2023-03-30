@@ -32,7 +32,7 @@
         },
         {
           "ParameterType": 5,
-          "BaseValue": 1,
+          "BaseValue": 3,
           "AddValue": 0,
           "Magnification": 1
         },
@@ -88,7 +88,7 @@
       },
       {
         "ParameterType": 5,
-        "BaseValue": 1,
+        "BaseValue": 3,
         "AddValue": 0,
         "Magnification": 1
       },

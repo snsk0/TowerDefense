@@ -41,10 +41,11 @@ namespace InGame.Players.Archers
             if (!usableSpecial)
                 return;
 
-            StartCoolTimeCount(this.GetCancellationTokenOnDestroy()).Forget();
+            
             await archerAnimationPlayer.PlaySpecialAttackAnimation(this.GetCancellationTokenOnDestroy());
 
             var attackValue = playerParameter.GetCalculatedValue(PlayerParameterType.AttackValue) * 6;
+            StartCoolTimeCount(this.GetCancellationTokenOnDestroy()).Forget();
             //var damage = new Damage(attackValue, KnockbackType.None);
             target.Damage(attackValue, 1, gameObject);
         }

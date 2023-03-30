@@ -10,7 +10,14 @@ namespace InGame.Players.Archers
 {
     public class ArcherAnimationPlayer : PlayerAnimationPlayer
     {
+        private ArcherEffectPlayer archerEffectPlayer;
+
         public bool IsAiming { get; private set; }
+
+        private void Start()
+        {
+            archerEffectPlayer = playerEffectPlayer as ArcherEffectPlayer;
+        }
 
         public void StartAimWalkAnimation()
         {
@@ -31,6 +38,7 @@ namespace InGame.Players.Archers
         public async UniTask PlayNormalAttackAnimation(CancellationToken token)
         {
             animator.SetTrigger(AnimatorParameterHashes.NormalAttack);
+            archerEffectPlayer.PlayNormalAttackEffect(token).Forget();
             currentAttackState = PlayerAttackStateType.Normal;
             IsAiming = true;
             StartAimWalkAnimation();
@@ -39,6 +47,7 @@ namespace InGame.Players.Archers
             currentAttackState = PlayerAttackStateType.None;
             IsAiming = false;
             StopAimWalkAnimation();
+            
         }
 
         public async UniTask PlaySpecialAttackAnimation(CancellationToken token)
@@ -48,6 +57,7 @@ namespace InGame.Players.Archers
             await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.SpecialAttack, AnimatorStateHashes.Attack, animator, token);
             await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.SpecialAttack, AnimatorStateHashes.Attack, animator, token, toState: false);
             currentAttackState = PlayerAttackStateType.None;
+            archerEffectPlayer.PlaySpecialAttackEffect(token).Forget();
         }
     }
 }

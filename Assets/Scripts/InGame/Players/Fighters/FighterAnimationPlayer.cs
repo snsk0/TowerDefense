@@ -12,7 +12,12 @@ namespace InGame.Players.Fighters
 {
     public class FighterAnimationPlayer : PlayerAnimationPlayer
     {
-        [SerializeField] private AvatarMask upperBodyMask; 
+        private FighterEffectPlayer fighterEffectPlayer;
+
+        private void Start()
+        {
+            fighterEffectPlayer = playerEffectPlayer as FighterEffectPlayer;
+        }
 
         public void PlayNormalAttackAniamtion(Action<bool> setEnableAttackCollider)
         {
@@ -22,11 +27,13 @@ namespace InGame.Players.Fighters
             {
                 if (stateInfo.shortNameHash == AnimatorStateHashes.FirstNormalAttack)
                 {
-                    PlayNormalAttackAnimation(setEnableAttackCollider, 0.5f, token).Forget();
+                    Action playEffectAction = () => fighterEffectPlayer.PlayNormalAttackEffect(true);
+                    PlayNormalAttackAnimation(setEnableAttackCollider, playEffectAction, 0.5f, token).Forget();
                 }
                 else if(stateInfo.shortNameHash == AnimatorStateHashes.SecondNormalAttack)
                 {
-                    PlayNormalAttackAnimation(setEnableAttackCollider, 0.78f, token).Forget();
+                    Action playEffectAction = () => fighterEffectPlayer.PlayNormalAttackEffect(false);
+                    PlayNormalAttackAnimation(setEnableAttackCollider, playEffectAction, 0.78f, token).Forget();
                 }
                 else
                 {
@@ -35,17 +42,18 @@ namespace InGame.Players.Fighters
             }
             else
             {
-                PlayNormalAttackAnimation(setEnableAttackCollider, 0.78f, token).Forget();
+                Action playEffectAction = () => fighterEffectPlayer.PlayNormalAttackEffect(true);
+                PlayNormalAttackAnimation(setEnableAttackCollider, playEffectAction, 0.78f, token).Forget();
             }
         }
 
-        private async UniTaskVoid PlayNormalAttackAnimation(Action<bool> setEnableAttackCollider, float attackTiming, CancellationToken token)
+        private async UniTaskVoid PlayNormalAttackAnimation(Action<bool> setEnableAttackCollider, Action playEffectAction, float attackTiming, CancellationToken token)
         {
             animator.SetTrigger(AnimatorParameterHashes.NormalAttack);
-            //var token = this.GetCancellationTokenOnDestroy();
             await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.NormalAttack, AnimatorStateHashes.Attack, animator, token);
             currentAttackState = PlayerAttackStateType.Normal;
             await AnimationTransitionWaiter.WaitStateTime(attackTiming, (int)AnimatorLayerType.NormalAttack, AnimatorStateHashes.Attack, animator, token);
+            playEffectAction?.Invoke();
             setEnableAttackCollider(true);
             await AnimationTransitionWaiter.WaitStateTime(1f, (int)AnimatorLayerType.NormalAttack, AnimatorStateHashes.Attack, animator, token);
             currentAttackState = PlayerAttackStateType.None;
@@ -55,10 +63,10 @@ namespace InGame.Players.Fighters
         public async UniTask PlaySpecialAttackAnimation(Action<bool> setEnableAttackCollider, CancellationToken token)
         {
             animator.SetTrigger(AnimatorParameterHashes.SpecialAttack);
-            //var token = this.GetCancellationTokenOnDestroy();
             await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.SpecialAttack, AnimatorStateHashes.Attack, animator, token);
             currentAttackState = PlayerAttackStateType.Special;
             await AnimationTransitionWaiter.WaitStateTime(0.33f, (int)AnimatorLayerType.SpecialAttack, AnimatorStateHashes.Attack, animator, token);
+            fighterEffectPlayer.playSpecialAttackEffect();
             setEnableAttackCollider(true);
             await AnimationTransitionWaiter.WaitStateTime(1f, (int)AnimatorLayerType.SpecialAttack, AnimatorStateHashes.Attack, animator, token);
             currentAttackState = PlayerAttackStateType.None;
