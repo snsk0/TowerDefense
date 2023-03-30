@@ -21,7 +21,7 @@ namespace InGame.Players
 
         public void AddDamage(int damageValue)
         {
-            currentHP -= (int)Mathf.Clamp(1, Mathf.Infinity, damageValue - playerParameter.GetCalculatedValue(PlayerParameterType.DefenceValue));
+            currentHP -= (int)Mathf.Clamp(damageValue - playerParameter.GetCalculatedValue(PlayerParameterType.DefenceValue), 1, Mathf.Infinity);
             
             if (currentHP <= 0)
             {
