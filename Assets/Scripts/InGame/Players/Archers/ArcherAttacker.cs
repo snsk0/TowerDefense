@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using InGame.Damages;
 using InGame.Enemies;
+using Runtime.Enemy;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace InGame.Players.Archers
     {
         [SerializeField] private ArcherAnimationPlayer archerAnimationPlayer;
 
-        public async UniTask NormalAttack(IEnemyDamagable target, CancellationToken token)
+        public async UniTask NormalAttack(IDamagable target)
         {
             if (archerAnimationPlayer.currentAttackState!=PlayerAttackStateType.None)
                 return;
@@ -25,11 +26,11 @@ namespace InGame.Players.Archers
             await archerAnimationPlayer.PlayNormalAttackAnimation(this.GetCancellationTokenOnDestroy());
 
             var attackValue = playerParameter.GetCalculatedValue(PlayerParameterType.AttackValue);
-            var damage = new Damage(attackValue, KnockbackType.None);
-            target.ApplyDamage(damage);
+            //var damage = new Damage(attackValue, KnockbackType.None);
+            target.Damage(attackValue, 1, gameObject);
         }
 
-        public async UniTask SpecialAttack(IEnemyDamagable target, CancellationToken token)
+        public async UniTask SpecialAttack(IDamagable target)
         {
             if (archerAnimationPlayer.currentAttackState != PlayerAttackStateType.None)
                 return;
@@ -40,12 +41,13 @@ namespace InGame.Players.Archers
             if (!usableSpecial)
                 return;
 
-            StartCoolTimeCount(this.GetCancellationTokenOnDestroy()).Forget();
+            
             await archerAnimationPlayer.PlaySpecialAttackAnimation(this.GetCancellationTokenOnDestroy());
 
             var attackValue = playerParameter.GetCalculatedValue(PlayerParameterType.AttackValue) * 6;
-            var damage = new Damage(attackValue, KnockbackType.None);
-            target.ApplyDamage(damage);
+            StartCoolTimeCount(this.GetCancellationTokenOnDestroy()).Forget();
+            //var damage = new Damage(attackValue, KnockbackType.None);
+            target.Damage(attackValue, 1, gameObject);
         }
     }
 }

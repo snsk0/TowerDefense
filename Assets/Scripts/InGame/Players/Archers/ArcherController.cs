@@ -27,6 +27,7 @@ namespace InGame.Players.Archers
         public override void StartControll(GameObject playerObject)
         {
             archerAttacker = playerObject.GetComponent<ArcherAttacker>();
+            playerObject.GetComponent<ArcherEffectPlayer>().Init(targetManager);
 
             base.StartControll(playerObject);
         }
@@ -52,11 +53,11 @@ namespace InGame.Players.Archers
                 currentControlledPlayerObj.transform.LookAt(targetManager.TargetedTransform.Value.position);
                 if (result == 0)
                 {
-                    await archerAttacker.NormalAttack(targetManager.currentTargetEnemy, token);
+                    await archerAttacker.NormalAttack(targetManager.currentTargetEnemy);
                 }
                 else if (result == 1)
                 {
-                    await archerAttacker.SpecialAttack(targetManager.currentTargetEnemy, token);
+                    await archerAttacker.SpecialAttack(targetManager.currentTargetEnemy);
                 }
                 await UniTask.DelayFrame(1, cancellationToken: token);
             }

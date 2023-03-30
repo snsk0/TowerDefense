@@ -1,6 +1,6 @@
 using InGame.Cameras;
-using InGame.Enemies;
 using InGame.Players;
+using Runtime.Enemy;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +35,7 @@ namespace InGame.Targets
             var cameraToPlayerVec = Vector3Calculator.MulElements((playerPos - cameraPos), new Vector3(1, 0, 1));
 
             //プレイヤーに近い敵のうち、カメラから見て奥側にいて、画面中央に最も近い敵の取得
-            var target = enemyManager.CurrentEnemyObjects
+            var target = enemyManager.LivingEnemyTransformList
                                     .Select(x => x.transform)
                                     .Where(x => Vector3.Distance(x.position, playerPos) < 10f)
                                     .Where(x => Vector3.Dot(Vector3Calculator.MulElements((x.position - playerPos), new Vector3(1, 0, 1)), cameraToPlayerVec) < 90)

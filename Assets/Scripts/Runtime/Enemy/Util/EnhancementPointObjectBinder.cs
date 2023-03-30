@@ -5,18 +5,25 @@ using UniRx;
 using Runtime.Enemy.Component;
 
 using InGame.DropItems;
+using VContainer;
+using VContainer.Unity;
 
 namespace Runtime.Enemy.Util
 {
-    public class EnhancementPointObjectBinder : MonoBehaviour
+    public class EnhancementPointObjectBinder : ControllerBase, IStartable
     {
         //各種マネージャー
-        [SerializeField] private EnemyManager enemyManager;
-        private EnhancementPointObjectManager epoManager;
+        private readonly EnemyManager enemyManager;
+        private readonly EnhancementPointObjectManager epoManager;
 
+        [Inject]
+        public EnhancementPointObjectBinder(EnemyManager enemyManager, EnhancementPointObjectManager enhancementPointObjectManager)
+        {
+            this.enemyManager = enemyManager;
+            this.epoManager = enhancementPointObjectManager;
+        }
 
-
-        private void Start()
+        public void Start()
         {
             enemyManager.onGenerateEventHandler.Subscribe(enemy =>
             {

@@ -3,7 +3,6 @@ using InGame;
 using InGame.Cameras;
 using InGame.Cursors;
 using InGame.DropItems;
-using InGame.Enemies;
 using InGame.Players;
 using InGame.Players.Archers;
 using InGame.Players.Fighters;
@@ -11,6 +10,9 @@ using InGame.Targets;
 using InGame.UI.Enhancements;
 using InGame.UI.Players;
 using Prepare;
+using Runtime.Enemy;
+using Runtime.Enemy.Util;
+using Runtime.Wave;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -20,10 +22,11 @@ public class GameLifetimeScope : LifetimeScope
     //‰ðŒˆ‚·‚éMonoBehaviour
     [Header("‰ðŒˆ‚·‚éMonoBehaviour")]
     [SerializeField] private EnhancementView enhancementView;
-    //[SerializeField] private CursorController cursorController;
+    [SerializeField] private EnemyManager enemyManager;
     [SerializeField] private TargetPointerView targetPointerView;
     [SerializeField] private PlayerHPView playerHPView;
     [SerializeField] private AttackCoolTimeView attackCoolTimeView;
+    [SerializeField] private PlayerManagerProvider playerManagerProvider;
 
     //‰ðŒˆ‚µ‚È‚¢MonoBehaviour
     [Header("‰ðŒˆ‚µ‚È‚¢MonoBehaviour")]
@@ -37,19 +40,17 @@ public class GameLifetimeScope : LifetimeScope
     {
         builder.RegisterEntryPoint<PlayerGeneratePresenter>();
         builder.RegisterEntryPoint<EnhancementPresenter>();
-        //builder.RegisterEntryPoint<EnemyGeneratePresenter>();
         builder.RegisterEntryPoint<CameraSetUpPresenter>();
         builder.RegisterEntryPoint<CursorPresenter>();
         builder.RegisterEntryPoint<PlayerHPPresenter>();
         builder.RegisterEntryPoint<AttackCoolTimePresenter>();
+        builder.RegisterEntryPoint<EnhancementPointObjectBinder>();
 
         builder.Register<PlayerBackpack>(Lifetime.Singleton);
         builder.Register<TargetManager>(Lifetime.Singleton);
 
         builder.Register<PlayerManager>(Lifetime.Singleton)
             .WithParameter("playerGenerator", playerGenerator);
-        //builder.Register<EnemyManager>(Lifetime.Singleton)
-        //    .WithParameter("enemyGenerator", enemyGenerator);
         builder.Register<CameraManager>(Lifetime.Singleton)
             .WithParameter("freeLookCamera", freeLookCamera);
         builder.Register<EnhancementPointObjectManager>(Lifetime.Singleton)
@@ -75,8 +76,10 @@ public class GameLifetimeScope : LifetimeScope
         }
 
         builder.RegisterComponent(enhancementView);
+        builder.RegisterComponent(enemyManager);
         builder.RegisterComponent(targetPointerView);
         builder.RegisterComponent(playerHPView);
         builder.RegisterComponent(attackCoolTimeView);
+        builder.RegisterComponent(playerManagerProvider);
     }
 }

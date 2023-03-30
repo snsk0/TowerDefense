@@ -1,11 +1,13 @@
 using UnityEngine;
 
 using InGame.Players;
+using VContainer;
 
 namespace Runtime.Wave
 {
     public class PlayerManagerProvider : MonoBehaviour
     {
-        public PlayerManager playerManager { get; private set; }
+        [Inject] private readonly PlayerManager _playerManager;
+        public PlayerManager playerManager => _playerManager;
     }
 }
