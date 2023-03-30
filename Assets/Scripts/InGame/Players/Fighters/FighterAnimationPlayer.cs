@@ -12,8 +12,6 @@ namespace InGame.Players.Fighters
 {
     public class FighterAnimationPlayer : PlayerAnimationPlayer
     {
-        [SerializeField] private AvatarMask upperBodyMask;
-
         private FighterEffectPlayer fighterEffectPlayer;
 
         private void Start()
@@ -65,7 +63,6 @@ namespace InGame.Players.Fighters
         public async UniTask PlaySpecialAttackAnimation(Action<bool> setEnableAttackCollider, CancellationToken token)
         {
             animator.SetTrigger(AnimatorParameterHashes.SpecialAttack);
-            //var token = this.GetCancellationTokenOnDestroy();
             await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.SpecialAttack, AnimatorStateHashes.Attack, animator, token);
             currentAttackState = PlayerAttackStateType.Special;
             await AnimationTransitionWaiter.WaitStateTime(0.33f, (int)AnimatorLayerType.SpecialAttack, AnimatorStateHashes.Attack, animator, token);

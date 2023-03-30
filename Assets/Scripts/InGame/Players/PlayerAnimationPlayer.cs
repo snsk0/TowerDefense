@@ -74,10 +74,18 @@ namespace InGame.Players
             switch (knockbackType)
             {
                 case KnockbackType.None:
-                    Debug.Log("ノックバック無し！");
+                    break;
+                case KnockbackType.Small:
+                    animator.SetTrigger(AnimatorParameterHashes.SmallHit);
+                    playerEffectPlayer.PlaySmallHitEffect();
+                    break;
+                case KnockbackType.Normal:
+                    animator.SetTrigger(AnimatorParameterHashes.NormalHit);
+                    playerEffectPlayer.PlayNormalHitEffect();
                     break;
                 case KnockbackType.Huge:
-                    animator.SetTrigger("HugeDamaged");
+                    animator.SetTrigger(AnimatorParameterHashes.HugeHit);
+                    playerEffectPlayer.PlayNormalHitEffect();
                     await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.Base, AnimatorStateHashes.Damaged, animator, token);
 
                     this.FixedUpdateAsObservable()
@@ -89,7 +97,6 @@ namespace InGame.Players
                         .AddTo(this);
                     break;
                 default:
-                    Debug.Log("ノックバック！");
                     break;
             }
         }

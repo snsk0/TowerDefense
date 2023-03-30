@@ -22,6 +22,11 @@ namespace InGame.Players
         {
             playerHealth.AddDamage((int)damage.attackValue);
             playerAnimationPlayer.PlayDamagedAnimation(damage.knockbackType, this.GetCancellationTokenOnDestroy()).Forget();
+
+            if (playerHealth.currentHP <= 0)
+            {
+                IsDamagable = false;
+            }
         }
     }
 }
