@@ -54,10 +54,13 @@ namespace Runtime.Enemy
 
 
         //ƒ_ƒ[ƒWŠÖ”
-        public void Damage(float damage, Vector3 knock, float hate, GameObject cause)
+        public void Damage(float damage, float knock, float hate, GameObject cause)
         {
             health.SetDamage(damage);
             this.hate.AddHate(hate, cause);
+
+            Vector3 dir = cause.transform.position - transform.position;
+            dir *= knock;
 
             //€–S”»’è
             if (isDeath())
@@ -66,7 +69,7 @@ namespace Runtime.Enemy
             }
             else
             {
-                blackBoard.SetValue<Vector3>("Damaged", knock);
+                blackBoard.SetValue<Vector3>("Damaged", dir);
             }
         }
 

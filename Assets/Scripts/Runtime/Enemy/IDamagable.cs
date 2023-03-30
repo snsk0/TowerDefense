@@ -7,8 +7,8 @@ namespace Runtime.Enemy
     {
         public void Damage(float damage, float hate, GameObject cause)
         {
-            Damage(damage, Vector3.zero, hate, cause);
+            Damage(damage, 0, hate, cause);
         }
-        public void Damage(float damage, Vector3 knock, float hate, GameObject cause);
+        public void Damage(float damage, float knock, float hate, GameObject cause);
     }
 }
