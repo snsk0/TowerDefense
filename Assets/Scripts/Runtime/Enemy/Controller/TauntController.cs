@@ -146,8 +146,9 @@ namespace Runtime.Enemy.Controller
             //ƒwƒCƒg‰Šú‰»
             //GameObject player = GameObject.Find("Player");
             GameObject tower = GameObject.Find("Tower");
-            //hate.AddHate(0, player);
-            hate.AddHate(3, tower);
+            GameObject player = GameObject.Find("Player");
+            hate.AddHate(Random.Range(0f, 2.3f), player);
+            hate.AddHate(Random.Range(0.1f, 2.9f), tower);
         }
     }
 }
