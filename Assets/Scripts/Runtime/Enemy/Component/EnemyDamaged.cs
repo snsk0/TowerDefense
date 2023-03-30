@@ -23,12 +23,12 @@ namespace Runtime.Enemy.Component
 
             if (/*knockBack > 0.25 &&*/ knockBack < 0.5)
             {
-                transform.forward = -direction;
+                transform.forward = direction;
                 animator.PlayDamaged(0);
             }
             else if (knockBack >= 0.5)
             {
-                transform.forward = -direction;
+                transform.forward = direction;
                 animator.PlayDamaged(1);
                 rigidbody.velocity = Vector3.zero;
             }
