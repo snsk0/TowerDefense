@@ -17,6 +17,7 @@ namespace Runtime.Wave
 
         //wave”
         public int wave { get; set; }
+        public static int Wave { get; private set; }
 
 
         //‰Šú‰»
@@ -43,6 +44,8 @@ namespace Runtime.Wave
             main_2.generateNumber = 4;
             main_2.enemiesNumber[(int)EnemyType.Taunt] = 9;
             main_2.enemiesNumber[(int)EnemyType.Golem] = 1;
+
+            boss.type = EnemyType.Golem;
 
 
 
@@ -88,6 +91,7 @@ namespace Runtime.Wave
         private void Update()
         {
             stateMachine.Tick();
+            Wave = wave;
         }
     }
 }
