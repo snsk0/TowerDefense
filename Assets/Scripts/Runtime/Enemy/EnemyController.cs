@@ -1,7 +1,5 @@
 using UnityEngine;
 
-using UniRx;
-
 using StateMachines;
 using StateMachines.BlackBoards;
 
@@ -17,6 +15,8 @@ namespace Runtime.Enemy
         //ステートマシン関連
         protected StateMachine<EnemyController> stateMachine;
         protected IBlackBoard blackBoard = new BlackBoard();
+        public StateBase<EnemyController> currentState => stateMachine.currentState;
+        public IWriteOnlyBlackBoard blackBoardWriter => blackBoard;
 
 
         //コンポーネント
@@ -26,9 +26,6 @@ namespace Runtime.Enemy
         public EnemyParameter parameter => _parameter;
 
 
-        //死亡フラグ
-        private ReactiveProperty<bool> _isDeathProperty;
-        public IReadOnlyReactiveProperty<bool> isDeathProperty => _isDeathProperty;
 
 
         //初期化
@@ -38,15 +35,11 @@ namespace Runtime.Enemy
             parameter.Initialize(0);
             health.Initialize();
             hate.Initialize();
-            _isDeathProperty = new ReactiveProperty<bool>(false);
         }
 
         //Property破棄
         protected void OnDisable()
         {
-            //死亡フラグpropertyをDispose
-            _isDeathProperty.Dispose();
-
             //外からアクセスしたblackBoardのvalueを初期化しておく
             blackBoard.SetValue<Vector3>("Damaged", Vector3.zero);
             blackBoard.SetValue<bool>("Death", false);
@@ -67,8 +60,7 @@ namespace Runtime.Enemy
             this.hate.AddHate(hate, cause);
 
             //死亡判定
-            _isDeathProperty.Value = isDeath();
-            if (isDeathProperty.Value)
+            if (isDeath())
             {
                 blackBoard.SetValue<bool>("Death", true);
             }

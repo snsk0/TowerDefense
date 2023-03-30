@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2488457859733677054}
-  step: 0.05
+  step: 0.1
 --- !u!114 &2488457859733677052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,7 +339,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f5dc4787508f1245aba7c64bf35ac69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropItem: {fileID: 3194749104013472195, guid: f590ee611908cae46bbcfa40b0f7ae09, type: 3}
   offset: {x: 0, y: 0.35, z: 0}
   parameter: {fileID: 2488457859733676993}
 --- !u!1 &2999038107993073549

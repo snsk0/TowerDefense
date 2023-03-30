@@ -3636,10 +3636,10 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   enhancementView: {fileID: 1941427210}
+  enemyManager: {fileID: 2144210922}
   targetPointerView: {fileID: 340579622}
   playerHPView: {fileID: 189156606}
   attackCoolTimeView: {fileID: 1381301406}
-  enhancementPointObjectBinder: {fileID: 529222648}
   playerGenerator: {fileID: 1090364856}
   freeLookCamera: {fileID: 224630254}
   enhancementPointObjectPrefab: {fileID: 2388683342240837234, guid: be0d4116b988dac42a39087dbb928e82, type: 3}
@@ -5307,51 +5307,6 @@ Transform:
   m_Father: {fileID: 1991992844}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 225, z: 0}
---- !u!1 &529222647
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 529222649}
-  - component: {fileID: 529222648}
-  m_Layer: 0
-  m_Name: EnhancementPointObjectBinder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &529222648
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 529222647}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce4c8855b827d994ebf4bd6038ad3368, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyManager: {fileID: 2144210922}
---- !u!4 &529222649
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 529222647}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.5590487, y: -24.154366, z: 34.86299}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 20
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &533077471
 GameObject:
   m_ObjectHideFlags: 0
@@ -13942,6 +13897,10 @@ PrefabInstance:
     - target: {fileID: 4769685014007518033, guid: 9e610320fb571ae4cab69d3f2b4ea68c, type: 3}
       propertyPath: m_Name
       value: TargetCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4769685014007518033, guid: 9e610320fb571ae4cab69d3f2b4ea68c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4769685014007518037, guid: 9e610320fb571ae4cab69d3f2b4ea68c, type: 3}
       propertyPath: m_Pivot.x

@@ -6,6 +6,9 @@ using System.Collections.Concurrent;
 using UnityEngine;
 
 using UniRx;
+using UniRx.Triggers;
+
+using Runtime.Enemy.State;
 
 using Cysharp.Threading.Tasks;
 
@@ -28,6 +31,7 @@ namespace Runtime.Enemy
         //敵の管理
         private List<EnemyController> _livingEnemyList;
         public IReadOnlyList<EnemyController> livingEnemyList => _livingEnemyList;
+        public IEnumerable<Transform> LivingEnemyTransformList => _livingEnemyList.Select(x => x.transform);
 
         //生成イベント
         private Subject<EnemyController> onGenerateSubject;
@@ -86,6 +90,21 @@ namespace Runtime.Enemy
             //敵を生成
             EnemyController enemy = generatorList[(int)type].Generate(transform);
             onGenerateSubject.OnNext(enemy);
+            _livingEnemyList.Add(enemy);
+
+            //デスを監視する
+            SingleAssignmentDisposable disposable = new SingleAssignmentDisposable();
+            disposable.Disposable = enemy.UpdateAsObservable()
+                .Where(_ => { return enemy.currentState is DeathState; })
+                .Subscribe(_ =>
+                {
+                    //イベント登録の解除
+                    disposable.Dispose();
+
+                    //リストから消す
+                    _livingEnemyList.Remove(enemy);
+                });
+
 
             //一定時間後にリストに戻す(非同期)
             UniTask task = WaitLocationCoolTime(transform);
