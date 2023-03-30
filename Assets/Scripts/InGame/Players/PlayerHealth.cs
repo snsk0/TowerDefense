@@ -6,6 +6,8 @@ namespace InGame.Players
 {
     public class PlayerHealth : MonoBehaviour
     {
+        [SerializeField] private PlayerAnimationPlayer playerAnimationPlayer;
+
         private PlayerParameter playerParameter;
 
         public int currentHP { get; private set; }
@@ -20,6 +22,13 @@ namespace InGame.Players
         public void AddDamage(int damageValue)
         {
             currentHP -= damageValue;
+            
+            if (currentHP <= 0)
+            {
+                currentHP = 0;
+                playerAnimationPlayer.PlayDeathAnimation();
+            }
+
             Debug.Log($"PlayerHealth:{currentHP}");
         }
 
