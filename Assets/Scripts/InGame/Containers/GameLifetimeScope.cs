@@ -20,7 +20,7 @@ public class GameLifetimeScope : LifetimeScope
     //‰ðŒˆ‚·‚éMonoBehaviour
     [Header("‰ðŒˆ‚·‚éMonoBehaviour")]
     [SerializeField] private EnhancementView enhancementView;
-    [SerializeField] private CursorController cursorController;
+    //[SerializeField] private CursorController cursorController;
     [SerializeField] private TargetPointerView targetPointerView;
     [SerializeField] private PlayerHPView playerHPView;
     [SerializeField] private AttackCoolTimeView attackCoolTimeView;
@@ -58,6 +58,7 @@ public class GameLifetimeScope : LifetimeScope
             .WithParameter("generator", enhancementPointObjectGenerator);
 
         builder.Register<TargetSearcher>(Lifetime.Transient);
+        builder.Register<CursorController>(Lifetime.Transient);
 
         var prepareSetting = Parent.Container.Resolve<PrepareSetting>();
         switch (prepareSetting.selectedPlayerCharacterType)
@@ -74,7 +75,6 @@ public class GameLifetimeScope : LifetimeScope
         }
 
         builder.RegisterComponent(enhancementView);
-        builder.RegisterComponent(cursorController);
         builder.RegisterComponent(targetPointerView);
         builder.RegisterComponent(playerHPView);
         builder.RegisterComponent(attackCoolTimeView);
