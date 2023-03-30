@@ -57,6 +57,7 @@ namespace InGame.Players.Archers
             await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.SpecialAttack, AnimatorStateHashes.Attack, animator, token);
             await AnimationTransitionWaiter.WaitAnimationTransition((int)AnimatorLayerType.SpecialAttack, AnimatorStateHashes.Attack, animator, token, toState: false);
             currentAttackState = PlayerAttackStateType.None;
+            archerEffectPlayer.PlaySpecialAttackEffect(token).Forget();
         }
     }
 }
