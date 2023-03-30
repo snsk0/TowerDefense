@@ -16,6 +16,7 @@ namespace InGame.Players
     {
         [SerializeField] protected Animator animator;
         [SerializeField] protected Rigidbody rigidbody;
+        [SerializeField] protected PlayerEffectPlayer playerEffectPlayer;
 
         private PlayerInput playerInput = new PlayerInput();
         private PlayerParameter playerParameter;
