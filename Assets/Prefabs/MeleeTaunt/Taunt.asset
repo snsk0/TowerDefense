@@ -17,5 +17,5 @@ MonoBehaviour:
   _attack: 10
   _speed: 3.5
   _poise: 0
-  _exp: 0
+  _exp: 1
   _growth: 0
