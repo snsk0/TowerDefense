@@ -36,6 +36,7 @@ namespace Runtime.Enemy.State
         {
             animator.PlayDeath();
             isExcuted = false;
+            timer = 0;
         }
 
         public override void Update()

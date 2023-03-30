@@ -32,7 +32,7 @@ namespace Runtime.Enemy
         protected void OnEnable()
         {
             stateMachine.Reset();
-            parameter.Initialize(0);
+            parameter.Initialize(Wave.WaveManager.Wave - 1);
             health.Initialize();
             hate.Initialize();
         }

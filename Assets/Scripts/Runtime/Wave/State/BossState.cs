@@ -9,17 +9,16 @@ namespace Runtime.Wave.State
     public class BossState : StateBase<WaveManager>
     {
         //コンポーネント
-        private IEnemyGenerator generator;
+        private EnemyManager manager;
         private EnemyHealth health;
+
+        public EnemyType type { private get; set; }
 
 
         //コンストラクタ
         public BossState(WaveManager manager, IBlackBoard blackBoard) : base(manager, blackBoard)
         {
-            foreach(IEnemyGenerator generator in owner.GetComponents<IEnemyGenerator>())
-            {
-                if (generator.enemyType == EnemyType.Golem) this.generator = generator;
-            }
+            this.manager = owner.GetComponent<EnemyManager>();
         }
 
 
@@ -27,7 +26,8 @@ namespace Runtime.Wave.State
         public override void Start()
         {
             //ボスをスポーンさせる
-            health =  generator.Generate(owner.transform).GetComponent<EnemyHealth>();
+            EnemyController controller = manager.GetInitialEnemy(type);
+            health = controller.GetComponent<EnemyHealth>();
         }
 
         public override void Update()
