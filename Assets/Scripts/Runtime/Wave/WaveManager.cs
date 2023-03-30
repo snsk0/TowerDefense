@@ -40,10 +40,10 @@ namespace Runtime.Wave
             main.enemiesNumber[(int)EnemyType.Taunt] = 1;
 
             main_2.waveTime = 150.0f;
-            main_2.generateSpanTime = 9.0f;
-            main_2.generateNumber = 4;
-            main_2.enemiesNumber[(int)EnemyType.Taunt] = 9;
-            main_2.enemiesNumber[(int)EnemyType.Golem] = 1;
+            main_2.generateSpanTime = 5.0f;
+            main_2.generateNumber = 5;
+            main_2.enemiesNumber[(int)EnemyType.Taunt] = 7;
+            main_2.enemiesNumber[(int)EnemyType.Golem] = 3;
 
             boss.type = EnemyType.Golem;
 
