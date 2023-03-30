@@ -19,7 +19,6 @@ namespace Runtime.UI.Presenter
         [SerializeField] private WaveManager manager;
 
 
-
         private void Update()
         {
             //wave”XV
