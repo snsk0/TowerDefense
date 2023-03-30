@@ -68,9 +68,10 @@ namespace InGame.Players.Fighters
             await AnimationTransitionWaiter.WaitStateTime(0.33f, (int)AnimatorLayerType.SpecialAttack, AnimatorStateHashes.Attack, animator, token);
             fighterEffectPlayer.playSpecialAttackEffect();
             setEnableAttackCollider(true);
+            await AnimationTransitionWaiter.WaitStateTime(0.65f, (int)AnimatorLayerType.SpecialAttack, AnimatorStateHashes.Attack, animator, token);
+            setEnableAttackCollider(false);
             await AnimationTransitionWaiter.WaitStateTime(1f, (int)AnimatorLayerType.SpecialAttack, AnimatorStateHashes.Attack, animator, token);
             currentAttackState = PlayerAttackStateType.None;
-            setEnableAttackCollider(false);
         }
     }
 }
