@@ -7564,7 +7564,7 @@ GameObject:
   - component: {fileID: 1300608320711264289}
   - component: {fileID: 1300608320711264303}
   - component: {fileID: -9142131251394298488}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EarthGolem
   m_TagString: Untagged
   m_Icon: {fileID: 0}

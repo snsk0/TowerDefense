@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 4468419108153231977}
   - component: {fileID: 4468419108153231976}
   - component: {fileID: -6956749998631295510}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: NormalMetalon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
