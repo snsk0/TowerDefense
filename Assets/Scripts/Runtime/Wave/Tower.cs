@@ -11,7 +11,7 @@ namespace Runtime.Wave
     {
         [SerializeField] private EnemyHealth health;
 
-        public bool IsDamagable { get; private set; }
+        public bool IsDamagable { get; private set; } = true;
 
         private void OnEnable()
         {
