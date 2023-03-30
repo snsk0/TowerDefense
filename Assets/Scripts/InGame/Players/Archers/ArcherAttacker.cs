@@ -27,7 +27,7 @@ namespace InGame.Players.Archers
 
             var attackValue = playerParameter.GetCalculatedValue(PlayerParameterType.AttackValue);
             //var damage = new Damage(attackValue, KnockbackType.None);
-            target.Damage(attackValue, 1, gameObject);
+            target.Damage(attackValue, 1, 1, gameObject);
         }
 
         public async UniTask SpecialAttack(IDamagable target)
