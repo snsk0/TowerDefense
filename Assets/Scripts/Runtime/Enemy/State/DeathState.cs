@@ -16,6 +16,7 @@ namespace Runtime.Enemy.State
         private EnemyDissolve dissolve;
         private EnemyAnimator animator;
         private EnemyItemDropper dropper;   //‰¼ŽÀ‘•
+        private Collider collider;
 
         private float timer;
         private bool isExcuted;
@@ -28,6 +29,7 @@ namespace Runtime.Enemy.State
             animator = owner.GetComponent<EnemyAnimator>();
             dropper = owner.GetComponent<EnemyItemDropper>();
             health = owner.GetComponent<EnemyHealth>();
+            collider = owner.GetComponent<Collider>();
         }
 
 
@@ -37,6 +39,7 @@ namespace Runtime.Enemy.State
             animator.PlayDeath();
             isExcuted = false;
             timer = 0;
+            collider.enabled = false;
         }
 
         public override void Update()
@@ -55,6 +58,7 @@ namespace Runtime.Enemy.State
             {
                 if(health.currentHealth.Value <= 0) dropper.Drop();     //‰¼ŽÀ‘•
                 owner.gameObject.SetActive(false);  //Disable
+                collider.enabled = true;
             }
         }
 
