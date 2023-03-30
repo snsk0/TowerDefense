@@ -47,7 +47,7 @@ namespace InGame.Players.Archers
             var attackValue = playerParameter.GetCalculatedValue(PlayerParameterType.AttackValue) * 6;
             StartCoolTimeCount(this.GetCancellationTokenOnDestroy()).Forget();
             //var damage = new Damage(attackValue, KnockbackType.None);
-            target.Damage(attackValue, 1, gameObject);
+            target.Damage(attackValue, 1, 3, gameObject);
         }
     }
 }

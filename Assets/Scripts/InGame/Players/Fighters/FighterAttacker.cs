@@ -24,8 +24,6 @@ namespace InGame.Players.Fighters
                 .Subscribe(enemy =>
                 {
                     var attackValue = playerParameter.GetCalculatedValue(PlayerParameterType.AttackValue);
-                    //var damage = new Damage(attackValue, KnockbackType.None);
-                    //enemy.ApplyDamage(damage);
                     enemy.Damage(attackValue, 1, 1, gameObject);
                 })
                 .AddTo(this);
@@ -37,9 +35,7 @@ namespace InGame.Players.Fighters
                 .Subscribe(enemy =>
                 {
                     var attackValue = playerParameter.GetCalculatedValue(PlayerParameterType.AttackValue) * 3f;
-                    //var damage = new Damage(attackValue, KnockbackType.None);
-                    //enemy.ApplyDamage(damage);
-                    enemy.Damage(attackValue, 1, 1, gameObject);
+                    enemy.Damage(attackValue, 1, 3, gameObject);
                 })
                 .AddTo(this);
         }
