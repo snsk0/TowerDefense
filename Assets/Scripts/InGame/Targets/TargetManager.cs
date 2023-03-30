@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using InGame.Enemies;
+using Runtime.Enemy;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace InGame.Targets
         private readonly ReactiveProperty<Transform> currentTargetTransform = new ReactiveProperty<Transform>();
         public IReadOnlyReactiveProperty<Transform> TargetedTransform => currentTargetTransform;
 
-        public IEnemyDamagable currentTargetEnemy { get; private set; }
+        public IDamagable currentTargetEnemy { get; private set; }
 
         private readonly TargetSearcher targetSearcher;
         private readonly CancellationTokenSource tokenSource;
@@ -45,7 +46,7 @@ namespace InGame.Targets
 
                 //ターゲットの更新
                 currentTargetTransform.Value = target;
-                currentTargetEnemy = target == null ? null : target.GetComponent<IEnemyDamagable>();
+                currentTargetEnemy = target == null ? null : target.GetComponent<IDamagable>();
 
                 await UniTask.DelayFrame(1, cancellationToken: token);
             }

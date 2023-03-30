@@ -31,6 +31,7 @@ namespace Runtime.Enemy
         //“G‚ÌŠÇ—
         private List<EnemyController> _livingEnemyList;
         public IReadOnlyList<EnemyController> livingEnemyList => _livingEnemyList;
+        public IEnumerable<Transform> LivingEnemyTransformList => _livingEnemyList.Select(x => x.transform);
 
         //¶¬ƒCƒxƒ“ƒg
         private Subject<EnemyController> onGenerateSubject;
