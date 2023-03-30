@@ -72,7 +72,7 @@ namespace Runtime.Wave.State
                 {
                     valueSum += enemiesNumber[(int)type];
 
-                    if (valueSum <= index)
+                    if (valueSum >= index)
                     {
                         //ê∂ê¨Ç∑ÇÈ
                         enemyManager.GetInitialEnemy(type);
