@@ -38,5 +38,6 @@ namespace Runtime.Wave.State
                 blackBoard.SetValue<bool>("Boss", false);
             }
         }
+
     }
 }

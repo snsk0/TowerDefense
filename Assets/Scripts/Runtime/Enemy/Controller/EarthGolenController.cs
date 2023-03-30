@@ -29,7 +29,7 @@ namespace Runtime.Enemy.Controller
 
             //•Ï”‰Šú‰»
             targetTower.isResume = false;
-            idleTower.seekRange = 5.2f;
+            idleTower.seekRange = 8.2f;
             idleTower.attackCoolTime = 0.7f;
             /*
             seekTower.minVelocity = 0.1f;
@@ -37,7 +37,7 @@ namespace Runtime.Enemy.Controller
             seekTower.followAgentDistance = 0.25f;
             seekTower.isFixedAgentDistance = false;
             */
-            seekTower.stoppingDistance = 5.0f;
+            seekTower.stoppingDistance = 8.0f;
             attackTower.index = (int)TauntAttackType.Melee;
 
             //‘JˆÚğŒ‚Ì’Ç‰Á
@@ -68,14 +68,14 @@ namespace Runtime.Enemy.Controller
 
             //•Ï”‰Šú‰»
             targetPlayer.isResume = false;
-            idlePlayer.seekRange = 6.3f;
+            idlePlayer.seekRange = 5.3f;
             idlePlayer.attackCoolTime = 1.0f;
             /*
             seekPlayer.minVelocity = 0.1f;
             seekPlayer.maxAgentDistance = 1.0f;
             seekPlayer.followAgentDistance = 0.25f;
             */
-            seekPlayer.stoppingDistance = 6.0f;
+            seekPlayer.stoppingDistance = 5.0f;
             attackPlayer.index = (int)TauntAttackType.Melee;
 
             //‘JˆÚğŒ‚Ì’Ç‰Á
