@@ -15,6 +15,7 @@ namespace Runtime.UI.Presenter
         [SerializeField] private Slider slider;
         [SerializeField] private Text text;
         [SerializeField] private Text gameOverText;
+        [SerializeField] private Text clearText;
         [SerializeField] private WaveManager manager;
 
 
@@ -27,20 +28,24 @@ namespace Runtime.UI.Presenter
 
             //sliderèàóù
             StateBase<WaveManager> state = manager.stateMachine.GetCurrentLeafState();
-            if (state == null) return; 
-            if(state.GetType() == typeof(WaitState))
+            if (state == null) return;
+            if (state.GetType() == typeof(WaitState))
             {
                 WaitState wait = (WaitState)state;
                 slider.value = wait.currentTime / wait.waitTime;
             }
-            else if(state.GetType() == typeof(MainState))
+            else if (state.GetType() == typeof(MainState))
             {
                 MainState main = (MainState)state;
                 slider.value = 1.0f - (main.currentTime / main.waveTime);
             }
-            else if(state.GetType() == typeof(GameOverState))
+            else if (state.GetType() == typeof(GameOverState))
             {
                 gameOverText.gameObject.SetActive(true);
+            }
+            else if(state.GetType() == typeof(ClearState))
+            {
+                clearText.gameObject.SetActive(true);
             }
             else
             {
