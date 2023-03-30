@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using UniRx;
+using UniRx.Triggers;
 
 
 namespace Runtime.Enemy
@@ -61,20 +62,16 @@ namespace Runtime.Enemy
             enemy.transform.rotation = transform.transform.rotation;
             enemy.gameObject.SetActive(true);
 
-            //死亡イベント登録
+            //Disable検知
             SingleAssignmentDisposable disposable = new SingleAssignmentDisposable();
-            disposable.Disposable = enemy.isDeathProperty
-                .Subscribe(isDeath =>
+            disposable.Disposable = enemy.gameObject.OnDisableAsObservable()
+                .Subscribe(_ =>
                 {
-                    if (isDeath)
-                    {
-                        //イベント登録の解除
-                        disposable.Dispose();
+                    //イベント登録の解除
+                    disposable.Dispose();
 
-                        //スタックに積みなおして無効化
-                        enemy.gameObject.SetActive(false);
-                        disableEnemyStack.Push(enemy);
-                    }
+                    //スタックに積みなおす
+                    disableEnemyStack.Push(enemy);
                 });
 
             return enemy;
