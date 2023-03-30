@@ -16,16 +16,13 @@ namespace Runtime.UI.Presenter
         [SerializeField] private Canvas canvas;
         [SerializeField] private HealthView view;
 
-        //dispose
-        private IDisposable disposable;
-
         //最初に一度だけ登録
         private void Start()
         {
-            disposable = health.currentHealth.Subscribe(health =>
+            health.currentHealth.Subscribe(health =>
             {
                 view.SetValue(health / this.health.maxHealth);
-            });
+            }).AddTo(this);
         }
 
         //キャンバスをカメラに向ける
@@ -33,12 +30,6 @@ namespace Runtime.UI.Presenter
         {
             canvas.worldCamera = Camera.main;
             canvas.transform.rotation = canvas.worldCamera.transform.rotation;
-        }
-
-        //disposeになった時に解除する
-        private void OnDisable()
-        {
-            if (disposable != null) disposable.Dispose();
         }
     }
 }

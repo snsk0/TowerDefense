@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyName: Taunt
   _maxHealth: 10
-  _attack: 10
+  _attack: 5
   _speed: 3.5
   _poise: 0
   _exp: 1

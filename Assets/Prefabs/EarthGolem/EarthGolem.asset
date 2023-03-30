@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EarthGolem
   m_EditorClassIdentifier: 
   _enemyName: EarthGolem
-  _maxHealth: 10
+  _maxHealth: 100
   _attack: 10
   _speed: 7
   _poise: 0
