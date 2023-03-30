@@ -14,6 +14,7 @@ namespace InGame.Players.Animators
         public static int Run => Animator.StringToHash("Run");
         public static int Sprint => Animator.StringToHash("Sprint");
         public static int NormalAttackSpeed => Animator.StringToHash("NormalAttackSpeed");
+        public static int Death => Animator.StringToHash("Death");
 
         //ファイター用
         public static int FirstNormalAttackSpeed => Animator.StringToHash("FirstNormalAttackSpeed");
