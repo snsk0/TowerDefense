@@ -48,10 +48,10 @@ namespace Runtime.Enemy.Component.Attack
             {
                 hitedList.Add(other.gameObject);
 
-                IPlayerDamagable damagable = other.GetComponent<IPlayerDamagable>();
-                if (!damagable.IsDamagable)
-                    return;
-                damagable?.ApplyDamage(new Damage(parameter.attack, KnockbackType.Small));
+                if(other.TryGetComponent<IPlayerDamagable>(out var damagable) && damagable.IsDamagable)
+                {
+                    damagable?.ApplyDamage(new Damage(parameter.attack, KnockbackType.Small));
+                }
 
                 //if(damagable != null)
                 //{
