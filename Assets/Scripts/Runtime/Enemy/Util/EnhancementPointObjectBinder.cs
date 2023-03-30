@@ -5,6 +5,7 @@ using UniRx;
 using Runtime.Enemy.Component;
 
 using InGame.DropItems;
+using VContainer;
 
 namespace Runtime.Enemy.Util
 {
@@ -12,7 +13,7 @@ namespace Runtime.Enemy.Util
     {
         //各種マネージャー
         [SerializeField] private EnemyManager enemyManager;
-        private EnhancementPointObjectManager epoManager;
+        [Inject] private EnhancementPointObjectManager epoManager;
 
 
 
