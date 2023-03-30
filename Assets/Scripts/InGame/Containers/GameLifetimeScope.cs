@@ -11,6 +11,7 @@ using InGame.Targets;
 using InGame.UI.Enhancements;
 using InGame.UI.Players;
 using Prepare;
+using Runtime.Enemy.Util;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -24,6 +25,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private TargetPointerView targetPointerView;
     [SerializeField] private PlayerHPView playerHPView;
     [SerializeField] private AttackCoolTimeView attackCoolTimeView;
+    [SerializeField] private EnhancementPointObjectBinder enhancementPointObjectBinder;
 
     //‰ðŒˆ‚µ‚È‚¢MonoBehaviour
     [Header("‰ðŒˆ‚µ‚È‚¢MonoBehaviour")]
@@ -78,5 +80,6 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(targetPointerView);
         builder.RegisterComponent(playerHPView);
         builder.RegisterComponent(attackCoolTimeView);
+        builder.RegisterComponent(enhancementPointObjectBinder);
     }
 }

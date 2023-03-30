@@ -51,6 +51,7 @@ namespace Runtime.Enemy.State
             if(timer > 3.0f)
             {
                 dropper.Drop();     //‰¼ŽÀ‘•
+                owner.gameObject.SetActive(false);  //Disable
             }
         }
 

@@ -5,6 +5,8 @@ using System.Collections.Concurrent;
 
 using UnityEngine;
 
+using UniRx;
+
 using Cysharp.Threading.Tasks;
 
 
@@ -23,6 +25,14 @@ namespace Runtime.Enemy
         private List<Transform> generateLocationList;
         private ConcurrentBag<Transform> awaitLocationList;
 
+        //敵の管理
+        private List<EnemyController> _livingEnemyList;
+        public IReadOnlyList<EnemyController> livingEnemyList => _livingEnemyList;
+
+        //生成イベント
+        private Subject<EnemyController> onGenerateSubject;
+        public IObservable<EnemyController> onGenerateEventHandler => onGenerateSubject;
+
 
         //初期化
         private void Awake()
@@ -30,12 +40,18 @@ namespace Runtime.Enemy
             generateLocationList = new List<Transform>(_generateLocationList);
             generatorList = new IEnemyGenerator[Enum.GetValues(typeof(EnemyType)).Cast<int>().Max() + 1];
             awaitLocationList = new ConcurrentBag<Transform>();
+            _livingEnemyList = new List<EnemyController>();
+            onGenerateSubject = new Subject<EnemyController>();
 
             //generatorを全取得
             foreach(IEnemyGenerator generator in GetComponents<IEnemyGenerator>())
             {
                 generatorList[(int)generator.enemyType] = generator;
             }
+        }
+        private void OnDestroy()
+        {
+            onGenerateSubject.Dispose();
         }
 
 
@@ -69,6 +85,7 @@ namespace Runtime.Enemy
 
             //敵を生成
             EnemyController enemy = generatorList[(int)type].Generate(transform);
+            onGenerateSubject.OnNext(enemy);
 
             //一定時間後にリストに戻す(非同期)
             UniTask task = WaitLocationCoolTime(transform);

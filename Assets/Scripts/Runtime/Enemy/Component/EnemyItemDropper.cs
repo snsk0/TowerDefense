@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine;
 
 using Runtime.Enemy.Parameter;
@@ -6,17 +8,26 @@ namespace Runtime.Enemy.Component
 {
     public class EnemyItemDropper : MonoBehaviour
     {
-        [SerializeField] private ExpOrb dropItem;
+        //[SerializeField] private ExpOrb dropItem;
         [SerializeField] private Vector3 offset;
         [SerializeField] private EnemyParameter parameter;
 
+
+        //åƒÇ—èoÇ∑ä÷êî
+        private Action<Vector3, int> generateExp;
+
+
+        //èâä˙âª
+        public void initialize(Action<Vector3, int> generateExp)
+        {
+            this.generateExp = generateExp;
+        }
+
+
+        //åƒÇ—èoÇµ
         public void Drop()
         {
-            GameObject go = Instantiate(dropItem.gameObject, transform);
-            go.transform.position += offset;
-
-            ExpOrb orb = dropItem.GetComponent<ExpOrb>();
-            orb.SetInitialize(parameter);
+            generateExp.Invoke(transform.position + offset, (int)parameter.exp);
         }
     }
 }
