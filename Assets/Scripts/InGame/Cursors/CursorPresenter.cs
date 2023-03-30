@@ -14,22 +14,22 @@ namespace InGame.Cursors
         private readonly EnhancementView enhancementView;
 
         [Inject]
-        public CursorPresenter(CursorController cursorController/*, EnhancementView enhancementView*/)
+        public CursorPresenter(CursorController cursorController, EnhancementView enhancementView)
         {
             this.cursorController = cursorController;
-            //this.enhancementView = enhancementView;
+            this.enhancementView = enhancementView;
         }
 
         public void Start()
         {
             cursorController.SetVisibleCursoe(false);
 
-            //enhancementView.ViewPanelObservable
-            //    .Subscribe(opened =>
-            //    {
-            //        cursorController.SetVisibleCursoe(opened);
-            //    })
-            //    .AddTo(this);
+            enhancementView.ViewPanelObservable
+                .Subscribe(opened =>
+                {
+                    cursorController.SetVisibleCursoe(opened);
+                })
+                .AddTo(this);
         }
     }
 }

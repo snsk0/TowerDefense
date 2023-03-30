@@ -92,6 +92,11 @@ namespace InGame.Players
                     break;
             }
         }
+
+        public void PlayDeathAnimation()
+        {
+            animator.SetBool(AnimatorParameterHashes.Death, true);
+        }
     }
 }
 

@@ -18,15 +18,16 @@ using VContainer.Unity;
 public class GameLifetimeScope : LifetimeScope
 {
     //‰ðŒˆ‚·‚éMonoBehaviour
+    [Header("‰ðŒˆ‚·‚éMonoBehaviour")]
     [SerializeField] private EnhancementView enhancementView;
-    [SerializeField] private CursorController cursorController;
+    //[SerializeField] private CursorController cursorController;
     [SerializeField] private TargetPointerView targetPointerView;
     [SerializeField] private PlayerHPView playerHPView;
     [SerializeField] private AttackCoolTimeView attackCoolTimeView;
 
     //‰ðŒˆ‚µ‚È‚¢MonoBehaviour
+    [Header("‰ðŒˆ‚µ‚È‚¢MonoBehaviour")]
     [SerializeField] private PlayerGenerator playerGenerator;
-    [SerializeField] private EnemyGenerator enemyGenerator;
     [SerializeField] private CinemachineFreeLook freeLookCamera;
     [SerializeField] private GameObject enhancementPointObjectPrefab;
     [SerializeField] private Transform enhancementPointObjectParent;
@@ -35,20 +36,20 @@ public class GameLifetimeScope : LifetimeScope
     protected override void Configure(IContainerBuilder builder)
     {
         builder.RegisterEntryPoint<PlayerGeneratePresenter>();
-        //builder.RegisterEntryPoint<EnhancementPresenter>();
+        builder.RegisterEntryPoint<EnhancementPresenter>();
         //builder.RegisterEntryPoint<EnemyGeneratePresenter>();
         builder.RegisterEntryPoint<CameraSetUpPresenter>();
         builder.RegisterEntryPoint<CursorPresenter>();
-        //builder.RegisterEntryPoint<PlayerHPPresenter>();
-        //builder.RegisterEntryPoint<AttackCoolTimePresenter>();
+        builder.RegisterEntryPoint<PlayerHPPresenter>();
+        builder.RegisterEntryPoint<AttackCoolTimePresenter>();
 
         builder.Register<PlayerBackpack>(Lifetime.Singleton);
         builder.Register<TargetManager>(Lifetime.Singleton);
 
         builder.Register<PlayerManager>(Lifetime.Singleton)
             .WithParameter("playerGenerator", playerGenerator);
-        builder.Register<EnemyManager>(Lifetime.Singleton)
-            .WithParameter("enemyGenerator", enemyGenerator);
+        //builder.Register<EnemyManager>(Lifetime.Singleton)
+        //    .WithParameter("enemyGenerator", enemyGenerator);
         builder.Register<CameraManager>(Lifetime.Singleton)
             .WithParameter("freeLookCamera", freeLookCamera);
         builder.Register<EnhancementPointObjectManager>(Lifetime.Singleton)
@@ -57,6 +58,7 @@ public class GameLifetimeScope : LifetimeScope
             .WithParameter("generator", enhancementPointObjectGenerator);
 
         builder.Register<TargetSearcher>(Lifetime.Transient);
+        builder.Register<CursorController>(Lifetime.Transient);
 
         var prepareSetting = Parent.Container.Resolve<PrepareSetting>();
         switch (prepareSetting.selectedPlayerCharacterType)
@@ -71,11 +73,10 @@ public class GameLifetimeScope : LifetimeScope
                 builder.RegisterEntryPoint<TargetPointerPresenter>();
                 break;
         }
-        
-        //builder.RegisterComponent(enhancementView);
-        builder.RegisterComponent(cursorController);
-        //builder.RegisterComponent(targetPointerView);
-        //builder.RegisterComponent(playerHPView);
-        //builder.RegisterComponent(attackCoolTimeView);
+
+        builder.RegisterComponent(enhancementView);
+        builder.RegisterComponent(targetPointerView);
+        builder.RegisterComponent(playerHPView);
+        builder.RegisterComponent(attackCoolTimeView);
     }
 }

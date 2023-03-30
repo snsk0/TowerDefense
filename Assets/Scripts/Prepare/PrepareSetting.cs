@@ -8,7 +8,7 @@ namespace Prepare
     //NOTE: ƒVƒ“ƒOƒ‹ƒgƒ“‚ÅŠÇ—
     public sealed class PrepareSetting
     {
-        public PlayerCharacterType selectedPlayerCharacterType { get; private set; }
+        public PlayerCharacterType selectedPlayerCharacterType { get; private set; } = PlayerCharacterType.Fighter;
 
         public void SetSelectedPlayerCharacterType(PlayerCharacterType playerCharacterType)
         {

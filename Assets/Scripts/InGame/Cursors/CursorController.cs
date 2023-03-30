@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace InGame.Cursors
 {
-    public class CursorController : MonoBehaviour
+    public class CursorController
     {
         public void SetVisibleCursoe(bool value)
         {

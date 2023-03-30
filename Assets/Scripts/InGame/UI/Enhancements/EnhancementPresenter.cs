@@ -15,17 +15,15 @@ namespace InGame.UI.Enhancements
     {
         private readonly PlayerManager playerManager;
         private readonly EnhancementView enhancementView;
-        private readonly EnemyManager enemyManager;
         private readonly PlayerBackpack playerBackpack;
 
         private readonly PlayerInput playerInput = new PlayerInput();
 
         [Inject]
-        public EnhancementPresenter(PlayerManager playerManager, EnhancementView enhancementView, EnemyManager enemyManager, PlayerBackpack playerBackpack)
+        public EnhancementPresenter(PlayerManager playerManager, EnhancementView enhancementView, PlayerBackpack playerBackpack)
         {
             this.playerManager = playerManager;
             this.enhancementView = enhancementView;
-            this.enemyManager = enemyManager;
             this.playerBackpack = playerBackpack;
         }
 

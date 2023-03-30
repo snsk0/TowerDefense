@@ -18,6 +18,9 @@ namespace InGame.Players
         public GameObject currentPlayerObject { get; private set; }
         public PlayerParameter playerParameter { get; private set; }
 
+        private PlayerHealth playerHealth;
+        public bool IsDead => playerHealth.currentHP <= 0;
+
         [Inject]
         public PlayerManager(PlayerGenerator playerGenerator)
         {
@@ -40,7 +43,8 @@ namespace InGame.Players
             currentPlayerObject.GetComponent<PlayerAttacker>().Init(playerParameter);
             currentPlayerObject.GetComponent<PlayerAnimationPlayer>().Init(playerParameter);
             currentPlayerObject.GetComponent<PlayerMover>().Init(playerParameter);
-            currentPlayerObject.GetComponent<PlayerHealth>().Init(playerParameter);
+            playerHealth = currentPlayerObject.GetComponent<PlayerHealth>();
+            playerHealth.Init(playerParameter);
 
             generatedPlayerSubject.OnNext(currentPlayerObject);
         }
