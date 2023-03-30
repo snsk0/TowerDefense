@@ -33,7 +33,7 @@ namespace Runtime.Enemy.State.Taunt
             rigidbody.AddForce(Vector3.up * 4.0f, ForceMode.VelocityChange);
 
             GameObject tower = GameObject.Find("Tower");
-            GameObject player = GameObject.Find("Player");
+            GameObject player = GameObject.FindWithTag("Player");
             hate.AddHate(Random.Range(0f, 2.3f), player);
             hate.AddHate(Random.Range(0.1f, 2.9f), tower);
 

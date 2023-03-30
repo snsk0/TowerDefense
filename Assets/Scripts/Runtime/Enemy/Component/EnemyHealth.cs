@@ -16,7 +16,7 @@ namespace Runtime.Enemy.Component
 
         //フィールド
         public float maxHealth => parameter.maxHealth;
-        private ReactiveProperty<float> _currentHealth;
+        private ReactiveProperty<float> _currentHealth = new ReactiveProperty<float>();
         public IReactiveProperty<float> currentHealth => _currentHealth;
 
 
@@ -24,7 +24,7 @@ namespace Runtime.Enemy.Component
         //初期化
         public void Initialize()
         {
-            _currentHealth = new ReactiveProperty<float>(maxHealth);
+            _currentHealth.Value = maxHealth;
         }
 
 
@@ -41,7 +41,7 @@ namespace Runtime.Enemy.Component
 
 
         //Dispose
-        private void OnDisable()
+        private void OnDestroy()
         {
             _currentHealth.Dispose();
         }
