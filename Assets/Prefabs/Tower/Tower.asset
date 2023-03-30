@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tower
   m_EditorClassIdentifier: 
   _enemyName: Tower
-  _maxHealth: 10000
+  _maxHealth: 200
   _attack: 0
   _speed: 0
   _poise: 0
