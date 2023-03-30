@@ -12,11 +12,11 @@ namespace Runtime.Wave.State
     public class BattleState : ParentStateBase<WaveManager>
     {
         //コンポーネント
-        private GameObject player;
         private EnemyHealth towerHealth;
         private EnemyManager manager;
+        private PlayerManagerProvider provider;
 
-        //タワーヘルス
+        public int maxWave { private get; set; }
 
         public BattleState(WaveManager manager, IBlackBoard blackBoard) : base(manager, blackBoard) 
         {
@@ -24,6 +24,8 @@ namespace Runtime.Wave.State
             towerHealth = GameObject.FindGameObjectWithTag("Tower").GetComponent<EnemyHealth>();
 
             this.manager = owner.GetComponent<EnemyManager>();
+
+            provider = owner.GetComponent<PlayerManagerProvider>();
         }
 
 
@@ -39,7 +41,7 @@ namespace Runtime.Wave.State
         protected override void SelfUpdate()
         {
             //playerとtowerどちらかが死んだらゲームオーバーに
-            if (towerHealth.currentHealth.Value == 0) blackBoard.SetValue<bool>("GameOver", true);
+            if (towerHealth.currentHealth.Value == 0 || provider.playerManager.IsDead) blackBoard.SetValue<bool>("GameOver", true);
 
             //bossStateが終了したらEndWave
             if(innerStateMachine.currentState is BossState && !blackBoard.GetValue<bool>("Boss"))
@@ -51,6 +53,8 @@ namespace Runtime.Wave.State
                 {
                     enemy.blackBoardWriter.SetValue<bool>("Death", true);
                 }
+
+                if (owner.wave >= maxWave) blackBoard.SetValue<bool>("Clear", true);
             }
         }
 
