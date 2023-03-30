@@ -12,6 +12,7 @@ using InGame.UI.Players;
 using Prepare;
 using Runtime.Enemy;
 using Runtime.Enemy.Util;
+using Runtime.Wave;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -25,6 +26,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private TargetPointerView targetPointerView;
     [SerializeField] private PlayerHPView playerHPView;
     [SerializeField] private AttackCoolTimeView attackCoolTimeView;
+    [SerializeField] private PlayerManagerProvider playerManagerProvider;
 
     //‰ðŒˆ‚µ‚È‚¢MonoBehaviour
     [Header("‰ðŒˆ‚µ‚È‚¢MonoBehaviour")]
@@ -78,5 +80,6 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(targetPointerView);
         builder.RegisterComponent(playerHPView);
         builder.RegisterComponent(attackCoolTimeView);
+        builder.RegisterComponent(playerManagerProvider);
     }
 }
