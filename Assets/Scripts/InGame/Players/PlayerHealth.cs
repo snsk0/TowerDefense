@@ -20,7 +20,7 @@ namespace InGame.Players
         public void AddDamage(int damageValue)
         {
             currentHP -= damageValue;
-            Debug.Log($"PlayerHealth{currentHP}");
+            Debug.Log($"PlayerHealth:{currentHP}");
         }
 
         public void Heal(int value)
