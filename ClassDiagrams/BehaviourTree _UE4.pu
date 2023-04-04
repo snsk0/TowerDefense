@@ -1,0 +1,65 @@
+﻿@startuml BehaviourTree
+
+class Node
+
+class CompositeNode{
+    List<CompositeChild> children
+    List<Service> services
+}
+class CompositeChild{
+    CompositeNode childComposite
+    TaskNode childTask
+    List<Decorator> decorators
+}
+class Selector
+class Sequence
+
+CompositeNode-->CompositeChild
+
+CompositeNode<|--Selector
+CompositeNode<|--Sequence
+
+class AuxiliaryNode
+class Service
+class Decolator
+
+AuxiliaryNode<|-- Service
+AuxiliaryNode<|-- Decolator
+
+class TaskNode
+
+Node<|--CompositeNode
+Node<|--AuxiliaryNode
+Node<|--TaskNode
+
+class BehaviorTreeManager{
+    
+}
+class BehaviorTree{
+    CompositeNode root
+    Blackboard blackboard
+}
+class  BehaviorTreeComponent{
+    void StartTree(BehaviorTree behaviorTree)
+}
+class Blackboard{
+    List<BlackboardEntry> keys
+}
+enum BlackboardKeyType
+class BlackboardEntry{
+    string entryName
+    BlackboardKeyType keyType
+}
+
+BehaviorTree-->Blackboard
+Blackboard-->BlackboardEntry
+BehaviorTreeComponent-->BehaviorTree
+
+class AIController{
+    void RunBehaviorTree(BehaviorTree behaviorTree)
+}
+
+AIController-->BehaviorTree
+AIController-->BehaviorTreeComponent
+
+@enduml

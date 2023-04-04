@@ -1,0 +1,95 @@
+﻿@startuml BehaviourTree
+
+abstract class Node{
+    int priority
+    
+    List<Decolator> decolators
+    void Execute(AIController owner, GameObject Controlled)
+}
+abstract class Composite{
+    List<Service> services
+    List<Node> children
+}
+
+class Selecter
+class Sequence
+class Task{
+    List<Service> services
+    TaskResultType ExecuteTask()
+    TaskResultType AbortType()
+}
+class Service{
+    void Execute(AIController owner, GameObject Controlled)
+}
+class BlackBoard{
+    List<BlackBoardKeyType> keyList
+    Dictionary<BlackBoardKeyType, Object> valueDictionary
+    void SetValue(BlackBoardKeyType key, Object value)
+    Object GetValue(BlackBoardKeyType key)
+}
+class Decorator{
+    IObservable<(AbortType, int)> abortObservable
+    bool ParformConditionCheck()
+}
+class Root{
+    Composite child
+    BlackBoard blackBoard
+}
+
+enum BlackBoardKeyType
+enum AbortType{
+    None,
+    Self,
+    LowerPriority,
+    Both,
+}
+enum TaskResultType{
+    Succeeded,
+    Faild,
+    Aborted,
+    InProgress,
+}
+
+BehaviourTree-->Task
+
+Node<|--Composite
+Node<|--Task
+Node<|-- Root
+
+Composite<|--Selecter
+Composite<|--Sequence
+
+Node-->Decorator
+Node-->Service
+
+class AIController
+class BehaviourTree{
+    Root root
+    Task currentTask
+    List<Decorator> decorators
+    void RunTree()
+    bool TyrAbortCurrentTask()
+    void ObserveAbortEvent()
+}
+
+AIController-->BehaviourTree
+AIController-->BlackBoard
+BehaviourTree-->Root
+BehaviourTree-->Decorator
+Root-->Composite
+Root-->BlackBoard
+Composite-->Node
+Task-->BlackBoard
+Task-->BlackBoardKeyType
+BlackBoard-->BlackBoardKeyType
+Service-->BlackBoard
+
+@enduml
+
+class BlackBoardValuePresenter{
+    ObserveSetValueEvent()
+    ObserveGetValueEvent()
+}
+
+BlackBoardValuePresenter-->Task
+BlackBoardValuePresenter-->BlackBoard
