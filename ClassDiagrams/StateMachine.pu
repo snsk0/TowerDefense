@@ -13,11 +13,12 @@ namespace snk{
 namespace kami{
     class StateMachineManager{
         StateMachineFactory stateMachineFactory
-        IEnumalable<StateMachine> instancedStateMachines 
+        IEnumalable<StateMachine> instancedStateMachines
+        void ProcessStateMachine()
     }
     class StateMachineFactory{
-        IObsrervable<StateMachineController> createdController
-        void CreateEnemyController()
+        IObsrervable<StateMachineController> createdControllerObservable
+        void CreateStateMachine(StateMachine stateMachine)
     }
     abstract class BaseState{
         List<Transition> transitionList
@@ -45,10 +46,17 @@ namespace kami{
     }
     enum BlackboardKeyType
 
+    StateMachineManager-->StateMachineFactory
+    StateMachineManager-->StateMachine
+    StateMachineController-->StateMachineFactory
 
     StateMachineController-->StateMachine
     StateMachine-->StateMachine
     StateMachine-->BaseState
+    StateMachine-->Transition
+    StateMachine-->Blackboard
+    BaseState-->Transition
+    BaseState-->Blackboard
 }
 
 @enduml
