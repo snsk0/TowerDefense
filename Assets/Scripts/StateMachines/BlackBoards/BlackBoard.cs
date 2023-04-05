@@ -5,6 +5,7 @@ namespace StateMachines.BlackBoards
     public class BlackBoard : IBlackBoard
     {
         //ブラックボードのデータ
+        //stringよりEnumがいい
         private readonly Dictionary<string, object> valueList;
 
         //初期化

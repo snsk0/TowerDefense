@@ -2,6 +2,7 @@ using StateMachines.BlackBoards;
 
 namespace StateMachines
 {
+    //Parentであることを明記する必要ある？
     public abstract class ParentStateBase<T> : StateBase<T>
     {
         //内部ステートマシン

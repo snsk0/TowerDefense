@@ -1,0 +1,54 @@
+@startuml StateMachine
+
+namespace snk{
+    class StateMachine
+    abstract class StateBase
+    class ParentState
+
+    StateMachine-->StateBase
+    StateBase<|--ParentState
+    ParentState-->StateMachine
+}
+
+namespace kami{
+    class StateMachineManager{
+        StateMachineFactory stateMachineFactory
+        IEnumalable<StateMachine> instancedStateMachines 
+    }
+    class StateMachineFactory{
+        IObsrervable<StateMachineController> createdController
+        void CreateEnemyController()
+    }
+    abstract class BaseState{
+        List<Transition> transitionList
+        Blackboard blackboard
+        void FinishState()
+    }
+    class StateMachine{
+        List<TransitionList> transitionList
+        StateMachine subStateMachine
+        BaseState entryState
+        BaseState currentState
+        Blackboard blackboard
+        void CheckTransition()
+        void ChangeState()
+    }
+    class StateMachineController{
+        StateMachine useStateMachine
+    }
+    class Transition{
+        BaseState nextState
+        Func<BlackboardKeyType, bool> CanTransition
+    }
+    class Blackboard{
+        Dictionary<BlackboardKeyType, Object> keyDictionary
+    }
+    enum BlackboardKeyType
+
+
+    StateMachineController-->StateMachine
+    StateMachine-->StateMachine
+    StateMachine-->BaseState
+}
+
+@enduml
