@@ -33,6 +33,12 @@ namespace Review.StateMachine
             currentState = activeState;
         }
 
+        public void Restart()
+        {
+            currentState = entryState;
+            IsProsessing = true;
+        }
+
         public void Tick()
         {
             currentState.Execute();
@@ -73,7 +79,7 @@ namespace Review.StateMachine
         {
             if (parent!=null)
             {
-                parent.Init();
+                parent.Restart();
             }
             else
             {
