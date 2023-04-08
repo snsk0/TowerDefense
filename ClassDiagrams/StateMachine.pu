@@ -1,16 +1,6 @@
 @startuml StateMachine
 
-namespace snk{
-    class StateMachine
-    abstract class StateBase
-    class ParentState
-
-    StateMachine-->StateBase
-    StateBase<|--ParentState
-    ParentState-->StateMachine
-}
-
-namespace kami{
+namespace StateMachines{
     class StateMachineManager{
         StateMachineFactory stateMachineFactory
         IEnumalable<StateMachine> instancedStateMachines
@@ -18,7 +8,7 @@ namespace kami{
     }
     class StateMachineFactory{
         IObsrervable<StateMachineController> createdControllerObservable
-        void CreateStateMachine(StateMachine stateMachine)
+        StateMachine CreateStateMachine(StateMachine stateMachine)
     }
     abstract class BaseState{
         List<Transition> transitionList
@@ -35,7 +25,9 @@ namespace kami{
         void ChangeState()
     }
     class StateMachineController{
+        StateMachineType stateMachineType
         StateMachine useStateMachine
+        StateMachineController(Type stateMachineType)
     }
     class Transition{
         BaseState nextState
@@ -45,10 +37,13 @@ namespace kami{
         Dictionary<BlackboardKeyType, Object> keyDictionary
     }
     enum BlackboardKeyType
+    enum StateMachineType
+    enum StateType
 
     StateMachineManager-->StateMachineFactory
     StateMachineManager-->StateMachine
     StateMachineController-->StateMachineFactory
+    StateMachineFactory-->StateMachine
 
     StateMachineController-->StateMachine
     StateMachine-->StateMachine
@@ -58,5 +53,28 @@ namespace kami{
     BaseState-->Transition
     BaseState-->Blackboard
 }
+
+namespace Enemies{
+    class EnemyManager{
+        void GenerateEnemy()
+    }
+    class EnemyGenerator{
+        GameObject GenerateEnemy(EnemyType enemyType)
+    }
+    class EnemyControllerFactory{
+        EnemyController CreateEnemyController(EnemyType)
+    }
+    class EnemyController
+    enum EnemyType
+
+    EnemyManager-->EnemyGenerator
+    EnemyManager-->EnemyControllerFactory
+    EnemyControllerFactory-->EnemyController
+
+    EnemyGenerator..>EnemyType
+    EnemyControllerFactory..>EnemyType
+}
+
+StateMachines.StateMachineController<|--Enemies.EnemyController
 
 @enduml

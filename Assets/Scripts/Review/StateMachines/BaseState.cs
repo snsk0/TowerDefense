@@ -1,13 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Review.StateMachine
 {
-    public class BaseState
+    [Serializable]
+    public class BaseState : UnityEngine.Object
     {
-        private List<Transition> transitionList;
-        public IEnumerable<Transition> Transitions => transitionList;
         private Blackboard blackboard;
 
         public void Execute()

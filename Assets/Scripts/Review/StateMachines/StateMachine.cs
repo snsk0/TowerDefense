@@ -6,20 +6,36 @@ using UnityEngine;
 
 namespace Review.StateMachine
 {
-    public abstract class StateMachine
+    public class StateMachine
     {
-        private List<Transition> transitionList;
         private StateMachine parent;
-        private List<StateMachine> subStateMachines;
-        private List<Type> states;
+
+        private IEnumerable<Transition> transitions;
+        private IEnumerable<BaseState> states;
+        private List<Type> subStateMachines;
+
         private BaseState currentState;
         private BaseState entryState;
         private Blackboard blackboard;
 
         public bool IsProsessing { get; protected set; }
 
-        protected abstract void SetStates();
-        protected abstract void SetTransitions();
+        public StateMachine(StateMachineSetting stateMachineSetting)
+        {
+            //SetStates(stateMachineSetting.stateTypes)
+        }
+
+        protected void SetStates(IEnumerable<BaseState> states)
+        {
+            this.states = states;
+        }
+
+        protected void SetTransitions(IEnumerable<Transition> transitions)
+        {
+            this.transitions = transitions;
+        }
+
+        
 
         public void Init()
         {
@@ -47,32 +63,32 @@ namespace Review.StateMachine
 
         private void CheckTransition()
         {
-            foreach(var transition in transitionList.Where(x=>x.canTransition()))
-            {
-                ChangeState(transition.afterState);
-            }
+            //foreach(var transition in transitionList.Where(x=>x.canTransition()))
+            //{
+            //    ChangeState(transition.afterState);
+            //}
 
-            foreach (var transition in currentState.Transitions.Where(x => x.canTransition()))
-            {
-                ChangeState(transition.afterState);
-            }
+            //foreach (var transition in currentState.Transitions.Where(x => x.canTransition()))
+            //{
+            //    ChangeState(transition.afterState);
+            //}
         }
 
         private void ChangeState(BaseState nextState)
         {
             currentState.Abort();
 
-            if (states.Any(x => x == nextState.GetType()))
-            {
-                currentState = nextState;
-            }
-            else
-            {
-                currentState = null;
-                IsProsessing = false;
-                var subStateMachine = subStateMachines.Single(x => x.states.Any(y => y == nextState.GetType()));
-                subStateMachine.Init();
-            }
+            //if (states.Any(x => x == nextState.GetType()))
+            //{
+            //    currentState = nextState;
+            //}
+            //else
+            //{
+            //    currentState = null;
+            //    IsProsessing = false;
+            //    //var subStateMachine = subStateMachines.Single(x => x.states.Any(y => y == nextState.GetType()));
+            //    //subStateMachine.Init();
+            //}
         }
 
         private void ExitState()
