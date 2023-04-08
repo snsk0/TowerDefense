@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Review.StateMachine
+namespace Review.StateMachines
 {
     [Serializable]
     public class BaseState : UnityEngine.Object

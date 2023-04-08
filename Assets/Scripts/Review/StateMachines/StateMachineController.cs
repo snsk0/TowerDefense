@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Review.StateMachine
+namespace Review.StateMachines
 {
     public class StateMachineController
     {

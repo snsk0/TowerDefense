@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace Review.StateMachine
+namespace Review.StateMachines
 {
     [Serializable]
     public class Transition

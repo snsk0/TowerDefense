@@ -20,18 +20,11 @@ MonoBehaviour:
   - beforeStateIndex: 0
     afterStateIndex: 0
     consitions:
-    - useKey: 0
+    - useKey: 1
       keyQueryType: 0
       intValue: 0
       floatValue: 0
       blackboardSetting: {fileID: 11400000, guid: 9672a14dd0cec514997cca24639742e6, type: 2}
-    usableStateObjects:
-    - {fileID: 11400000, guid: 7774c93b7cf4e5542a8eb5d820a823ae, type: 2}
-    beforeState: {fileID: 0}
-    afterState: {fileID: 0}
-  - beforeStateIndex: 0
-    afterStateIndex: 0
-    consitions: []
     usableStateObjects:
     - {fileID: 11400000, guid: 7774c93b7cf4e5542a8eb5d820a823ae, type: 2}
     beforeState: {fileID: 0}

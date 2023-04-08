@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-namespace Review.StateMachine
+namespace Review.StateMachines
 {
     public class StateMachineManager
     {

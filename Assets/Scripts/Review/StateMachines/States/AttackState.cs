@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-namespace Review.StateMachine
+namespace Review.StateMachines.States
 {
     public class AttackState : BaseState
     {

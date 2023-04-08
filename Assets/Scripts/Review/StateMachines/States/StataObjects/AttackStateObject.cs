@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Review.StateMachine.States
+namespace Review.StateMachines.States.StateObjects
 {
     [CreateAssetMenu(menuName ="StateObject/AttackState", fileName =("AttackStateObject"))]
     public class AttackStateObject : BaseStateObject

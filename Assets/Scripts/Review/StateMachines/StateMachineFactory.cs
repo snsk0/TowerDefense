@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 
-namespace Review.StateMachine
+namespace Review.StateMachines
 {
     public class StateMachineFactory
     {

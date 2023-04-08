@@ -6,14 +6,8 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace Review.StateMachine
+namespace Review.StateMachines
 {
-    [Serializable]
-    public class TestClass
-    {
-        [SerializeField] private int aaa;
-    }
-
     [CreateAssetMenu(menuName ="StateMachineSetting", fileName ="StateMachineSetting")]
     public class StateMachineSetting : ScriptableObject
     {
