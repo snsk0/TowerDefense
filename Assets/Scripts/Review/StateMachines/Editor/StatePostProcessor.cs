@@ -67,9 +67,7 @@ namespace Review.StateMachines.Editor
             if (!className.EndsWith("StateObject")) return;
 
             Assembly assembly = Assembly.Load("Assembly-CSharp");
-            Debug.Log(className);
             var type = assembly.GetType($"Review.StateMachines.States.StateObjects.{className}");
-            Debug.Log(type);
             var obj = ScriptableObject.CreateInstance(type);
             AssetDatabase.CreateAsset(obj, $"{StateScriptableObjectFilePath}{className}.asset");
             AssetDatabase.SaveAssets();

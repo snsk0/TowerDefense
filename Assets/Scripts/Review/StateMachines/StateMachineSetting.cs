@@ -11,15 +11,17 @@ namespace Review.StateMachines
     [CreateAssetMenu(menuName ="StateMachineSetting", fileName ="StateMachineSetting")]
     public class StateMachineSetting : ScriptableObject
     {
-        [SerializeField] private List<StateMachineSetting> subStateMachineTypes;
-        [SerializeField] private List<BaseStateObject> states;
+        [SerializeField] private List<StateMachineSetting> subStateMachineSettings;
+        [SerializeField] private List<BaseStateObject> stateObjects;
         [SerializeField] private BlackboardSetting blackboardSetting;
         [SerializeField] private List<Transition> transitions;
 
         //private IEnumerable<Transition> oldTransitions;
 
-        public IEnumerable<StateMachineSetting> SubStateMachineTypes => subStateMachineTypes;
-        public IEnumerable<Type> stateTypes;
+        public IEnumerable<StateMachineSetting> SubStateMachineSettings => subStateMachineSettings;
+        public IEnumerable<BaseStateObject> StateObjects => stateObjects;
+        //public KeyValuePair<string, BaseStateObject[]> subStates(StateMachineSetting stateMachineSetting)
+        //    => new KeyValuePair<string, BaseStateObject[]>(stateMachineSetting.name, stateMachineSetting.states.ToArray()); 
         
         private void OnValidate()
         {
@@ -30,15 +32,15 @@ namespace Review.StateMachines
             //    return;
 
             //var newTransitions = transitions.Except(oldTransitions);
-            foreach(var condition in transitions.SelectMany(x=>x.Conditions))
+            foreach (var condition in transitions.SelectMany(x => x.Conditions))
             {
                 condition.SetBlackboardSetting(blackboardSetting);
             }
 
-            foreach(var transition in transitions)
-            {
-                transition.SetUsableStateObjects(states);
-            }
+            //foreach(var transition in transitions)
+            //{
+            //    transition.SetStateObjects(states, subStateMachineSettings.Select(x=>subStates(x)));
+            //}
             //oldTransitions = transitions;
 
             //subStateMachineTypes = subStateMachines.Select(x => Type.GetType(Enum.GetName(typeof(StateMachineType), x)));

@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19413ef89a1c634eba3b9f062ef4dd8, type: 3}
   m_Name: SlimeStateMachineSetting
   m_EditorClassIdentifier: 
-  subStateMachineTypes: []
-  states:
-  - {fileID: 11400000, guid: 7774c93b7cf4e5542a8eb5d820a823ae, type: 2}
+  subStateMachineSettings:
+  - {fileID: 11400000, guid: 9e2365cce558be145ab9201ef688cdf2, type: 2}
+  stateObjects:
+  - {fileID: 0}
   blackboardSetting: {fileID: 11400000, guid: 9672a14dd0cec514997cca24639742e6, type: 2}
   transitions:
   - beforeStateIndex: 0
@@ -25,7 +26,10 @@ MonoBehaviour:
       intValue: 0
       floatValue: 0
       blackboardSetting: {fileID: 11400000, guid: 9672a14dd0cec514997cca24639742e6, type: 2}
-    usableStateObjects:
-    - {fileID: 11400000, guid: 7774c93b7cf4e5542a8eb5d820a823ae, type: 2}
+    stateObjects:
+    - {fileID: 0}
+    - {fileID: 0}
+    subStateMachineNames:
+    - SlimeSubStateMachineSetting
     beforeState: {fileID: 0}
     afterState: {fileID: 0}

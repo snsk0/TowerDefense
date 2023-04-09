@@ -10,22 +10,14 @@ namespace Review.StateMachines
     [Serializable]
     public class Transition
     {
-        [SerializeField] private int beforeStateIndex;
-        [SerializeField] private int afterStateIndex;
-
+        //エディタ上で遷移条件を指定する
         [SerializeField] List<TransitionCondition> consitions;
 
         //エディタ拡張で使用する値
-        [SerializeField] private BaseStateObject[] usableStateObjects;
         [SerializeField] private BaseState beforeState;
         [SerializeField] private BaseState afterState;
 
         public IEnumerable<TransitionCondition> Conditions => consitions;
-
-        public void SetUsableStateObjects(IEnumerable<BaseStateObject> usableStateObjects)
-        {
-            this.usableStateObjects = usableStateObjects.ToArray();
-        }
     }
 
     [Serializable]
