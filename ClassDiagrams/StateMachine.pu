@@ -1,7 +1,115 @@
 @startuml StateMachine
 
 namespace StateMachines{
-    class StateMachineManager{
+    class StatemachineManager{
+        -StateMachienFactory stateMachineFactory
+        -List<StateMachine> processingStateMachines
+        -processStateMachines()
+        -ObserveCreateStateMachine()
+    }
+    class StateMachineFactory{
+        +IObservable<StateMachine> CreatedStateMachineObservable
+        +StateMachine CreateStateMachine(StateMachineSetting setting)
+    }
+    class StateMachineController{
+        -StateMachineSetting useStateMachineSetting
+        -StateMachine usingStateMachine
+        -void RunStateMachine()
+        -void StopStateMachine()
+    }
+
+    class StateMachine{
+        -IEnumerable<Statemachine> subStateMachines
+        -IEnumerable<BaseState> states
+        -IEnumerable<Transition> transitions
+        -Blackboard blackboard
+        -BaseState entryState
+        -BaseState currentState
+        +StateMachine(IEnumerable<Statemachine> subStateMachines, IEnumerable<Transition> transitions
+            IEnumerable<BaseState> states, Blackboard blackboard)
+        +void Tick()
+    }
+    class BaseState{
+        -Blackboard blackboard
+        +ResultType result
+        +BaseState()
+        +void Execute()
+        -void ObserveStateResult(BaseState baseState)
+    }
+    class Transition{
+        +BaseState BeforeState
+        +BaseState AfterState
+        +IEnumerable<TransitionCondition> Conditions
+    }
+    class TransitionCondition{
+        +bool Condition(Blackboard blackboard)
+    }
+    class Blackboard
+    
+    class StateMachineSetting<<ScriptableObject>>
+    class BaseStateObject<<ScriptableObject>>
+    class BlackboardSetting<<ScriptableObject>>
+
+    enum ResultType{
+        Success,
+        False,
+        Processing,
+        Avort,
+    }
+
+    StatemachineManager-->StateMachine
+    StatemachineManager-->StateMachineFactory
+
+    StateMachineController-->StateMachine
+    StateMachineController-->StateMachineFactory
+    StateMachineController-->StateMachineSetting
+
+    StateMachineFactory-->StateMachine
+    StateMachineFactory..>StateMachineSetting
+    StateMachineFactory..>BaseStateObject
+    StateMachineFactory..>Transition
+    StateMachineFactory..>BlackBoardSetting
+
+    StateMachine-->StateMachine
+    StateMachine-->BaseState
+    StateMachine-->Transition
+    StateMachine-->TransitionCondition
+    StateMachine-->Blackboard
+
+    StateMachineSetting-->BaseStateObject
+    StateMachineSetting-->BlackboardSetting
+    StateMachineSetting-->Transition
+    Transition-->TransitionCondition
+
+    TransitionCondition-->Blackboard
+}
+
+namespace Enemies{
+    class EnemyManager{
+        void GenerateEnemy()
+    }
+    class EnemyGenerator{
+        GameObject GenerateEnemy(EnemyType enemyType)
+    }
+    class EnemyControllerFactory{
+        EnemyController CreateEnemyController(EnemyType)
+    }
+    class EnemyController
+    enum EnemyType
+
+    EnemyManager-->EnemyGenerator
+    EnemyManager-->EnemyControllerFactory
+    EnemyControllerFactory-->EnemyController
+
+    EnemyGenerator..>EnemyType
+    EnemyControllerFactory..>EnemyType
+}
+
+StateMachines.StateMachineController<|--Enemies.EnemyController
+
+@enduml
+
+class StateMachineManager{
         StateMachineFactory stateMachineFactory
         IEnumalable<StateMachine> instancedStateMachines
         void ProcessStateMachine()
@@ -52,29 +160,3 @@ namespace StateMachines{
     StateMachine-->Blackboard
     BaseState-->Transition
     BaseState-->Blackboard
-}
-
-namespace Enemies{
-    class EnemyManager{
-        void GenerateEnemy()
-    }
-    class EnemyGenerator{
-        GameObject GenerateEnemy(EnemyType enemyType)
-    }
-    class EnemyControllerFactory{
-        EnemyController CreateEnemyController(EnemyType)
-    }
-    class EnemyController
-    enum EnemyType
-
-    EnemyManager-->EnemyGenerator
-    EnemyManager-->EnemyControllerFactory
-    EnemyControllerFactory-->EnemyController
-
-    EnemyGenerator..>EnemyType
-    EnemyControllerFactory..>EnemyType
-}
-
-StateMachines.StateMachineController<|--Enemies.EnemyController
-
-@enduml

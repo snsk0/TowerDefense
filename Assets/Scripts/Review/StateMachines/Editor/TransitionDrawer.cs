@@ -90,9 +90,9 @@ namespace Review.StateMachines.Editor
                         string[] stateNameArray = new string[stateObjectsSize + 1];
                         for (int i = 0; i < stateObjectsSize; i++)
                         {
-                            stateNameArray[i] = ((BaseStateObject)_property.stateObjectsProperty.GetArrayElementAtIndex(i).objectReferenceValue)?.stateName;
+                            stateNameArray[i+1] = ((BaseStateObject)_property.stateObjectsProperty.GetArrayElementAtIndex(i).objectReferenceValue)?.stateName;
                         }
-                        stateNameArray[stateObjectsSize] = "Any";
+                        stateNameArray[0] = "Any";
 
                         // ‘JˆÚŒ³‚Ì‘I‘ð—“‚ð•`‰æ
                         fieldRect.y += LineHeight;
@@ -116,7 +116,7 @@ namespace Review.StateMachines.Editor
                         string[] afterStateNameArray;
                         if (_property.stateMachineIndex == 0)
                         {
-                            afterStateNameArray = stateNameArray.Take(stateObjectsSize).ToArray();
+                            afterStateNameArray = stateNameArray.Skip(1).Take(stateObjectsSize).ToArray();
                         }
                         else
                         {

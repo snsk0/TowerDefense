@@ -9,10 +9,16 @@ namespace Review.Enemies
         private EnemyGenerator enemyGenerator;
         private EnemyControllerFactory enemyControllerFactory;
 
-        public void GenerateEnemy()
+        public EnemyManager(EnemyGenerator enemyGenerator, EnemyControllerFactory enemyControllerFactory)
         {
-            enemyGenerator.GenerateEnemy(EnemyType.None);
-            enemyControllerFactory.CreateEnemyController(EnemyType.None);
+            this.enemyGenerator = enemyGenerator;
+            this.enemyControllerFactory = enemyControllerFactory;
+        }
+
+        public void GenerateEnemy(EnemyType generateEnemyType)
+        {
+            var enemy=enemyGenerator.GenerateEnemy(generateEnemyType);
+            enemyControllerFactory.CreateEnemyController(generateEnemyType, enemy);
         }
     }
 }

@@ -15,11 +15,13 @@ namespace Review.StateMachines.Editor
             "\n" +
             "namespace Review.StateMachines.States.StateObjects" +
             "{\n" +
-            "   public class #CLASSNAME# : BaseStateObject\n" +
-            "   {\n" +
-            "       public override string stateName { get; protected set; } = \"#STATENAME#\";\n" +
-            "       public override BaseState state { get; protected set; } = new #STATENAME#();\n" +
-            "   }\n" +
+            "    public class #CLASSNAME# : BaseStateObject\n" +
+            "    {\n" +
+            "        public override string stateName { get; protected set; } = \"#STATENAME#\";\n" +
+            "        public override BaseState CreateState(){\n" +
+            "            return new #STATENAME#();\n" +
+            "        }\n" +
+            "    }\n" +
             "}\n" +
             "";
 
@@ -27,10 +29,10 @@ namespace Review.StateMachines.Editor
             "\n" +
             "namespace Review.StateMachines.States" +
             "{\n" +
-            "   public class #CLASSNAME# : BaseState\n" +
-            "   {\n" +
+            "    public class #CLASSNAME# : BaseState\n" +
+            "    {\n" +
             "\n" +
-            "   }\n" +
+            "    }\n" +
             "}\n" +
             "";
 

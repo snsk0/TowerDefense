@@ -7,7 +7,7 @@ namespace Review.Enemies.Controllers
 {
     public class GoblinController : EnemyController
     {
-        public GoblinController()
+        public GoblinController(GameObject targetObject, StateMachineFactory stateMachineFactory) : base(targetObject, stateMachineFactory)
         {
             stateMachineType = StateMachineType.Goblin;
         }

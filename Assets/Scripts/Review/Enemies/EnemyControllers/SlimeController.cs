@@ -7,7 +7,9 @@ namespace Review.Enemies.Controllers
 {
     public class SlimeController : EnemyController
     {
-        public SlimeController()
+        protected override string settingFilePath { get; set; } = "SlimeStateMachineSetting";
+
+        public SlimeController(GameObject targetObject, StateMachineFactory stateMachineFactory) : base(targetObject, stateMachineFactory)
         {
             stateMachineType = StateMachineType.Slime;
         }

@@ -13,13 +13,14 @@ namespace Review.StateMachines.Editor
     {
         private class PropertyData
         {
-            public SerializedProperty useKeyProperty;
             public SerializedProperty keyQueryTypeProperty;
             public SerializedProperty intValueProperty;
             public SerializedProperty floatValueProperty;
 
             public SerializedProperty valueTypeProperty;
-            public SerializedProperty blackboardSettingProperty;
+            public SerializedProperty keyNameProperty;
+
+            public int useKeyIndex;
         }
 
         private Dictionary<string, PropertyData> _propertyDataPerPropertyPath = new Dictionary<string, PropertyData>();
@@ -35,13 +36,12 @@ namespace Review.StateMachines.Editor
             }
 
             _property = new PropertyData();
-            _property.useKeyProperty = property.FindPropertyRelative("useKey");
             _property.keyQueryTypeProperty = property.FindPropertyRelative("keyQueryType");
             _property.intValueProperty = property.FindPropertyRelative("intValue");
             _property.floatValueProperty = property.FindPropertyRelative("floatValue");
 
             _property.valueTypeProperty = property.FindPropertyRelative("valueType");
-            _property.blackboardSettingProperty = property.FindPropertyRelative("blackboardSetting");
+            _property.keyNameProperty = property.FindPropertyRelative("keyName");
             _propertyDataPerPropertyPath.Add(property.propertyPath, _property);
         }
 
@@ -61,22 +61,22 @@ namespace Review.StateMachines.Editor
                 property.isExpanded = EditorGUI.Foldout(new Rect(fieldRect), property.isExpanded, label);
                 if (property.isExpanded)
                 {
-
                     using (new EditorGUI.IndentLevelScope())
                     {
-                        var blackboardSetting = (BlackboardSetting)_property.blackboardSettingProperty.objectReferenceValue;
+                        var blackboardSetting = ((StateMachineSetting)property.serializedObject.targetObject).UseBlackboardSetting;
 
-                        // Nameを描画
+                        // ブラックボードキーの選択欄を描画
                         fieldRect.y += LineHeight;
                         var keyStringList = blackboardSetting.keyStrings.ToArray();
-                        var keyIndex = EditorGUI.Popup(new Rect(fieldRect), "Key", _property.useKeyProperty.intValue, keyStringList);
-                        _property.useKeyProperty.intValue = keyIndex;
+                        _property.useKeyIndex = EditorGUI.Popup(new Rect(fieldRect), "Key", _property.useKeyIndex, keyStringList);
 
-                        var valueType = blackboardSetting.GetBlackBoardValueType(keyStringList[keyIndex]);
+                        _property.keyNameProperty.stringValue = keyStringList[_property.useKeyIndex];
+                        var valueType = blackboardSetting.GetBlackBoardValueType(_property.keyNameProperty.stringValue);
+                        _property.valueTypeProperty.enumValueIndex = (int)valueType;
 
+                        //条件の設定
                         string[] popupList;
                         int selectIndex;
-
                         switch (valueType)
                         {
                             case BlackboardValueType.Boolean:

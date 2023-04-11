@@ -7,7 +7,9 @@ namespace Review.Enemies
 {
     public class EnemyController : StateMachineController
     {
-        public EnemyController()
+        protected override string settingFilePath { get; set; }
+
+        public EnemyController(GameObject targetObject, StateMachineFactory stateMachineFactory) : base(targetObject, stateMachineFactory)
         {
 
         }

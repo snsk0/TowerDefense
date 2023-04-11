@@ -22,6 +22,7 @@ namespace Review.StateMachines
         [SerializeField] private BlackboardKeyValuePair[] blackboardKeyValuePairs;
 
         public IEnumerable<string> keyStrings => blackboardKeyValuePairs.Select(x => x.KeyString);
+        public IEnumerable<BlackboardKeyValuePair> BlackboardKeyValuePairs => blackboardKeyValuePairs;
 
         private void OnValidate()
         {

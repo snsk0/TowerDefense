@@ -6,7 +6,10 @@ namespace Review.StateMachines.States.StateObjects
     public class AttackStateObject : BaseStateObject
     {
         public override string stateName { get; protected set; } = "AttackState";
-        public override BaseState state { get; protected set; } = new AttackState();
+        public override BaseState CreateState()
+        {
+            return new AttackState();
+        }
     }
 }
 

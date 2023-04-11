@@ -6,22 +6,38 @@ using UnityEngine.AddressableAssets;
 
 namespace Review.StateMachines
 {
-    public class StateMachineController
+    public abstract class StateMachineController
     {
         protected StateMachineType stateMachineType;
 
-        private StateMachineSetting stateMachineSetting;
-        private StateMachine useStateMachine;
-        private StateMachineFactory stateMachineFactory;
+        protected abstract string settingFilePath { get; set; }
 
-        public StateMachineController()
+        private StateMachine usingStateMachine;
+        //private StateMachineFactory stateMachineFactory;
+
+        public GameObject targetObject { get; private set; }
+
+        protected StateMachineController(GameObject targetObject, StateMachineFactory stateMachineFactory)
         {
-            var path = $"StateMachine/{Enum.GetName(typeof(StateMachineType), stateMachineType)}";
-            Addressables.LoadAssetAsync<StateMachineSetting>(path).Completed += setting =>
+            this.targetObject = targetObject;
+            //this.stateMachineFactory = stateMachineFactory;
+            Debug.Log(settingFilePath);
+
+            if(settingFilePath == "")
             {
-                stateMachineFactory.CreateStateMachine(setting.Result);
+                Debug.LogWarning("ステートマシンの設定ファイルパスが設定されていません");
+                return;
+            }
+
+            Addressables.LoadAssetAsync<StateMachineSetting>(settingFilePath).Completed += setting =>
+            {
+                if (setting.Result == null)
+                {
+                    Debug.LogError($"ステートマシンの設定ファイルパスが正しくありません\nPath{settingFilePath}");
+                    return;
+                }
+                usingStateMachine=stateMachineFactory.CreateStateMachine(setting.Result);
             };
-            
         }
     }
 }

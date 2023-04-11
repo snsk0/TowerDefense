@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Review.StateMachines
 {
     [Serializable]
-    public class BaseState : UnityEngine.Object
+    public class BaseState
     {
         private Blackboard blackboard;
 

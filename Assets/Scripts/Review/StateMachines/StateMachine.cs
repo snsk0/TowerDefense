@@ -10,29 +10,46 @@ namespace Review.StateMachines
     {
         private StateMachine parent;
 
+        private IEnumerable<StateMachine> subStateMachines;
         private IEnumerable<Transition> transitions;
         private IEnumerable<BaseState> states;
-        private List<Type> subStateMachines;
-
+        
         private BaseState currentState;
         private BaseState entryState;
         private Blackboard blackboard;
 
         public bool IsProsessing { get; protected set; }
 
-        public StateMachine(StateMachineSetting stateMachineSetting)
+        public StateMachine(IEnumerable<StateMachine> subStateMachines, IEnumerable<Transition> transitions,
+            IEnumerable<BaseState> states, Blackboard blackboard) 
         {
-            //SetStates(stateMachineSetting.stateTypes)
+            SetSubStateMachines(subStateMachines);
+            SetTransitions(transitions);
+            SetStates(states);
+            SetBlackboard(blackboard);
+
+            entryState = states.ElementAt(0);
+            Init();
         }
 
-        protected void SetStates(IEnumerable<BaseState> states)
+        private void SetSubStateMachines(IEnumerable<StateMachine> subStateMachines)
+        {
+            this.subStateMachines = subStateMachines;
+        }
+
+        private void SetTransitions(IEnumerable<Transition> transitions)
+        {
+            this.transitions = transitions;
+        }
+
+        private void SetStates(IEnumerable<BaseState> states)
         {
             this.states = states;
         }
 
-        protected void SetTransitions(IEnumerable<Transition> transitions)
+        private void SetBlackboard(Blackboard blackboard)
         {
-            this.transitions = transitions;
+            this.blackboard = blackboard;
         }
 
         

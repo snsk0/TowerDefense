@@ -7,7 +7,7 @@ namespace Review.Enemies.Controllers
 {
     public class GolemController : EnemyController
     {
-        public GolemController()
+        public GolemController(GameObject targetObject, StateMachineFactory stateMachineFactory) : base(targetObject, stateMachineFactory)
         {
             stateMachineType = StateMachineType.Golem;
         }

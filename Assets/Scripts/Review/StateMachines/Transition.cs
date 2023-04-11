@@ -28,16 +28,9 @@ namespace Review.StateMachines
         [SerializeField] private int intValue;
         [SerializeField] private float floatValue;
 
-        //ƒGƒfƒBƒ^Šg’£‚ÅŽg—p‚·‚é’l
-        [SerializeField] private BlackboardSetting blackboardSetting;
-
-        private BlackboardValueType valueType;
+        [SerializeField] private string keyName;
+        [SerializeField] private BlackboardValueType valueType;
         private Blackboard blackboard;
-
-        public void SetBlackboardSetting(BlackboardSetting blackboardSetting)
-        {
-            this.blackboardSetting = blackboardSetting;
-        }
 
         public bool Condition()
         {
@@ -47,17 +40,17 @@ namespace Review.StateMachines
                     switch (keyQueryType)
                     {
                         case TransitionKeyQueryType.IsEqual:
-                            return blackboard.GetValue<int>(blackboardSetting.GetKeyName(useKey)) == intValue;
+                            return blackboard.GetValue<int>(keyName) == intValue;
                         case TransitionKeyQueryType.IsNotEqual:
-                            return blackboard.GetValue<int>(blackboardSetting.GetKeyName(useKey)) != intValue;
+                            return blackboard.GetValue<int>(keyName) != intValue;
                         case TransitionKeyQueryType.IsLessThan:
-                            return blackboard.GetValue<int>(blackboardSetting.GetKeyName(useKey)) < intValue;
+                            return blackboard.GetValue<int>(keyName) < intValue;
                         case TransitionKeyQueryType.IsLessThanOrEqual:
-                            return blackboard.GetValue<int>(blackboardSetting.GetKeyName(useKey)) <= intValue;
+                            return blackboard.GetValue<int>(keyName) <= intValue;
                         case TransitionKeyQueryType.IsGreaterThan:
-                            return blackboard.GetValue<int>(blackboardSetting.GetKeyName(useKey)) > intValue;
+                            return blackboard.GetValue<int>(keyName) > intValue;
                         case TransitionKeyQueryType.IsGreaterThanOrEqual:
-                            return blackboard.GetValue<int>(blackboardSetting.GetKeyName(useKey)) >= intValue;
+                            return blackboard.GetValue<int>(keyName) >= intValue;
                         default:
                             Debug.LogError("Œ^‚ÆƒNƒGƒŠ‚ªˆê’v‚µ‚Ü‚¹‚ñ");
                             break;
@@ -67,17 +60,17 @@ namespace Review.StateMachines
                     switch (keyQueryType)
                     {
                         case TransitionKeyQueryType.IsEqual:
-                            return blackboard.GetValue<float>(blackboardSetting.GetKeyName(useKey)) == floatValue;
+                            return blackboard.GetValue<float>(keyName) == floatValue;
                         case TransitionKeyQueryType.IsNotEqual:
-                            return blackboard.GetValue<float>(blackboardSetting.GetKeyName(useKey)) != floatValue;
+                            return blackboard.GetValue<float>(keyName) != floatValue;
                         case TransitionKeyQueryType.IsLessThan:
-                            return blackboard.GetValue<float>(blackboardSetting.GetKeyName(useKey)) < floatValue;
+                            return blackboard.GetValue<float>(keyName) < floatValue;
                         case TransitionKeyQueryType.IsLessThanOrEqual:
-                            return blackboard.GetValue<float>(blackboardSetting.GetKeyName(useKey)) <= floatValue;
+                            return blackboard.GetValue<float>(keyName) <= floatValue;
                         case TransitionKeyQueryType.IsGreaterThan:
-                            return blackboard.GetValue<float>(blackboardSetting.GetKeyName(useKey)) > floatValue;
+                            return blackboard.GetValue<float>(keyName) > floatValue;
                         case TransitionKeyQueryType.IsGreaterThanOrEqual:
-                            return blackboard.GetValue<float>(blackboardSetting.GetKeyName(useKey)) >= floatValue;
+                            return blackboard.GetValue<float>(keyName) >= floatValue;
                         default:
                             Debug.LogError("Œ^‚ÆƒNƒGƒŠ‚ªˆê’v‚µ‚Ü‚¹‚ñ");
                             break;
@@ -87,9 +80,9 @@ namespace Review.StateMachines
                     switch (keyQueryType)
                     {
                         case TransitionKeyQueryType.IsTrue:
-                            return blackboard.GetValue<bool>(blackboardSetting.GetKeyName(useKey));
+                            return blackboard.GetValue<bool>(keyName);
                         case TransitionKeyQueryType.IsFalse:
-                            return !blackboard.GetValue<bool>(blackboardSetting.GetKeyName(useKey));
+                            return !blackboard.GetValue<bool>(keyName);
                         default:
                             Debug.LogError("Œ^‚ÆƒNƒGƒŠ‚ªˆê’v‚µ‚Ü‚¹‚ñ");
                             break;
@@ -99,9 +92,9 @@ namespace Review.StateMachines
                     switch (keyQueryType)
                     {
                         case TransitionKeyQueryType.IsSet:
-                            return blackboard.GetValue<MonoBehaviour>(blackboardSetting.GetKeyName(useKey)) != null;
+                            return blackboard.GetValue<MonoBehaviour>(keyName) != null;
                         case TransitionKeyQueryType.IsNotSet:
-                            return blackboard.GetValue<MonoBehaviour>(blackboardSetting.GetKeyName(useKey)) == null;
+                            return blackboard.GetValue<MonoBehaviour>(keyName) == null;
                         default:
                             Debug.LogError("Œ^‚ÆƒNƒGƒŠ‚ªˆê’v‚µ‚Ü‚¹‚ñ");
                             break;
@@ -111,9 +104,9 @@ namespace Review.StateMachines
                     switch (keyQueryType)
                     {
                         case TransitionKeyQueryType.IsSet:
-                            return blackboard.GetValue<GameObject>(blackboardSetting.GetKeyName(useKey)) != null;
+                            return blackboard.GetValue<GameObject>(keyName) != null;
                         case TransitionKeyQueryType.IsNotSet:
-                            return blackboard.GetValue<GameObject>(blackboardSetting.GetKeyName(useKey)) == null;
+                            return blackboard.GetValue<GameObject>(keyName) == null;
                         default:
                             Debug.LogError("Œ^‚ÆƒNƒGƒŠ‚ªˆê’v‚µ‚Ü‚¹‚ñ");
                             break;
@@ -123,9 +116,9 @@ namespace Review.StateMachines
                     switch (keyQueryType)
                     {
                         case TransitionKeyQueryType.IsSet:
-                            return blackboard.GetValue<Transform>(blackboardSetting.GetKeyName(useKey)) != null;
+                            return blackboard.GetValue<Transform>(keyName) != null;
                         case TransitionKeyQueryType.IsNotSet:
-                            return blackboard.GetValue<Transform>(blackboardSetting.GetKeyName(useKey)) == null;
+                            return blackboard.GetValue<Transform>(keyName) == null;
                         default:
                             Debug.LogError("Œ^‚ÆƒNƒGƒŠ‚ªˆê’v‚µ‚Ü‚¹‚ñ");
                             break;

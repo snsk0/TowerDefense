@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Review.StateMachines
@@ -8,14 +9,14 @@ namespace Review.StateMachines
     {
         private Dictionary<string, object> valueDic;
 
-        public Blackboard(BlackboardSetting blackboardSetting)
+        public Blackboard(IEnumerable<KeyValuePair<string, object>> valueDic)
         {
-            
+            this.valueDic = valueDic.ToDictionary(t=>t.Key, t=>t.Value);
         }
 
         public T GetValue<T>(string key)
         {
-            valueDic.TryGetValue(key, out var value);
+            var value = valueDic.Single(x => x.Key == key).Value;
 
             if (value == null)
             {
@@ -33,13 +34,13 @@ namespace Review.StateMachines
 
         public void SetValue<T>(string key, T value)
         {
-            if (valueDic.ContainsKey(key))
+            if (valueDic.Any(x=>x.Key==key))
             {
                 valueDic[key] = value;
             }
             else
             {
-                Debug.LogWarning("キーが損z内しません");
+                Debug.LogWarning("キーが存在しません");
             }
         }
     }
