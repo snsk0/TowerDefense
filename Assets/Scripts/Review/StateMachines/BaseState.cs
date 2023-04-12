@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 namespace Review.StateMachines
@@ -8,21 +9,23 @@ namespace Review.StateMachines
     [Serializable]
     public class BaseState
     {
-        private Blackboard blackboard;
+        public ResultType result { get; protected set; }
 
-        public void Execute()
+        public bool IsRepeatable { get; protected set; } = false;
+
+        public virtual void Execute(Blackboard blackboard)
         {
-
+            //子クラスで具体的な実装
         }
 
-        public void Abort()
+        public virtual void Abort()
         {
-
+            //子クラスで具体的な実装
         }
 
-        private void FinishState()
+        protected virtual void FinishState()
         {
-
+            //子クラスで具体的な実装
         }
     }
 }

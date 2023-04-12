@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UniRx;
 using UnityEngine;
 
 namespace Review.StateMachines
 {
-    public class StateMachine
+    public class StateMachine : IDisposable
     {
         private StateMachine parent;
 
@@ -17,6 +18,8 @@ namespace Review.StateMachines
         private BaseState currentState;
         private BaseState entryState;
         private Blackboard blackboard;
+
+        private List<IDisposable> disposables = new List<IDisposable>();
 
         public bool IsProsessing { get; protected set; }
 
@@ -57,6 +60,7 @@ namespace Review.StateMachines
         public void Init()
         {
             currentState = entryState;
+            ExecuteState();
             IsProsessing = true;
         }
 
@@ -64,60 +68,71 @@ namespace Review.StateMachines
         {
             Init();
             currentState = activeState;
+            ExecuteState();
         }
 
         public void Restart()
         {
-            currentState = entryState;
-            IsProsessing = true;
+            Init();
         }
 
         public void Tick()
         {
-            Debug.Log("Tick");
-            //currentState.Execute();
+            CheckStateResult();
+
             //CheckTransition();
         }
 
-        private void CheckTransition()
+        private void ExecuteState()
         {
-            //foreach(var transition in transitionList.Where(x=>x.canTransition()))
-            //{
-            //    ChangeState(transition.afterState);
-            //}
-
-            //foreach (var transition in currentState.Transitions.Where(x => x.canTransition()))
-            //{
-            //    ChangeState(transition.afterState);
-            //}
+            currentState.Execute(blackboard);
         }
 
-        private void ChangeState(BaseState nextState)
+        private void CheckStateResult()
         {
-            currentState.Abort();
-
-            //if (states.Any(x => x == nextState.GetType()))
-            //{
-            //    currentState = nextState;
-            //}
-            //else
-            //{
-            //    currentState = null;
-            //    IsProsessing = false;
-            //    //var subStateMachine = subStateMachines.Single(x => x.states.Any(y => y == nextState.GetType()));
-            //    //subStateMachine.Init();
-            //}
-        }
-
-        private void ExitState()
-        {
-            if (parent!=null)
+            var result = currentState.result;
+            switch (result)
             {
-                parent.Restart();
+                case ResultType.Success:
+                    if (currentState.IsRepeatable)
+                    {
+                        ExecuteState();
+                    }
+                    else
+                    {
+                        ChangeNextState();
+                    }
+                    break;
+                case ResultType.False:
+                    break;
+                case ResultType.Processing:
+                    return;
+                case ResultType.Avort:
+                    break;
             }
-            else
+        }
+
+        private void ChangeNextState()
+        {
+            var stateTransitions = transitions.Where(x => x.BeforeState == currentState);
+            foreach(var transition in stateTransitions)
             {
-                currentState = entryState;
+                if (transition.Conditions.All(x => x.Condition()))
+                {
+                    currentState = transition.AfterState;
+                    ExecuteState();
+                    return;
+                }
+            }
+
+            Debug.Log("ëJà⁄êÊÇ™ë∂ç›ÇµÇ‹ÇπÇÒ");
+        }
+
+        public void Dispose()
+        {
+            foreach(var disposable in disposables)
+            {
+                disposable.Dispose();
             }
         }
     }

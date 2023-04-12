@@ -31,7 +31,20 @@ namespace Review.StateMachines.Editor
             "{\n" +
             "    public class #CLASSNAME# : BaseState\n" +
             "    {\n" +
+            "        public override void Execute(Blackboard blackboard)\n" +
+            "        {\n" +
+            "            base.Execute(blackboard);\n" +
+            "        }\n" +
             "\n" +
+            "        public override void Abort()\n" +
+            "        {\n" +
+            "            base.Abort();\n" +
+            "        }\n" +
+            "\n" +
+            "        protected override void FinishState()\n" +
+            "        {\n" +
+            "            base.FinishState();\n" +
+            "        }\n" +
             "    }\n" +
             "}\n" +
             "";

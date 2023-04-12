@@ -17,6 +17,9 @@ namespace Review.StateMachines
         [SerializeField] private BaseState beforeState;
         [SerializeField] private BaseState afterState;
 
+        public BaseState BeforeState => beforeState;
+        public BaseState AfterState => afterState;
+
         public IEnumerable<TransitionCondition> Conditions => consitions;
     }
 

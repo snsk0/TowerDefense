@@ -9,7 +9,7 @@ using VContainer;
 
 namespace Review.StateMachines
 {
-    public class StateMachineManager : ControllerBase
+    public class StateMachineManager : ControllerBase, IDisposable
     {
         private readonly StateMachineFactory stateMachineFactory;
 
@@ -36,6 +36,14 @@ namespace Review.StateMachines
         private void RegisterStateMachine(StateMachine stateMachine)
         {
             usingStateMachines.Add(stateMachine);
+        }
+
+        public void Dispose()
+        {
+            foreach(var SM in usingStateMachines)
+            {
+                SM.Dispose();
+            }
         }
     }
 }
