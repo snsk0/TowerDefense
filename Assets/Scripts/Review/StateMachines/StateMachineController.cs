@@ -13,15 +13,12 @@ namespace Review.StateMachines
         protected abstract string settingFilePath { get; set; }
 
         private StateMachine usingStateMachine;
-        //private StateMachineFactory stateMachineFactory;
 
         public GameObject targetObject { get; private set; }
 
         protected StateMachineController(GameObject targetObject, StateMachineFactory stateMachineFactory)
         {
             this.targetObject = targetObject;
-            //this.stateMachineFactory = stateMachineFactory;
-            Debug.Log(settingFilePath);
 
             if(settingFilePath == "")
             {

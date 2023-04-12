@@ -1,4 +1,4 @@
-@startuml StateMachine
+﻿@startuml StateMachine
 
 namespace StateMachines{
     class StatemachineManager{
@@ -9,13 +9,21 @@ namespace StateMachines{
     }
     class StateMachineFactory{
         +IObservable<StateMachine> CreatedStateMachineObservable
-        +StateMachine CreateStateMachine(StateMachineSetting setting)
+        +StateMachine CreateStateMachine(StateMachineSetting)
     }
     class StateMachineController{
         -StateMachineSetting useStateMachineSetting
         -StateMachine usingStateMachine
         -void RunStateMachine()
         -void StopStateMachine()
+    }
+    abstract StateMachineControllerFactory{
+        -StateMachineFactory stateMachineFactory
+        {abstract} StateMachineController CreateStateMachineController(Type, GameObject) : 
+    }
+    class StateMachineProcessor{
+        -StatemachineManager statemachineManager
+        -void StartProcessStateMachine()
     }
 
     class StateMachine{
@@ -25,8 +33,8 @@ namespace StateMachines{
         -Blackboard blackboard
         -BaseState entryState
         -BaseState currentState
-        +StateMachine(IEnumerable<Statemachine> subStateMachines, IEnumerable<Transition> transitions
-            IEnumerable<BaseState> states, Blackboard blackboard)
+        +StateMachine(IEnumerable<Statemachine>, IEnumerable<Transition>
+            IEnumerable<BaseState>, Blackboard)
         +void Tick()
     }
     class BaseState{
@@ -34,7 +42,7 @@ namespace StateMachines{
         +ResultType result
         +BaseState()
         +void Execute()
-        -void ObserveStateResult(BaseState baseState)
+        -void ObserveStateResult(BaseState)
     }
     class Transition{
         +BaseState BeforeState
@@ -42,7 +50,7 @@ namespace StateMachines{
         +IEnumerable<TransitionCondition> Conditions
     }
     class TransitionCondition{
-        +bool Condition(Blackboard blackboard)
+        +bool Condition(Blackboard)
     }
     class Blackboard
     
@@ -68,7 +76,13 @@ namespace StateMachines{
     StateMachineFactory..>StateMachineSetting
     StateMachineFactory..>BaseStateObject
     StateMachineFactory..>Transition
-    StateMachineFactory..>BlackBoardSetting
+    StateMachineFactory..>BlackboardSetting
+
+    StateMachineControllerFactory-->StateMachineController
+    StateMachineControllerFactory-->StateMachineFactory
+
+    StateMachineProcessor-->StatemachineManager
+    StateMachineProcessor-->StateMachine
 
     StateMachine-->StateMachine
     StateMachine-->BaseState
@@ -106,6 +120,7 @@ namespace Enemies{
 }
 
 StateMachines.StateMachineController<|--Enemies.EnemyController
+StateMachines.StateMachineControllerFactory<|--Enemies.EnemyControllerFactory
 
 @enduml
 

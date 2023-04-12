@@ -1,5 +1,6 @@
 using Review.Enemies.Controllers;
 using Review.StateMachines;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,14 +8,12 @@ using VContainer;
 
 namespace Review.Enemies
 {
-    public class EnemyControllerFactory
+    public class EnemyControllerFactory : StateMachineControllerFactory
     {
-        private readonly StateMachineFactory stateMachineFactory;
-
         [Inject]
-        public EnemyControllerFactory(StateMachineFactory stateMachineFactory)
+        public EnemyControllerFactory(StateMachineFactory stateMachineFactory) : base(stateMachineFactory)
         {
-            this.stateMachineFactory = stateMachineFactory;
+            
         }
 
         public EnemyController CreateEnemyController(EnemyType enemyType, GameObject targetObject)
@@ -24,15 +23,22 @@ namespace Review.Enemies
                 case EnemyType.None:
                     return null;
                 case EnemyType.Slime:
-                    return new SlimeController(targetObject, stateMachineFactory);
+                    return (SlimeController)CreateStateMachineController(typeof(SlimeController), targetObject);
                 case EnemyType.Goblin:
-                    return new GoblinController(targetObject, stateMachineFactory);
+                    return (GoblinController)CreateStateMachineController(typeof(GoblinController), targetObject);
                 case EnemyType.Golem:
-                    return new GolemController(targetObject, stateMachineFactory);
+                    return (GolemController)CreateStateMachineController(typeof(GolemController), targetObject);
                 default:
                     return null;
             }
         }
+
+        protected override StateMachineController CreateStateMachineController(Type controllerType, GameObject targetObject)
+        {
+            object[] constructorArgs = new object[] { targetObject, stateMachineFactory };
+            return (EnemyController)Activator.CreateInstance(controllerType, constructorArgs);
+        }
+
     }
 }
 

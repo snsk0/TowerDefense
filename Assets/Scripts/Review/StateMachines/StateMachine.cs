@@ -74,8 +74,9 @@ namespace Review.StateMachines
 
         public void Tick()
         {
-            currentState.Execute();
-            CheckTransition();
+            Debug.Log("Tick");
+            //currentState.Execute();
+            //CheckTransition();
         }
 
         private void CheckTransition()

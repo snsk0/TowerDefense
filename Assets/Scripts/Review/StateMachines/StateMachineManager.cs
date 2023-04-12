@@ -5,21 +5,22 @@ using System.Threading;
 using UnityEngine;
 using UniRx;
 using System;
+using VContainer;
 
 namespace Review.StateMachines
 {
-    public class StateMachineManager : ControllerBase, IDisposable
+    public class StateMachineManager : ControllerBase
     {
-        private StateMachineFactory stateMachineFactory;
+        private readonly StateMachineFactory stateMachineFactory;
 
-        private List<StateMachine> usingStateMachines;
-        private CancellationTokenSource tokenSource;
+        private List<StateMachine> usingStateMachines = new List<StateMachine>();
+        public IEnumerable<StateMachine> UsingStateMachines => usingStateMachines;
 
-        public StateMachineManager()
+        [Inject]
+        public StateMachineManager(StateMachineFactory stateMachineFactory)
         {
+            this.stateMachineFactory = stateMachineFactory;
             ObserveCreatedStateMachine();
-            tokenSource = new CancellationTokenSource();
-            StartProcessStateMachines(tokenSource.Token);
         }
 
         private void ObserveCreatedStateMachine()
@@ -35,23 +36,6 @@ namespace Review.StateMachines
         private void RegisterStateMachine(StateMachine stateMachine)
         {
             usingStateMachines.Add(stateMachine);
-        }
-
-        private async void StartProcessStateMachines(CancellationToken token)
-        {
-            while (true)
-            {
-                foreach(var SM in usingStateMachines)
-                {
-                    SM.Tick();
-                }
-                await UniTask.DelayFrame(1, cancellationToken: token);
-            }
-        }
-
-        public void Dispose()
-        {
-            tokenSource.Cancel();
         }
     }
 }
