@@ -15,8 +15,16 @@ MonoBehaviour:
   subStateMachineSettings:
   - {fileID: 11400000, guid: 9e2365cce558be145ab9201ef688cdf2, type: 2}
   stateObjects:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 2eb663f2f337f184dbdc6fe1253f5aa0, type: 2}
+  - {fileID: 11400000, guid: 7774c93b7cf4e5542a8eb5d820a823ae, type: 2}
   blackboardSetting: {fileID: 11400000, guid: 9672a14dd0cec514997cca24639742e6, type: 2}
   transitions:
-  - consitions: []
+  - consitions:
+    - useKey: 0
+      keyQueryType: 0
+      intValue: 0
+      floatValue: 0
+      keyName: Target
+      valueType: 0
+    beforeState: {fileID: 0}
+    afterState: {fileID: 11400000, guid: 2eb663f2f337f184dbdc6fe1253f5aa0, type: 2}

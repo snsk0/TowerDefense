@@ -17,7 +17,8 @@ namespace Review.StateMachines.Editor
             "{\n" +
             "    public class #CLASSNAME# : BaseStateObject\n" +
             "    {\n" +
-            "        public override string stateName { get; protected set; } = \"#STATENAME#\";\n" +
+            "        public override string stateName { get; } = \"#STATENAME#\";\n" +
+            "        public override Type stateType { get; } = typeof(\"#STATENAME#\");\n" +
             "        public override BaseState CreateState(){\n" +
             "            return new #STATENAME#();\n" +
             "        }\n" +

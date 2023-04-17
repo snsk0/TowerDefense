@@ -114,12 +114,12 @@ namespace Review.StateMachines
 
         private void ChangeNextState()
         {
-            var stateTransitions = transitions.Where(x => x.BeforeState == currentState);
+            var stateTransitions = transitions.Where(x => x.BeforeStateType == currentState.GetType());
             foreach(var transition in stateTransitions)
             {
                 if (transition.Conditions.All(x => x.Condition()))
                 {
-                    currentState = transition.AfterState;
+                    currentState = states.Single(x=>x.GetType()==transition.AfterStateType);
                     ExecuteState();
                     return;
                 }

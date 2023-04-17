@@ -97,7 +97,7 @@ namespace Review.StateMachines.Editor
                         // 遷移元の選択欄を描画
                         fieldRect.y += LineHeight;
                         _property.beforeStateIndex = EditorGUI.Popup(new Rect(fieldRect), "beforeState", _property.beforeStateIndex, stateNameArray);
-                        _property.beforeStateProperty.objectReferenceValue = _property.beforeStateIndex == stateObjectsSize ? null : _property.stateObjectsProperty.GetArrayElementAtIndex(_property.beforeStateIndex).objectReferenceValue;
+                        _property.beforeStateProperty.objectReferenceValue = _property.beforeStateIndex == 0 ? null : (BaseStateObject)_property.stateObjectsProperty.GetArrayElementAtIndex(_property.beforeStateIndex - 1).objectReferenceValue;
 
                         //遷移先のステートマシンの名前のリストを作成
                         var subStatemachineSize = _property.subStateMachinesProperty.arraySize;
@@ -129,7 +129,7 @@ namespace Review.StateMachines.Editor
                         _property.afterStateIndex = EditorGUI.Popup(new Rect(fieldRect), "afterState", _property.afterStateIndex, afterStateNameArray);
                         if(_property.stateMachineIndex == 0)
                         {
-                            _property.afterStateProperty.objectReferenceValue = _property.stateObjectsProperty.GetArrayElementAtIndex(_property.afterStateIndex).objectReferenceValue;
+                            _property.afterStateProperty.objectReferenceValue = (BaseStateObject)_property.stateObjectsProperty.GetArrayElementAtIndex(_property.afterStateIndex).objectReferenceValue;
                         }
                         else
                         {

@@ -14,11 +14,11 @@ namespace Review.StateMachines
         [SerializeField] List<TransitionCondition> consitions;
 
         //エディタ拡張で使用する値
-        [SerializeField] private BaseState beforeState;
-        [SerializeField] private BaseState afterState;
+        [SerializeField] private BaseStateObject beforeState;
+        [SerializeField] private BaseStateObject afterState;
 
-        public BaseState BeforeState => beforeState;
-        public BaseState AfterState => afterState;
+        public Type BeforeStateType => beforeState.stateType;
+        public Type AfterStateType => afterState.stateType;
 
         public IEnumerable<TransitionCondition> Conditions => consitions;
     }

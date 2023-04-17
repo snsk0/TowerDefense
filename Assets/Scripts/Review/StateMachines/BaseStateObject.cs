@@ -7,7 +7,8 @@ namespace Review.StateMachines
 {
     public abstract class BaseStateObject : ScriptableObject
     {
-        public abstract string stateName { get; protected set; }
+        public abstract string stateName { get; }
+        public abstract Type stateType { get; }
         public abstract BaseState CreateState();
     }
 }
